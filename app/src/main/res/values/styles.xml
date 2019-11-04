@@ -14,8 +14,5 @@
         <item name="android:background">@drawable/ic_spinner</item>
     </style>
 
-    <style name="SpinnerTheme" parent="android:Widget.Spinner">
-        <item name="android:background">@drawable/ic_spinner</item>
-    </style>
 
 </resources>

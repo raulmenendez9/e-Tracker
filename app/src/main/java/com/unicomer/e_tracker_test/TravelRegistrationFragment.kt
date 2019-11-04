@@ -60,7 +60,7 @@ class TravelRegistrationFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
+    }*/
 
 
     interface OnFragmentInteractionListener {

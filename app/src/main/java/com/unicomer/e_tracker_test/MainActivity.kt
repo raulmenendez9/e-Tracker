@@ -8,5 +8,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        loadRegistrationTravel(TravelRegistrationFragment())
     }
+
+    private fun loadRegistrationTravel(tr: TravelRegistrationFragment){
+        val formmu = supportFragmentManager.beginTransaction()
+        formmu.replace(R.id.fragmentRegistrationTravel, tr).addToBackStack(null)
+        formmu.commit()
+    }
+
 }

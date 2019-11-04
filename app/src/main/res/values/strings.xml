@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">e-Tracker-test</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings del Login   -->
+
+    <string name="login_login_issues">Problemas para ingresar?</string>
+    <string name="login_button_send">Entrar</string>
+    <string name="login_hint_et_email">Correo</string>
+    <string name="login_hint_et_password">Contrasena</string>
+
 
     <!--String del registro de viaje -->
     <!-- TextViews-->
@@ -29,6 +34,7 @@
 
     <!--Buttons -->
     <string name="initial_travel">Iniciar viaje</string>
+    <string name="login_logo_etracker_app">Application Logo</string>
 
 
 </resources>

@@ -1,14 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TravelRegistrationFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="50dp"
+            android:background="@color/colorPrimario_01_Azul">
+
+            <TextView
+                android:id="@+id/text_Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="595dp"
+                android:text="@string/empecemos"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/text_Start2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="35dp"
+                android:text="@string/initial"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="54dp" />
+
+            <TextView
+                android:id="@+id/text_OriginCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/origin_country"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="20dp" />
+
+            <EditText
+                android:id="@+id/editTextOrigin"
+                android:layout_width="277dp"
+                android:layout_height="43dp"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@drawable/ic_pais_origen_destino"
+                android:ems="10"
+                android:hint="@string/origin_country_EditText"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/text_OriginCountry" />
+
+            <TextView
+                android:id="@+id/text_DestinyCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/destiny_country"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/editTextOrigin" />
+
+            <EditText
+                android:id="@+id/editTextDestiny"
+                android:layout_width="274dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@drawable/ic_pais_origen_destino"
+                android:ems="10"
+                android:hint="@string/destiny_country_EditText"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/text_DestinyCountry" />
+
+            <TextView
+                android:id="@+id/textViewCostCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cost_center"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDestiny" />
+
+            <TextView
+                android:id="@+id/textViewCodProject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cod_project"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCostCenter" />
+
+            <com.santalu.maskedittext.MaskEditText
+                android:id="@+id/et_phone_number"
+                android:layout_width="77dp"
+                android:layout_height="42dp"
+                android:hint="- - -"
+                android:textColorHint="@android:color/white"
+                android:textAlignment="center"
+                android:inputType="phone"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.979"
+                app:layout_constraintStart_toEndOf="@+id/textViewCostCenter"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDestiny"
+                app:met_mask="#-#-#-#"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textViewCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/Cash"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCodProject" />
+
+            <EditText
+                android:id="@+id/editTextCost"
+                android:layout_width="143dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:hint="@string/cost"
+                android:textAlignment="textEnd"
+                android:drawableLeft="@drawable/ic_money"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.937"
+                app:layout_constraintStart_toEndOf="@+id/textViewCost"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCodProject" />
+
+            <TextView
+                android:id="@+id/textViewRefound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/refound"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCost" />
+
+            <RadioButton
+                android:id="@+id/radioButtonYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="116dp"
+                android:layout_marginTop="4dp"
+                android:button="@null"
+                android:drawableRight="@drawable/ic_radio_button"
+                android:text="@string/yes"
+                app:layout_constraintStart_toEndOf="@+id/textViewRefound"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCost" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:button="@null"
+                android:drawableRight="@drawable/ic_radio_button"
+                android:text="@string/no"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.882"
+                app:layout_constraintStart_toEndOf="@+id/radioButtonYes"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCost" />
+
+            <TextView
+                android:id="@+id/textViewInitialDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/initial_date"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRefound" />
+
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="152dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@drawable/ic_date"
+                android:ems="10"
+                android:hint="@string/date"
+                android:inputType="date"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.959"
+                app:layout_constraintStart_toEndOf="@+id/textViewInitialDate"
+                app:layout_constraintTop_toBottomOf="@+id/radioButtonYes" />
+
+            <TextView
+                android:id="@+id/textViewApprovedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/approved_by"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewInitialDate" />
+
+            <Spinner
+
+                android:layout_width="276dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="1dp"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/guideline3"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewApprovedBy"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+            <EditText
+                android:id="@+id/editTextMotive"
+                android:layout_width="277dp"
+                android:layout_height="45dp"
+                android:ems="10"
+                android:hint="@string/motive"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="389dp" />
+
+            <Button
+                android:id="@+id/buttonRegistrations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/initial_travel"
+                android:textColor="@color/colorPrimario_01_Azul"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/editTextMotive" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="298dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/ButtonCloseRegistration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="@color/colorPrimario_01_Azul"
+            android:src="@drawable/ic_close"
+            app:layout_anchor="@+id/constraintLayoutRegistration"
+            app:layout_anchorGravity="bottom|center" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TravelRegistrationFragment">
+    tools:context=".travel_registration.TravelRegistrationFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,7 +19,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="50dp"
-            android:background="@color/colorPrimario_01_Azul">
+            android:background="@color/colorPrimario_01_Azul"
+            app:layout_anchor="@+id/constraintLayoutRegistration"
+            app:layout_anchorGravity="center">
 
             <TextView
                 android:id="@+id/text_Start"
@@ -129,13 +131,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewCostCenter" />
 
             <com.santalu.maskedittext.MaskEditText
-                android:id="@+id/et_phone_number"
+                android:id="@+id/editTextCodProject"
                 android:layout_width="77dp"
                 android:layout_height="42dp"
                 android:hint="- - -"
-                android:textColorHint="@color/colorSecundario_04_Blanco"
-                android:textAlignment="center"
                 android:inputType="phone"
+                android:textAlignment="center"
+                android:textColorHint="@color/colorSecundario_04_Blanco"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.979"
                 app:layout_constraintStart_toEndOf="@+id/textViewCostCenter"
@@ -158,11 +160,11 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="1dp"
+                android:drawableLeft="@drawable/ic_money"
                 android:ems="10"
                 android:hint="@string/cost"
-                android:textAlignment="textEnd"
-                android:drawableLeft="@drawable/ic_money"
                 android:inputType="numberDecimal"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.937"
                 app:layout_constraintStart_toEndOf="@+id/textViewCost"
@@ -177,30 +179,34 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCost" />
 
-            <RadioButton
-                android:id="@+id/radioButtonYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="116dp"
-                android:layout_marginTop="4dp"
-                android:button="@null"
-                android:drawableRight="@drawable/ic_radio_button"
-                android:text="@string/yes"
-                app:layout_constraintStart_toEndOf="@+id/textViewRefound"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCost" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:button="@null"
-                android:drawableRight="@drawable/ic_radio_button"
-                android:text="@string/no"
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="138dp"
+                android:layout_height="23dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.882"
-                app:layout_constraintStart_toEndOf="@+id/radioButtonYes"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCost" />
+                app:layout_constraintHorizontal_bias="0.967"
+                app:layout_constraintStart_toEndOf="@+id/textViewRefound"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCost">
+
+
+                <RadioButton
+                    android:theme="@style/RadioButtonStyle"
+                    android:id="@+id/radioButtonYes"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:textColorHint="@color/colorSecundario_04_Blanco"/>
+
+                <RadioButton
+                    android:theme="@style/RadioButtonStyle"
+                    android:id="@+id/radioButtonNo"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:text="@string/no"
+                    android:textColorHint="@color/colorSecundario_04_Blanco"/>
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/textViewInitialDate"
@@ -213,18 +219,19 @@
 
             <EditText
                 android:id="@+id/editTextDate"
-                android:layout_width="152dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="4dp"
+                android:layout_width="193dp"
+                android:layout_height="38dp"
+                android:clickable="true"
                 android:drawableLeft="@drawable/ic_date"
                 android:ems="10"
+                android:focusable="false"
                 android:hint="@string/date"
                 android:inputType="date"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.959"
+                app:layout_constraintHorizontal_bias="0.979"
                 app:layout_constraintStart_toEndOf="@+id/textViewInitialDate"
-                app:layout_constraintTop_toBottomOf="@+id/radioButtonYes" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
             <TextView
                 android:id="@+id/textViewApprovedBy"

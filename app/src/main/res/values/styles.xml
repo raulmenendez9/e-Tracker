@@ -14,5 +14,11 @@
         <item name="android:background">@drawable/ic_spinner</item>
     </style>
 
+    <!-- Radio buttons-->
+    <style name="RadioButtonStyle" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorSecundario_04_Blanco</item>
+        <item name="android:textColorSecondary">@color/colorSecundario_04_Blanco</item>
+    </style>
+
 
 </resources>

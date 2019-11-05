@@ -91,6 +91,4 @@ class TravelRegistrationFragment : Fragment() {
                 }
             }
     }
-
-    //Union de 3 ramas
 }

@@ -1,43 +1,4 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
-    android:viewportWidth="183.741"
-    android:viewportHeight="171.072"
-    android:width="183.741dp"
-    android:height="171.072dp">
-    <group
-        android:translateX="-11892"
-        android:translateY="-7670">
-        <group
-            android:translateX="11892"
-            android:translateY="7670">
-            <group
-                android:translateX="12"
-                android:translateY="7">
-                <path
-                    android:pathData="M30 0H129.741A30 30 0 0 1 159.741 30V117.072A30 30 0 0 1 129.741 147.072H30A30 30 0 0 1 0 117.072V30A30 30 0 0 1 30 0Z">
-                    <aapt:attr
-                        name="android:fillColor">
-                        <gradient
-                            android:startX="79.8705"
-                            android:endX="79.8705"
-                            android:endY="147.072"
-                            android:tileMode="clamp">
-                            <item
-                                android:color="#FEC180"
-                                android:offset="0" />
-                            <item
-                                android:color="#FF8993"
-                                android:offset="1" />
-                        </gradient>
-                    </aapt:attr>
-                </path>
-            </group>
-        </group>
-        <group
-            android:translateX="11937.86"
-            android:translateY="7704.938">
-            <path
-                android:pathData="M27.515 50.311L40.6 37.23 8.148 4.828a18.524 18.524 0 0 0 0 26.162Zm31.339 -8.366c7.072 3.282 17.01 0.971 24.359 -6.379 8.828 -8.828 10.539 -21.493 3.744 -28.288C80.209 0.529 67.544 2.193 58.669 11.022c-7.349 7.349 -9.66 17.287 -6.379 24.359L7.177 80.494l6.517 6.517L45.542 55.257l31.8 31.8L83.86 80.54l-31.8 -31.8 6.795 -6.795Z"
-                android:fillColor="#F5F5F5" />
-        </group>
-    </group>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+</selector>

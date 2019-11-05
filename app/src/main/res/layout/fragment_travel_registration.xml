@@ -19,7 +19,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="50dp"
-            android:background="@color/colorPrimario_01_Azul">
+            android:background="@color/colorPrimary_01_Blue">
 
             <TextView
                 android:id="@+id/text_Start"
@@ -133,7 +133,7 @@
                 android:layout_width="77dp"
                 android:layout_height="42dp"
                 android:hint="- - -"
-                android:textColorHint="@color/colorSecundario_04_Blanco"
+                android:textColorHint="@color/colorSecondary_04_White"
                 android:textAlignment="center"
                 android:inputType="phone"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -288,7 +288,7 @@
                 android:background="@drawable/btn_background_white"
                 android:fontFamily="@font/helvetica_neue_lts_td_md"
                 android:text="@string/initial_travel"
-                android:textColor="@color/colorPrimario_01_Azul"
+                android:textColor="@color/colorPrimary_01_Blue"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -309,7 +309,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:backgroundTint="@color/colorPrimario_01_Azul"
+            app:backgroundTint="@color/colorPrimary_01_Blue"
             android:src="@drawable/ic_close"
             app:layout_anchor="@+id/constraintLayoutRegistration"
             app:layout_anchorGravity="bottom|center" />

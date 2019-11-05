@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "152650322493",
+    "firebase_url": "https://e-tracker-test.firebaseio.com",
+    "project_id": "e-tracker-test",
+    "storage_bucket": "e-tracker-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152650322493:android:fa0a4eedb2eca5b7001054",
+        "android_client_info": {
+          "package_name": "com.unicomer.e_tracker_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152650322493-336dlv638u7mg4t5vf61ec79d620ob6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicomer.e_tracker_test",
+            "certificate_hash": "9fbf32759e93c18dddfa20c2172a38c644f9c906"
+          }
+        },
+        {
+          "client_id": "152650322493-tv5ju1mn2ltv9sprc2evgiuj6naaiq0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPB82MjaMDpROH6NgzmwISAQ6fkTQBB-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152650322493-tv5ju1mn2ltv9sprc2evgiuj6naaiq0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

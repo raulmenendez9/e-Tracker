@@ -1,11 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimario_01_Azul</item>
         <item name="colorPrimaryDark">@color/colorPrimario_02_Azul_Oscuro</item>
         <item name="colorAccent">@color/colorSecundario_01_Azul</item>
     </style>
+    <!--Theme for Buttons e-Tracker-->
+
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/ic_spinner</item>
+    </style>
+
 
 </resources>

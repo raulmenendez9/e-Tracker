@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">e-Tracker-test</string>
+    <string name="app_name">e-Tracker</string>
 
     <!-- Strings del Login   -->
 
@@ -11,7 +11,7 @@
 
     <!--String del registro de viaje -->
     <!-- TextViews-->
-    <string name="empecemos">Empecemos!</string>
+    <string name="empecemos">¡Empecemos!</string>
     <string name="initial">Pero antes, completa el formulario:</string>
     <string name="origin_country">País de origen:</string>
     <string name="destiny_country">País de destino:</string>

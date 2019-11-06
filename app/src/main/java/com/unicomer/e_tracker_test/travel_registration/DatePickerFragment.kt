@@ -45,9 +45,7 @@ class DatePickerFragment : DialogFragment() {
     var mTimeFormatter: DateFormat?=null
      internal var mSublimePicker: SublimePicker?=null
     var mCallback: Callback?=null
-
     internal var mListener : SublimeListenerAdapter = object : SublimeListenerAdapter(){
-
 
         @Override
         override fun onCancelled(){
@@ -56,6 +54,7 @@ class DatePickerFragment : DialogFragment() {
             }
             dismiss()
         }
+
         override fun onDateTimeRecurrenceSet(
             sublimeMaterialPicker: SublimePicker,
             selectedDate: SelectedDate,
@@ -70,8 +69,6 @@ class DatePickerFragment : DialogFragment() {
             }
             dismiss()
         }
-
-
     }
 
     fun DatePickerFragment(){
@@ -82,7 +79,6 @@ class DatePickerFragment : DialogFragment() {
     }
 
     fun setCallback(callback: Callback){mCallback = callback}
-
 
     private var listener: OnFragmentInteractionListener? = null
 
@@ -118,20 +114,6 @@ class DatePickerFragment : DialogFragment() {
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-
-    /*override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }*/
 
     /**
      * This interface must be implemented by activities that contain this

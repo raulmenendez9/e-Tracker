@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimario_01_Azul</item>
-        <item name="colorPrimaryDark">@color/colorPrimario_02_Azul_Oscuro</item>
-        <item name="colorAccent">@color/colorSecundario_01_Azul</item>
+        <item name="colorPrimary">@color/colorPrimary_01_Blue</item>
+        <item name="colorPrimaryDark">@color/primaryColor_02_Dark_Blue</item>
+        <item name="colorAccent">@color/colorSecondary_01_Blue</item>
     </style>
     <!--Theme for Buttons e-Tracker-->
 
@@ -16,9 +16,20 @@
 
     <!-- Radio buttons-->
     <style name="RadioButtonStyle" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/colorSecundario_04_Blanco</item>
-        <item name="android:textColorSecondary">@color/colorSecundario_04_Blanco</item>
+        <item name="colorAccent">@color/colorSecondary_04_White</item>
+        <item name="android:textColorSecondary">@color/colorSecondary_04_White</item>
     </style>
+
+
+
+
+
+    <!--Theme for Buttons e-Tracker-->
+
+    <style name="Buttons" parent="android:Widget.Button">
+        <item name="android:drawable">@drawable/button_white</item>
+    </style>
+
 
 
 </resources>

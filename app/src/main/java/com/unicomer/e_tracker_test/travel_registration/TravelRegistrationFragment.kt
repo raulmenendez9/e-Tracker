@@ -2,7 +2,6 @@ package com.unicomer.e_tracker_test.travel_registration
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,23 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import butterknife.Unbinder
-import butterknife.BindView
 import butterknife.ButterKnife
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.unicomer.e_tracker_test.MainActivity
 import com.unicomer.e_tracker_test.R
-import kotlinx.android.synthetic.main.fragment_travel_registration.*
 import java.text.SimpleDateFormat
-import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -64,7 +59,7 @@ class TravelRegistrationFragment : Fragment() {
 
     var description: EditText? = null
     var initialTravel: Button? = null
-    var closeRegistration:Button? = null
+    var closeRegistration: FloatingActionButton? = null
     //accediendo a la instancia de Firestore
     val db = FirebaseFirestore.getInstance()
     var storageRef: StorageReference = FirebaseStorage.getInstance().reference
@@ -98,7 +93,7 @@ class TravelRegistrationFragment : Fragment() {
 
         description = view.findViewById(R.id.editTextMotive)
         initialTravel = view.findViewById(R.id.buttonRegistrations)
-        //closeRegistration = view.findViewById(R.id.ButtonCloseRegistration)
+        closeRegistration = view.findViewById(R.id.ButtonCloseRegistration)
 
         //Radiobuttons
         var radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
@@ -118,9 +113,6 @@ class TravelRegistrationFragment : Fragment() {
         ButterKnife.bind(this,view)
         unbinder = ButterKnife.bind(this,view)
 
-       // Objects.requireNonNull((activity as AppCompatActivity).supportActionBar)!!.setDefaultDisplayHomeAsUpEnabled(true)
-        //(activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.title_date_range_picker_example)
-
         datePicker!!.setOnClickListener{
             openDateRangePicker()
         }
@@ -130,6 +122,9 @@ class TravelRegistrationFragment : Fragment() {
             registration()
         }
 
+        closeRegistration!!.setOnClickListener{
+            activity!!.supportFragmentManager.popBackStack()
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -162,15 +157,14 @@ class TravelRegistrationFragment : Fragment() {
                 datePicker!!.setText(date)
             }
         })
-        // ini configurasi agar library menggunakan method Date Range Picker
+
+        // inicio de configuracion de library sublime para method Date Range Picker
         val options = SublimeOptions()
         options.setCanPickDateRange(true)
         options.pickerToShow = SublimeOptions.Picker.DATE_PICKER
-
         val bundle = Bundle()
         bundle.putParcelable("SUBLIME_OPTIONS", options)
         pickerFrag.arguments = bundle
-
         pickerFrag.setStyle(DialogFragment.STYLE_NO_TITLE, 0)
         pickerFrag.show(mycontext!!.supportFragmentManager, "SUBLIME_PICKER")
     }
@@ -187,21 +181,6 @@ class TravelRegistrationFragment : Fragment() {
                 super.onAttach(activity)
     }
 
-
-    /*override fun onAttach(context: Context) {
-        mycontext = activity as FragmentActivity
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }*/
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
@@ -219,6 +198,4 @@ class TravelRegistrationFragment : Fragment() {
                 }
             }
     }
-
-    //Union de 3 ramas
 }

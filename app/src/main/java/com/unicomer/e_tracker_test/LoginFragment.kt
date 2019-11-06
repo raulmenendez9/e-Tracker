@@ -1,12 +1,13 @@
 package com.unicomer.e_tracker_test
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 
 
 private const val ARG_PARAM1 = "param1"
@@ -14,6 +15,8 @@ private const val ARG_PARAM2 = "param2"
 
 
 class LoginFragment : Fragment() {
+
+    var signInButton: Button? = null
 
 
     private var param1: String? = null
@@ -29,17 +32,26 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_login, container, false)
+
+        signInButton = view?.findViewById(R.id.button_sign_in)
+        signInButton?.setOnClickListener {
+            Toast.makeText(view?.context, "Needs authentication!", Toast.LENGTH_SHORT).show()
+        }
+
+
+
+
+
+        return view
+
+
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,8 +69,7 @@ class LoginFragment : Fragment() {
 
 
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+
     }
 
     companion object {

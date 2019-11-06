@@ -39,5 +39,9 @@
     <string name="txt_loading">Cargando...</string>
     <string name="logo_garagework">Logo Garagework</string>
 
+    <!--Errors -->
+    <string name="error_hint">Todos los campos son obligatorio</string>
+    <string name="error_center_cost">El centro de coste deben ser de 4 digitos</string>
+
 
 </resources>

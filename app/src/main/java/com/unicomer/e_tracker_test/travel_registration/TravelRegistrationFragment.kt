@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.R
+import kotlinx.android.synthetic.main.fragment_travel_registration.*
 import java.text.SimpleDateFormat
 
 
@@ -53,6 +54,7 @@ class TravelRegistrationFragment : Fragment() {
     var destinyCountry: EditText? = null
     var centerCost: EditText? = null
     var cash: EditText? = null
+    var radioGroup: RadioGroup? = null
     var radioYes: RadioButton? = null
     var radioNo: RadioButton?=null
     var datePicker: EditText? = null
@@ -87,8 +89,8 @@ class TravelRegistrationFragment : Fragment() {
         destinyCountry= view.findViewById(R.id.editTextDestiny)
         centerCost=view.findViewById(R.id.editTextCodProject)
         cash = view.findViewById(R.id.editTextCost)
-        radioYes = view!!.findViewById(R.id.radioButtonYes)
-        radioNo = view!!.findViewById(R.id.radioButtonNo)
+        radioYes = view.findViewById(R.id.radioButtonYes)
+        radioNo = view.findViewById(R.id.radioButtonNo)
         datePicker = view.findViewById(R.id.editTextDate)
 
         description = view.findViewById(R.id.editTextMotive)
@@ -96,8 +98,8 @@ class TravelRegistrationFragment : Fragment() {
         closeRegistration = view.findViewById(R.id.ButtonCloseRegistration)
 
         //Radiobuttons
-        var radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
-        radioGroup.setOnCheckedChangeListener { radioGroup, i ->
+         radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
+        radioGroup!!.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
                 R.id.radioButtonYes ->{
                     Toast.makeText(activity,radioYes?.text.toString(),Toast.LENGTH_SHORT).show()
@@ -131,8 +133,9 @@ class TravelRegistrationFragment : Fragment() {
 
     fun registration(){
         //poner asignacion de variable
+        edittextValidations()
 
-        Toast.makeText(activity,datePicker?.text.toString(),Toast.LENGTH_SHORT).show()
+        //Toast.makeText(activity,datePicker?.text.toString(),Toast.LENGTH_SHORT).show()
 
 
 
@@ -152,7 +155,7 @@ class TravelRegistrationFragment : Fragment() {
                 mDateStart = formatDate.format(selectedDate.startDate.time)
                 mDateEnd = formatDate.format(selectedDate.endDate.time)
 
-                val date = "${mDateStart +" a "+ mDateEnd}"
+                val date = "$mDateStart a $mDateEnd"
 
                 datePicker!!.setText(date)
             }
@@ -167,6 +170,18 @@ class TravelRegistrationFragment : Fragment() {
         pickerFrag.arguments = bundle
         pickerFrag.setStyle(DialogFragment.STYLE_NO_TITLE, 0)
         pickerFrag.show(mycontext!!.supportFragmentManager, "SUBLIME_PICKER")
+    }
+
+    fun edittextValidations(){
+        if (originCountry!!.text.toString().isEmpty() || destinyCountry!!.text.toString().isEmpty()
+            || centerCost!!.text.toString().isEmpty()|| cash!!.text.toString().isEmpty()
+            || (radioGroup!!.checkedRadioButtonId == -1) || datePicker!!.text.toString().isEmpty()
+            || description!!.text.toString().isEmpty()){
+            Toast.makeText(activity,activity!!.getString(R.string.error_hint),Toast.LENGTH_SHORT).show()
+        }
+        if (centerCost!!.length()<7) {
+            Toast.makeText(activity,activity!!.getString(R.string.error_center_cost),Toast.LENGTH_SHORT).show()
+        }else {Toast.makeText(activity,"Registro completado",Toast.LENGTH_SHORT).show()}
     }
 
     override fun onDestroy() {

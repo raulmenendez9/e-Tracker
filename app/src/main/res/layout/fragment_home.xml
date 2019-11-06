@@ -18,15 +18,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/home_menu"
+
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
 
             <TextView
+                android:id="@+id/toolbar_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Nuevo Viaje"
-                android:textColor="@color/colorSecundario_04_Blanco" />
+                android:textColor="@color/colorSecundario_04_Blanco"
+                tools:layout_editor_absoluteX="16dp" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -59,24 +63,26 @@
             android:id="@+id/textView_Bienvenida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="40dp"
 
             android:text="Bienvenido"
             android:textColor="@color/colorPrimario_01_Azul"
             android:textSize="50sp"
             app:layout_constraintBottom_toTopOf="@+id/editText_msj_bienvenida"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="83dp" />
+            tools:layout_editor_absoluteX="144dp" />
 
         <TextView
             android:id="@+id/editText_msj_bienvenida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="188dp"
             android:text="Antes de comenzar tu viaje recuerda revisar nuestra seccion TyCS para ver detalles de los terminos  y condiciones de uso"
             android:textColor="@color/colorPrimario_01_Azul"
+            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton_addviaje"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="411dp" />
+            tools:layout_editor_absoluteX="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TravelRegistrationFragment">
+    tools:context=".travel_registration.TravelRegistrationFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,16 +19,21 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="50dp"
-            android:background="@color/colorPrimary_01_Blue">
+            android:background="@drawable/round_constraint"
+            app:layout_anchor="@+id/constraintLayoutRegistration"
+            app:layout_anchorGravity="center">
 
             <TextView
                 android:id="@+id/text_Start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginBottom="595dp"
+                android:fontFamily="@font/helvetica_neue_lts_td_bd"
                 android:text="@string/empecemos"
+                android:textSize="25sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,27 +44,33 @@
                 android:id="@+id/text_Start2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="35dp"
+                android:fontFamily="@font/helvetica_neue_lts_td_md"
                 android:text="@string/initial"
+                android:textSize="17sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="54dp" />
+                app:layout_constraintGuide_begin="61dp" />
 
             <TextView
                 android:id="@+id/text_OriginCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
                 android:text="@string/origin_country"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -77,10 +88,15 @@
                 android:layout_width="277dp"
                 android:layout_height="43dp"
                 android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/ic_pais_origen_destino"
+                android:drawableStart="@drawable/ic_pais_origen_destino"
                 android:ems="10"
                 android:hint="@string/origin_country_EditText"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary_04_White"
+                android:textColorHint="@color/hint"
                 android:inputType="textPersonName"
+                android:backgroundTint="@color/colorSecondary_04_White"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -91,6 +107,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/destiny_country"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -101,9 +120,14 @@
                 android:layout_width="274dp"
                 android:layout_height="39dp"
                 android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/ic_pais_origen_destino"
+                android:drawableStart="@drawable/ic_pais_origen_destino"
                 android:ems="10"
                 android:hint="@string/destiny_country_EditText"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary_04_White"
+                android:textColorHint="@color/hint"
+                android:backgroundTint="@color/colorSecondary_04_White"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -115,6 +139,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cost_center"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/editTextDestiny" />
 
@@ -123,19 +150,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cod_project"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCostCenter" />
 
             <com.santalu.maskedittext.MaskEditText
-                android:id="@+id/et_phone_number"
+                android:id="@+id/editTextCodProject"
                 android:layout_width="77dp"
                 android:layout_height="42dp"
                 android:hint="- - -"
                 android:textColorHint="@color/colorSecondary_04_White"
                 android:textAlignment="center"
                 android:inputType="phone"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
+                android:backgroundTint="@color/colorSecondary_04_White"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.979"
                 app:layout_constraintStart_toEndOf="@+id/textViewCostCenter"
@@ -149,6 +183,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/Cash"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCodProject" />
 
@@ -158,11 +195,16 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="1dp"
+                android:drawableLeft="@drawable/ic_money"
                 android:ems="10"
                 android:hint="@string/cost"
-                android:textAlignment="textEnd"
-                android:drawableLeft="@drawable/ic_money"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary_04_White"
+                android:backgroundTint="@color/colorSecondary_04_White"
+                android:textColorHint="@color/hint"
                 android:inputType="numberDecimal"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.937"
                 app:layout_constraintStart_toEndOf="@+id/textViewCost"
@@ -174,33 +216,46 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/refound"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCost" />
 
-            <RadioButton
-                android:id="@+id/radioButtonYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="116dp"
-                android:layout_marginTop="4dp"
-                android:button="@null"
-                android:drawableRight="@drawable/ic_radio_button"
-                android:text="@string/yes"
-                app:layout_constraintStart_toEndOf="@+id/textViewRefound"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCost" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:button="@null"
-                android:drawableRight="@drawable/ic_radio_button"
-                android:text="@string/no"
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="138dp"
+                android:layout_height="23dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.882"
-                app:layout_constraintStart_toEndOf="@+id/radioButtonYes"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCost" />
+                app:layout_constraintHorizontal_bias="0.967"
+                app:layout_constraintStart_toEndOf="@+id/textViewRefound"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCost">
+
+
+                <RadioButton
+                    android:theme="@style/RadioButtonStyle"
+                    android:id="@+id/radioButtonYes"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorSecondary_04_White"
+                    android:textColorHint="@color/colorSecondary_04_White"/>
+
+                <RadioButton
+                    android:theme="@style/RadioButtonStyle"
+                    android:id="@+id/radioButtonNo"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:text="@string/no"
+                    android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorSecondary_04_White"
+                    android:textColorHint="@color/colorSecondary_04_White"/>
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/textViewInitialDate"
@@ -208,23 +263,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/initial_date"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRefound" />
 
             <EditText
                 android:id="@+id/editTextDate"
-                android:layout_width="152dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/ic_date"
+                android:layout_width="163dp"
+                android:layout_height="38dp"
+                android:background="@drawable/round_edittext_date_picker"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_date"
                 android:ems="10"
+                android:focusable="false"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
                 android:hint="@string/date"
                 android:inputType="date"
                 android:textAlignment="center"
+                android:textColor="@color/colorSecondary_04_White"
+                android:textColorHint="@color/hint"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.959"
+                app:layout_constraintHorizontal_bias="0.979"
                 app:layout_constraintStart_toEndOf="@+id/textViewInitialDate"
-                app:layout_constraintTop_toBottomOf="@+id/radioButtonYes" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
             <TextView
                 android:id="@+id/textViewApprovedBy"
@@ -232,6 +296,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/approved_by"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -243,6 +310,9 @@
                 android:layout_height="36dp"
                 android:layout_marginTop="1dp"
                 android:textAlignment="center"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -254,6 +324,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/description"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary_04_White"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -265,6 +338,11 @@
                 android:layout_height="45dp"
                 android:ems="10"
                 android:hint="@string/motive"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary_04_White"
+                android:backgroundTint="@color/colorSecondary_04_White"
+                android:textColorHint="@color/hint"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -276,14 +354,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="389dp" />
+                app:layout_constraintGuide_begin="391dp" />
 
             <Button
                 android:id="@+id/buttonRegistrations"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginEnd="60dp"
                 android:background="@drawable/btn_background_white"
                 android:fontFamily="@font/helvetica_neue_lts_td_md"

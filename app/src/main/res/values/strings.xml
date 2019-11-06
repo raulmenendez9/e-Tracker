@@ -12,7 +12,7 @@
     <!--String del registro de viaje -->
     <!-- TextViews-->
     <string name="empecemos">Empecemos!</string>
-    <string name="initial">Pero antes, completa el formulario:</string>
+    <string name="initial">Pero antes, completa el formulario</string>
     <string name="origin_country">País de origen:</string>
     <string name="destiny_country">País de destino:</string>
     <string name="cost_center">Centro de coste:</string>
@@ -26,6 +26,7 @@
     <string name="approved_by">Aprobado por:</string>
     <string name="description">Descripción:</string>
     <!--EditTexts -->
+    <string name="title_date_range_picker_example">Date Range Picker</string>
     <string name="origin_country_EditText">País donde te encuentras</string>
     <string name="destiny_country_EditText">País donde te diriges</string>
     <string name="cost">0.00</string>

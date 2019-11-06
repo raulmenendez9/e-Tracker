@@ -18,7 +18,6 @@ class LoginFragment : Fragment() {
 
     var signInButton: Button? = null
 
-
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
@@ -35,11 +34,13 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        var view = inflater.inflate(R.layout.fragment_login, container, false)
 
         signInButton = view?.findViewById(R.id.button_sign_in)
+
         signInButton?.setOnClickListener {
             Toast.makeText(view?.context, "Needs authentication!", Toast.LENGTH_SHORT).show()
+
         }
 
 

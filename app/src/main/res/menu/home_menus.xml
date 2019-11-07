@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item app:showAsAction="always"
+        android:icon="@drawable/ic_menu"
+        android:title="">
+
+    <menu>
+        <item  android:icon="@drawable/ic_history" android:title="Historial"   app:showAsAction="ifRoom"/>
+        <item android:title="Terminos Y Condiciones" android:icon="@drawable/ic_terminos" app:showAsAction="ifRoom"/>
+        <item android:title="Generar Reporte" android:icon="@drawable/ic_clip" app:showAsAction="ifRoom"/>
+        <item android:title="Finalizar El Viaje" android:icon="@drawable/ic_finalizar_viaje" app:showAsAction="ifRoom"/>
+        <item android:title="Cerrar Sesion" android:icon="@drawable/ic_exit"  app:showAsAction="ifRoom"/>
+
+    </menu>
+    </item>
+
+
+</menu>

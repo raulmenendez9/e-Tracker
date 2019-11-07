@@ -10,11 +10,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         loadRegistrationTravel(TravelRegistrationFragment())
+
     }
 
     private fun loadRegistrationTravel(tr: TravelRegistrationFragment){
         val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.fragmentRegistrationTravel, tr).addToBackStack(null)
+        formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
 

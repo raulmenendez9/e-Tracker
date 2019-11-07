@@ -51,10 +51,10 @@ class LoginDialogFragment : DialogFragment() {
 /*
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
+        if (context is LoginFragmentListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException(context.toString() + " must implement LoginFragmentListener")
         }
     }
 

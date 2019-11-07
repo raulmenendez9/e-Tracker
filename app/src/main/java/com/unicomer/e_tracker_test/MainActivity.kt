@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loadHome(HomeFragment())
-        loadRegistrationTravel(TravelRegistrationFragment())
+        //loadRegistrationTravel(TravelRegistrationFragment())
     }
 
     private fun loadHome(home: HomeFragment) {

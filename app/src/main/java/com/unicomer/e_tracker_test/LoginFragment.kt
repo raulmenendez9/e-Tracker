@@ -1,12 +1,10 @@
 package com.unicomer.e_tracker_test
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,24 +14,22 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import java.lang.StringBuilder
-
+import androidx.fragment.app.FragmentManager
+import com.unicomer.e_tracker_test.dialogs.LoginDialogFragment
 
 class LoginFragment : Fragment() {
-
-
     // FirebaseAuth instancia
     val dbAuth = FirebaseAuth.getInstance()
-
 
     // Declarando elementos del UI
     var emailText: TextView? = null
     var passwordText: TextView? = null
-    var loginIssuesTextView: TextView? = null
     var signInButton: Button? = null
 
     // Listener
     private var listener: LoginFragmentListener? = null
+
+    var signInDialog: TextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +37,6 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         // Validar si el usuario ya inicio sesion
         val user = dbAuth.currentUser
         // currentUser determina el usuario y con currentUser se agrega el fragment con sesion iniciada
@@ -51,19 +46,27 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
         emailText = view?.findViewById(R.id.et_email)
         passwordText = view?.findViewById(R.id.et_password)
+
         signInButton = view?.findViewById(R.id.button_sign_in)
+        signInDialog = view?.findViewById(R.id.txt_signin_problem)
 
         signInButton?.setOnClickListener {
             loginIn()
         }
-
-
+        signInDialog?.setOnClickListener {
+            showDialog()
+        }
         return view
+    }
+
+    fun showDialog(){
+        val fm = activity!!.supportFragmentManager
+        val dialog = LoginDialogFragment()
+        dialog.show(fm,"DIALOG_LOGIN")
 
     }
 
@@ -112,35 +115,16 @@ class LoginFragment : Fragment() {
         }
     }
 
-
     private fun mostrarMainActivity(user: FirebaseUser){
         val intent = Intent(this.context, MainActivity::class.java)
         startActivity(intent)
     }
-
-    private fun onBackButtonPressed(){
-        val builder = AlertDialog.Builder(this.context)
-            .setTitle("Cerrar aplicacion?")
-            .setMessage("Quieres cerrar la aplicacion?")
-            .setPositiveButton("Si", { dialogInterface: DialogInterface, i: Int ->
-                System.exit(0)
-            })
-            .setNegativeButton("No", { dialogInterface: DialogInterface, i: Int -> })
-            .show()
-    }
-
-
-
-
     interface LoginFragmentListener {
         fun callMainFragment()
     }
-
-    companion object {
-
+    companion object{
         @JvmStatic
         fun newInstance() = LoginFragment()
-
     }
 }
 

@@ -47,41 +47,42 @@
 
         <ImageView
             android:id="@+id/container_bienvenida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="274dp"
             android:layout_marginTop="48dp"
             app:layout_constraintBottom_toTopOf="@+id/textView_Bienvenida"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.055"
+            app:layout_constraintVertical_bias="0.0"
 
+            app:srcCompat="@mipmap/img_background_new_travel"
             tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/textView_Bienvenida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
 
+            android:layout_marginBottom="16dp"
             android:text="Bienvenido"
             android:textColor="@color/colorPrimario_01_Azul"
             android:textSize="50sp"
             app:layout_constraintBottom_toTopOf="@+id/editText_msj_bienvenida"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="144dp" />
+            tools:layout_editor_absoluteX="83dp" />
 
         <TextView
             android:id="@+id/editText_msj_bienvenida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="188dp"
+            android:layout_marginBottom="92dp"
             android:text="Antes de comenzar tu viaje recuerda revisar nuestra seccion TyCS para ver detalles de los terminos  y condiciones de uso"
             android:textColor="@color/colorPrimario_01_Azul"
             app:layout_constraintBottom_toTopOf="@+id/floatingActionButton_addviaje"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp" />
+            tools:layout_editor_absoluteX="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

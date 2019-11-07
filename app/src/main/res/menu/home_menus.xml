@@ -10,7 +10,7 @@
         <item android:title="Terminos Y Condiciones" android:icon="@drawable/ic_terminos" app:showAsAction="ifRoom"/>
         <item android:title="Generar Reporte" android:icon="@drawable/ic_clip" app:showAsAction="ifRoom"/>
         <item android:title="Finalizar El Viaje" android:icon="@drawable/ic_finalizar_viaje" app:showAsAction="ifRoom"/>
-        <item android:title="Cerrar Sesion" android:icon="@drawable/ic_exit"  app:showAsAction="ifRoom"/>
+        <item android:id="@+id/item_cerrarapp" android:title="Cerrar Sesion" android:icon="@drawable/ic_exit"  app:showAsAction="ifRoom"/>
 
     </menu>
     </item>

@@ -50,8 +50,8 @@ class TravelRegistrationFragment : Fragment() {
     var unbinder: Unbinder? = null
     //variables del formulario
 
-    var originCountry: EditText? = null
-    var destinyCountry: EditText? = null
+    var originCountry:  AutoCompleteTextView? = null
+    var destinyCountry: AutoCompleteTextView? = null
     var centerCost: EditText? = null
     var cash: EditText? = null
     var radioGroup: RadioGroup? = null
@@ -96,6 +96,14 @@ class TravelRegistrationFragment : Fragment() {
         description = view.findViewById(R.id.editTextMotive)
         initialTravel = view.findViewById(R.id.buttonRegistrations)
         closeRegistration = view.findViewById(R.id.ButtonCloseRegistration)
+
+        //AutocompleteTextview
+        val countries = resources.getStringArray(R.array.coutries_array)
+        val contriAdapter= ArrayAdapter(activity!!,android.R.layout.simple_list_item_1,countries)
+        originCountry!!.setAdapter(contriAdapter)
+        destinyCountry!!.setAdapter(contriAdapter)
+
+        //Finish autocomplate
 
         //Radiobuttons
          radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)

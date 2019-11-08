@@ -7,9 +7,9 @@ data class Travel(val originCountry: String?,
                   val refund: String?,
                   val initialDate: String,
                  // val finishDate: String?,
-                  //val aproved: String?,
+                  val aproved: String?,
                   val description: String?,
                   val balance: String?){
-    constructor():this("","", "","","","",
+    constructor():this("","", "","","","","",
         "","")
 }

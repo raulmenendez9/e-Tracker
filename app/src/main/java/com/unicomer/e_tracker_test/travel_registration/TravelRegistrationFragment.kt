@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.NonNull
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import butterknife.Unbinder
@@ -69,6 +68,7 @@ class TravelRegistrationFragment : Fragment() {
 
     var datePicker: EditText? = null
     var spinner : Spinner? = null
+    var textSpinner: String? = null
     var aproved : MutableList<String> = mutableListOf()
 
     var description: EditText? = null
@@ -77,7 +77,7 @@ class TravelRegistrationFragment : Fragment() {
     //accediendo a la instancia de Firestore
     val db = FirebaseFirestore.getInstance()
     val aprovedRef = FirebaseFirestore.getInstance()
-    val travelAprovRef = aprovedRef.collection("travel_aprovers")
+    val travelAprovRef = aprovedRef.collection("travel_approvers")
     var storageRef: StorageReference = FirebaseStorage.getInstance().reference
 
 
@@ -111,6 +111,7 @@ class TravelRegistrationFragment : Fragment() {
         initialTravel = view.findViewById(R.id.buttonRegistrations)
         closeRegistration = view.findViewById(R.id.ButtonCloseRegistration)
 
+
         //AutocompleteTextview
         val countries = resources.getStringArray(R.array.coutries_array)
         val contriAdapter= ArrayAdapter(activity!!,android.R.layout.simple_list_item_1,countries)
@@ -136,17 +137,17 @@ class TravelRegistrationFragment : Fragment() {
         adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner!!.adapter = adapt
         travelAprovRef.get().addOnCompleteListener{
-            fun onComplete(task: Task<QuerySnapshot>){
-                if (task.isSuccessful){
-                    Log.d("Success", "datos funcionando")
-                    for (document: QueryDocumentSnapshot in task.result!!){
-                        var aprovedTravel = document.getString("name")
+                if (it.isSuccessful){
+
+                    for (document: QueryDocumentSnapshot in it.result!!){
+                        var aprovedTravel = document.getString("Name")
                         aproved.add(aprovedTravel!!)
+
+                        Log.d("Success", "$aproved")
                     }
                     adapt.notifyDataSetChanged()
                 }
                 Log.d("No_Success", "datos no funcionando")
-            }
         }
         //Finish Spinner
         initialTravel!!.setOnClickListener{
@@ -161,13 +162,7 @@ class TravelRegistrationFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
 
     fun registration(){
-        //poner asignacion de variable
         edittextValidations()
-
-        //Toast.makeText(activity,datePicker?.text.toString(),Toast.LENGTH_SHORT).show()
-
-
-
     }
 
     fun openDateRangePicker(){
@@ -224,6 +219,7 @@ class TravelRegistrationFragment : Fragment() {
             var datePick = datePicker!!.text.toString()
             var descp = description!!.text.toString()
             var balance = cassh
+            var aproved = spinner!!.selectedItem.toString()
             //RadioButton
             var refund:String? = null
             var selectedId : Int = radioGroup!!.checkedRadioButtonId
@@ -239,7 +235,7 @@ class TravelRegistrationFragment : Fragment() {
                 destCountry,
                 cenCost,
                 cassh, refund,
-                datePick,
+                datePick,aproved,
                 descp,
                 balance
             )

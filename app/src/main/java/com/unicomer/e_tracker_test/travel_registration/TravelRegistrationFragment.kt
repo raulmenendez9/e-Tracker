@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.NonNull
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import butterknife.Unbinder
@@ -16,11 +18,17 @@ import butterknife.ButterKnife
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.R
+import com.unicomer.e_tracker_test.models.Travel
 import kotlinx.android.synthetic.main.fragment_travel_registration.*
 import java.text.SimpleDateFormat
 
@@ -54,16 +62,22 @@ class TravelRegistrationFragment : Fragment() {
     var destinyCountry: AutoCompleteTextView? = null
     var centerCost: EditText? = null
     var cash: EditText? = null
+    //Radiobuttons
     var radioGroup: RadioGroup? = null
     var radioYes: RadioButton? = null
     var radioNo: RadioButton?=null
+    var refund:String?= null
     var datePicker: EditText? = null
+    var spinner : Spinner? = null
+    var aproved : MutableList<String> = mutableListOf()
 
     var description: EditText? = null
     var initialTravel: Button? = null
     var closeRegistration: FloatingActionButton? = null
     //accediendo a la instancia de Firestore
     val db = FirebaseFirestore.getInstance()
+    val aprovedRef = FirebaseFirestore.getInstance()
+    val travelAprovRef = aprovedRef.collection("travel_aprovers")
     var storageRef: StorageReference = FirebaseStorage.getInstance().reference
 
 
@@ -92,7 +106,7 @@ class TravelRegistrationFragment : Fragment() {
         radioYes = view.findViewById(R.id.radioButtonYes)
         radioNo = view.findViewById(R.id.radioButtonNo)
         datePicker = view.findViewById(R.id.editTextDate)
-
+        spinner = view.findViewById(R.id.spinnerAproved)
         description = view.findViewById(R.id.editTextMotive)
         initialTravel = view.findViewById(R.id.buttonRegistrations)
         closeRegistration = view.findViewById(R.id.ButtonCloseRegistration)
@@ -104,20 +118,8 @@ class TravelRegistrationFragment : Fragment() {
         destinyCountry!!.setAdapter(contriAdapter)
 
         //Finish autocomplate
-
-        //Radiobuttons
          radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
-        radioGroup!!.setOnCheckedChangeListener { radioGroup, i ->
-            when(i){
-                R.id.radioButtonYes ->{
-                    Toast.makeText(activity,radioYes?.text.toString(),Toast.LENGTH_SHORT).show()
-                }
-                R.id.radioButtonNo ->{
-                    Toast.makeText(activity,radioNo?.text.toString(),Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        //Termina Radiobuttons
+
 
         //Date picker
         ButterKnife.bind(this,view)
@@ -128,6 +130,25 @@ class TravelRegistrationFragment : Fragment() {
         }
 
         //finish Date picker
+
+        //Spinner
+        val adapt = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, aproved)
+        adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner!!.adapter = adapt
+        travelAprovRef.get().addOnCompleteListener{
+            fun onComplete(task: Task<QuerySnapshot>){
+                if (task.isSuccessful){
+                    Log.d("Success", "datos funcionando")
+                    for (document: QueryDocumentSnapshot in task.result!!){
+                        var aprovedTravel = document.getString("name")
+                        aproved.add(aprovedTravel!!)
+                    }
+                    adapt.notifyDataSetChanged()
+                }
+                Log.d("No_Success", "datos no funcionando")
+            }
+        }
+        //Finish Spinner
         initialTravel!!.setOnClickListener{
             registration()
         }
@@ -180,16 +201,58 @@ class TravelRegistrationFragment : Fragment() {
         pickerFrag.show(mycontext!!.supportFragmentManager, "SUBLIME_PICKER")
     }
 
-    fun edittextValidations(){
+    fun edittextValidations() {
         if (originCountry!!.text.toString().isEmpty() || destinyCountry!!.text.toString().isEmpty()
-            || centerCost!!.text.toString().isEmpty()|| cash!!.text.toString().isEmpty()
+            || centerCost!!.text.toString().isEmpty() || cash!!.text.toString().isEmpty()
             || (radioGroup!!.checkedRadioButtonId == -1) || datePicker!!.text.toString().isEmpty()
-            || description!!.text.toString().isEmpty()){
-            Toast.makeText(activity,activity!!.getString(R.string.error_hint),Toast.LENGTH_SHORT).show()
+            || description!!.text.toString().isEmpty()
+        ) {
+            Toast.makeText(activity, activity!!.getString(R.string.error_hint), Toast.LENGTH_SHORT)
+                .show()
         }
-        if (centerCost!!.length()<7) {
-            Toast.makeText(activity,activity!!.getString(R.string.error_center_cost),Toast.LENGTH_SHORT).show()
-        }else {Toast.makeText(activity,"Registro completado",Toast.LENGTH_SHORT).show()}
+        if (centerCost!!.length() < 7) {
+            Toast.makeText(
+                activity,
+                activity!!.getString(R.string.error_center_cost),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            var origCountry = originCountry!!.text.toString()
+            var destCountry = destinyCountry!!.text.toString()
+            var cenCost = centerCost!!.text.toString()
+            var cassh = cash!!.text.toString()
+            var datePick = datePicker!!.text.toString()
+            var descp = description!!.text.toString()
+            var balance = cassh
+
+            radioGroup!!.setOnCheckedChangeListener { radios, i ->
+                when (i) {
+                    R.id.radioButtonYes -> {
+                        refund= radioYes?.text.toString()
+                    }
+                    R.id.radioButtonNo -> {
+                         refund= radioNo?.text.toString()
+                    }
+                }
+            }
+            //Termina Radiobuttons
+            val travel: Travel = Travel(
+                origCountry,
+                destCountry,
+                cenCost,
+                cassh, refund,
+                datePick,
+                descp,
+                balance
+            )
+            db.collection("e-Tracker")
+                .add(travel)
+                .addOnSuccessListener { documentReference ->
+                    Log.d("Enviodata", "$travel")
+                    Toast.makeText(activity, "Registro completado", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e -> Log.w("Error", "$e") }
+        }
     }
 
     override fun onDestroy() {
@@ -221,4 +284,6 @@ class TravelRegistrationFragment : Fragment() {
                 }
             }
     }
+
+
 }

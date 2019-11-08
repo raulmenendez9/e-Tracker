@@ -66,7 +66,7 @@ class TravelRegistrationFragment : Fragment() {
     var radioGroup: RadioGroup? = null
     var radioYes: RadioButton? = null
     var radioNo: RadioButton?=null
-    var refund:String?= null
+
     var datePicker: EditText? = null
     var spinner : Spinner? = null
     var aproved : MutableList<String> = mutableListOf()
@@ -224,19 +224,17 @@ class TravelRegistrationFragment : Fragment() {
             var datePick = datePicker!!.text.toString()
             var descp = description!!.text.toString()
             var balance = cassh
+            //RadioButton
+            var refund:String? = null
+            var selectedId : Int = radioGroup!!.checkedRadioButtonId
 
-            radioGroup!!.setOnCheckedChangeListener { radios, i ->
-                when (i) {
-                    R.id.radioButtonYes -> {
-                        refund= radioYes?.text.toString()
-                    }
-                    R.id.radioButtonNo -> {
-                         refund= radioNo?.text.toString()
-                    }
-                }
+            if (selectedId == radioYes!!.id){
+                refund= radioYes?.text.toString()
+            }else if (selectedId == radioNo!!.id){
+                refund= radioNo?.text.toString()
             }
             //Termina Radiobuttons
-            val travel: Travel = Travel(
+            val travel = Travel(
                 origCountry,
                 destCountry,
                 cenCost,

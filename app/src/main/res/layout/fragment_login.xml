@@ -48,6 +48,9 @@
         <EditText
             android:id="@+id/et_email"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/helvetica_neue_lts_td_md"
+            android:textColor="@color/colorSecondary_03_Gray"
+            android:textColorHint="@color/colorSecondary_03_Gray"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/login_hint_et_email"
@@ -61,6 +64,9 @@
             android:id="@+id/et_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/helvetica_neue_lts_td_md"
+            android:textColor="@color/colorSecondary_03_Gray"
+            android:textColorHint="@color/colorSecondary_03_Gray"
             android:ems="10"
             android:hint="@string/login_hint_et_password"
             android:inputType="textPassword"
@@ -93,8 +99,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline_vertical_bottom">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/txt_signin_problem"
                 android:layout_width="wrap_content"
+                android:clickable="true"
+                android:textSize="15sp"
+                android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                android:textColor="@color/colorSecondary_03_Gray"
                 android:layout_height="wrap_content"
                 android:text="@string/login_login_issues"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +120,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_signin_problem" />
 
             <ImageView
                 android:id="@+id/image_triangle_bottom"
@@ -126,5 +136,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

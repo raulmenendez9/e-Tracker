@@ -11,6 +11,16 @@
         android:layout_height="match_parent">
 
 
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </FrameLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton_addviaje"
             android:layout_width="wrap_content"
@@ -26,15 +36,13 @@
             android:id="@+id/container_bienvenida"
             android:layout_width="369dp"
             android:layout_height="218dp"
-            android:layout_marginTop="40dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/textView_Bienvenida"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.466"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.668"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
             app:srcCompat="@mipmap/img_background_new_travel"
             tools:src="@tools:sample/avatars"
             tools:srcCompat="@mipmap/img_background_new_travel" />

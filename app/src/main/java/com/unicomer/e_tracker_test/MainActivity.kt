@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListener {
     override fun envio() {
+        var barra: View = findViewById(R.id.toolbar)
+        barra.visibility = View.GONE
         loadRegistrationTravel(TravelRegistrationFragment())
     }
 

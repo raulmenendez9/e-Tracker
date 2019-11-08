@@ -7,7 +7,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListener {
+    override fun envio() {
+        loadRegistrationTravel(TravelRegistrationFragment())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,25 +30,41 @@ class MainActivity : AppCompatActivity() {
         formmu.replace(R.id.container_Fragment_Inicio, tr).addToBackStack(null)
         formmu.commit()
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
             R.id.item_cerrarapp -> {
-                Toast.makeText(this,"me estoy ejecutando en el item de cerrar",Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"item cerrar app",Toast.LENGTH_LONG).show()
                 finish()
+                true
+            }
+            R.id.item_fin_viaje -> {
+                Toast.makeText(this,"item fin viaje",Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.item_historial -> {
+                Toast.makeText(this,"item historial",Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.item_generar -> {
+                Toast.makeText(this,"item generar",Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.item_terminos -> {
+                Toast.makeText(this,"item terminos y condiciones",Toast.LENGTH_LONG).show()
                 true
             }
 
             else -> {
-                Toast.makeText(this,"else ejecutando",Toast.LENGTH_LONG).show()
-                super.onOptionsItemSelected(item)
-
-            }
+                Toast.makeText(this,"ningun item",Toast.LENGTH_LONG).show()
+                super.onOptionsItemSelected(item)}
         }
     }
 

@@ -5,8 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.constraintlayout.solver.widgets.WidgetContainer
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,10 +34,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -40,27 +42,50 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        var vista=inflater.inflate(R.layout.fragment_home, container, false)
+        val fab: View = vista.findViewById(R.id.floatingActionButton_addviaje)
+        fab.setOnClickListener {
+            listener?.envio()
+        }
+
+            return vista
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+//    fun onButtonPressed(uri: Uri) {
+//        listener?.onFragmentInteraction(uri)
+//    }
+
+    //seleccionar un item
+//    override fun onOptionsItemSelected(item: MenuItem)=when(item.itemId){
+//
+//        R.id.item_cerrarapp ->consume{ view!!.finish()}
+//
+//
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//
+//
+//
+//    inline fun consume(f: () -> Unit): Boolean {
+//        f()
+//        return true
+//    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
     }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is OnFragmentInteractionListener) {
-//            listener = context
-//        } else {
-//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-//        }
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        listener = null
-//    }
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -75,7 +100,8 @@ class HomeFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        //fun onFragmentInteraction(uri: Uri)
+        fun envio()
     }
 
     companion object {

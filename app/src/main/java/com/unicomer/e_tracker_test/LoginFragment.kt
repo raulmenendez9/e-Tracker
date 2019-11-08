@@ -105,7 +105,6 @@ class LoginFragment : Fragment() {
                         // mostrarMainActivity(null)
                     }
                 }
-
         }
     }
 

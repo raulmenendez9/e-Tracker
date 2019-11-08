@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadRegistrationTravel(tr: TravelRegistrationFragment){
         val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
+        formmu.replace(R.id.main_fragment_container, tr)
         formmu.commit()
     }
 

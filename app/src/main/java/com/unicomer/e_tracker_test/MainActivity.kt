@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loadHome(HomeFragment())
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
         //loadRegistrationTravel(TravelRegistrationFragment())
     }
 
@@ -35,7 +36,11 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
-
+    private fun loadTerms(tyc:TerminosFragment){
+        val formmu = supportFragmentManager.beginTransaction()
+        formmu.replace(R.id.main_fragment_container, tyc).addToBackStack(null)
+        formmu.commit()
+    }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -73,8 +78,10 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
             }
             R.id.item_terminos -> {
                 Toast.makeText(this,"item terminos y condiciones",Toast.LENGTH_LONG).show()
+                loadTerms(TerminosFragment())
                 true
             }
+
 
             else -> {
                 Toast.makeText(this,"ningun item",Toast.LENGTH_LONG).show()

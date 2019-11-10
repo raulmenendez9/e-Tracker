@@ -20,6 +20,7 @@ import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicke
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -75,6 +76,8 @@ class TravelRegistrationFragment : Fragment() {
     var initialTravel: Button? = null
     var closeRegistration: FloatingActionButton? = null
     //accediendo a la instancia de Firestore
+    val user = FirebaseAuth.getInstance().currentUser
+    var emailUser: String?=null
     val db = FirebaseFirestore.getInstance()
     val aprovedRef = FirebaseFirestore.getInstance()
     val travelAprovRef = aprovedRef.collection("travel_approvers")
@@ -138,7 +141,6 @@ class TravelRegistrationFragment : Fragment() {
         spinner!!.adapter = adapt
         travelAprovRef.get().addOnCompleteListener{
                 if (it.isSuccessful){
-
                     for (document: QueryDocumentSnapshot in it.result!!){
                         var aprovedTravel = document.getString("Name")
                         aproved.add(aprovedTravel!!)
@@ -220,6 +222,8 @@ class TravelRegistrationFragment : Fragment() {
             var descp = description!!.text.toString()
             var balance = cassh
             var aproved = spinner!!.selectedItem.toString()
+                emailUser=user!!.email
+
             //RadioButton
             var refund:String? = null
             var selectedId : Int = radioGroup!!.checkedRadioButtonId
@@ -239,13 +243,15 @@ class TravelRegistrationFragment : Fragment() {
                 descp,
                 balance
             )
-            db.collection("e-Tracker")
-                .add(travel)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("Enviodata", "$travel")
-                    Toast.makeText(activity, "Registro completado", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e -> Log.w("Error", "$e") }
+            emailUser?.let {
+                db.collection("e-Tracker").document(it).collection("Travels")
+                    .add(travel)
+                    .addOnSuccessListener { documentReference ->
+                        Log.d("Enviodata", "$travel")
+                        Toast.makeText(activity, "Registro completado", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e -> Log.w("Error", "$e") }
+            }
         }
     }
 

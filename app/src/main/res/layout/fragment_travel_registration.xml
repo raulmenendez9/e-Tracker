@@ -273,9 +273,12 @@
                 android:id="@+id/editTextDate"
                 android:layout_width="163dp"
                 android:layout_height="38dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/round_edittext_date_picker"
                 android:clickable="true"
                 android:drawableStart="@drawable/ic_date"
+                android:drawableLeft="10dp"
+                android:drawablePadding="0dp"
                 android:ems="10"
                 android:focusable="false"
                 android:fontFamily="@font/helvetica_neue_lts_td_roman"
@@ -286,7 +289,7 @@
                 android:textColorHint="@color/hint"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.979"
+                app:layout_constraintHorizontal_bias="0.967"
                 app:layout_constraintStart_toEndOf="@+id/textViewInitialDate"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 

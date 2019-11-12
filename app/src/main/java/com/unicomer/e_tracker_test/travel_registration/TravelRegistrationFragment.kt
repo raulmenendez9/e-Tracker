@@ -29,6 +29,7 @@ import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Travel
 import kotlinx.android.synthetic.main.fragment_travel_registration.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -66,6 +67,7 @@ class TravelRegistrationFragment : Fragment() {
     var radioNo: RadioButton?=null
 
     var datePicker: EditText? = null
+    var finisDate: EditText?=null
     var spinner : Spinner? = null
     var textSpinner: String? = null
     var aproved : MutableList<String> = mutableListOf()
@@ -107,6 +109,7 @@ class TravelRegistrationFragment : Fragment() {
         radioYes = view.findViewById(R.id.radioButtonYes)
         radioNo = view.findViewById(R.id.radioButtonNo)
         datePicker = view.findViewById(R.id.editTextDate)
+        finisDate = view.findViewById(R.id.finishDate)
         spinner = view.findViewById(R.id.spinnerAproved)
         description = view.findViewById(R.id.editTextMotive)
         initialTravel = view.findViewById(R.id.buttonRegistrations)
@@ -175,13 +178,15 @@ class TravelRegistrationFragment : Fragment() {
                                                  recurrenceOption: SublimeRecurrencePicker.RecurrenceOption,
                                                  recurrenceRule: String?) {
                 @SuppressLint("SimpleDateFormat")
-                val formatDate = SimpleDateFormat("dd-MMM")
+                val formatDate = SimpleDateFormat("dd-MM-yyyy")
                 mDateStart = formatDate.format(selectedDate.startDate.time)
                 mDateEnd = formatDate.format(selectedDate.endDate.time)
 
-                val date = "$mDateStart a $mDateEnd"
+                val initdate = mDateStart
+                val finishdate = mDateEnd
 
-                datePicker!!.setText(date)
+                datePicker!!.setText(initdate)
+                finisDate!!.setText(finishdate)
             }
         })
 
@@ -217,10 +222,15 @@ class TravelRegistrationFragment : Fragment() {
             var cenCost = centerCost!!.text.toString()
             var cassh = cash!!.text.toString()
             var datePick = datePicker!!.text.toString()
+            var finishtravel = finisDate!!.text.toString()
             var descp = description!!.text.toString()
             var balance = cassh
             var aproved = spinner!!.selectedItem.toString()
                 emailUser=user!!.email
+            var email = emailUser
+            var date = getDateTime()
+            var update = null
+
 
             //RadioButton
             var refund:String? = null
@@ -236,20 +246,18 @@ class TravelRegistrationFragment : Fragment() {
                 origCountry,
                 destCountry,
                 cenCost,
-                cassh, refund,
-                datePick,aproved,
+                cassh, email, refund,
+                datePick,finishtravel,date,update,aproved,
                 descp,
                 balance
             )
-            emailUser?.let {
-                db.collection("e-Tracker").document(it).collection("Travels")
+                db.collection("e-Tracker")
                     .add(travel)
                     .addOnSuccessListener { documentReference ->
                         Log.d("Enviodata", "$travel")
                         Toast.makeText(activity, "Registro completado", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener { e -> Log.w("Error", "$e") }
-            }
         }
     }
     //Creacion del Actualizar Datos del viaje
@@ -263,6 +271,16 @@ class TravelRegistrationFragment : Fragment() {
             }
 
 
+        }
+    }
+    @SuppressLint("SimpleDateFormat")
+    private fun getDateTime(): String? {
+        try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.getDefault())
+            sdf.timeZone = TimeZone.getTimeZone("UTC")
+            return sdf.format(Date())
+        } catch (e: Exception) {
+            return e.toString()
         }
     }
 

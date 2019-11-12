@@ -1,8 +1,7 @@
 package com.unicomer.e_tracker_test.travel_registration
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.ContentValues.TAG
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,42 +12,22 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
-import butterknife.Unbinder
 import butterknife.ButterKnife
+import butterknife.Unbinder
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.*
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Travel
-import kotlinx.android.synthetic.main.fragment_travel_registration.*
 import java.text.SimpleDateFormat
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TravelRegistrationFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TravelRegistrationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class TravelRegistrationFragment : Fragment() {
+class TravelUpdateFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
     var mycontext : FragmentActivity?=null
     //Date picker
     var mDateStart: String? = null
@@ -79,23 +58,14 @@ class TravelRegistrationFragment : Fragment() {
     val db = FirebaseFirestore.getInstance()
     val aprovedRef = FirebaseFirestore.getInstance()
     val travelAprovRef = aprovedRef.collection("travel_approvers")
-    var storageRef: StorageReference = FirebaseStorage.getInstance().reference
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View?{
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_travel_registration, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -120,7 +90,7 @@ class TravelRegistrationFragment : Fragment() {
         destinyCountry!!.setAdapter(contriAdapter)
 
         //Finish autocomplate
-         radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
+        radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
 
 
         //Date picker
@@ -138,16 +108,16 @@ class TravelRegistrationFragment : Fragment() {
         adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner!!.adapter = adapt
         travelAprovRef.get().addOnCompleteListener{
-                if (it.isSuccessful){
-                    for (document: QueryDocumentSnapshot in it.result!!){
-                        var aprovedTravel = document.getString("Name")
-                        aproved.add(aprovedTravel!!)
+            if (it.isSuccessful){
+                for (document: QueryDocumentSnapshot in it.result!!){
+                    var aprovedTravel = document.getString("Name")
+                    aproved.add(aprovedTravel!!)
 
-                        Log.d("Success", "$aproved")
-                    }
-                    adapt.notifyDataSetChanged()
+                    Log.d("Success", "$aproved")
                 }
-                Log.d("No_Success", "datos no funcionando")
+                adapt.notifyDataSetChanged()
+            }
+            Log.d("No_Success", "datos no funcionando")
         }
         //Finish Spinner
         initialTravel!!.setOnClickListener{
@@ -220,7 +190,7 @@ class TravelRegistrationFragment : Fragment() {
             var descp = description!!.text.toString()
             var balance = cassh
             var aproved = spinner!!.selectedItem.toString()
-                emailUser=user!!.email
+            emailUser=user!!.email
 
             //RadioButton
             var refund:String? = null
@@ -252,49 +222,9 @@ class TravelRegistrationFragment : Fragment() {
             }
         }
     }
-    //Creacion del Actualizar Datos del viaje
-    fun updateTravels(id: String) {
-        emailUser?.let {
-            val docRef = db.collection("e-Tracker").document(it)
-                .collection("Travels")
-            val query:Query = docRef.whereEqualTo(FieldPath.documentId(), id)
-            query.get().addOnSuccessListener {documentSnapshot->
-                val viajes = documentSnapshot.toObjects(Travel::class.java)
-            }
-
-
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         unbinder!!.unbind()
     }
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-    override fun onAttach(activity: Activity) {
-        mycontext= activity as FragmentActivity
-                super.onAttach(activity)
-    }
-
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
-    companion object {
-
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TravelRegistrationFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-
 }

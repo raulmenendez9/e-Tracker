@@ -47,7 +47,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class TravelRegistrationFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
+    private var id: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     var mycontext : FragmentActivity?=null
@@ -87,8 +87,7 @@ class TravelRegistrationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            id = it.getString(ARG_PARAM1)
         }
     }
 
@@ -136,11 +135,12 @@ class TravelRegistrationFragment : Fragment() {
 
         //finish Date picker
 
-        //Spinner
-        val adapt = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, aproved)
-        adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner!!.adapter = adapt
-        travelAprovRef.get().addOnCompleteListener{
+        if (id == null) {
+            //Spinner
+            val adapt = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, aproved)
+            adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner!!.adapter = adapt
+            travelAprovRef.get().addOnCompleteListener{
                 if (it.isSuccessful){
                     for (document: QueryDocumentSnapshot in it.result!!){
                         var aprovedTravel = document.getString("Name")
@@ -151,12 +151,16 @@ class TravelRegistrationFragment : Fragment() {
                     adapt.notifyDataSetChanged()
                 }
                 Log.d("No_Success", "datos no funcionando")
+            }
+            //Finish Spinner
+            initialTravel!!.setOnClickListener {
+                registration()
+            }
+        }else{
+            getTravels(id!!)
+            initialTravel!!.setOnClickListener{
+        updateTravel(id!!)}
         }
-        //Finish Spinner
-        initialTravel!!.setOnClickListener{
-            registration()
-        }
-
         closeRegistration!!.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()
         }
@@ -230,8 +234,6 @@ class TravelRegistrationFragment : Fragment() {
             var email = emailUser
             var date = getDateTime()
             var update = null
-
-
             //RadioButton
             var refund:String? = null
             var selectedId : Int = radioGroup!!.checkedRadioButtonId
@@ -260,17 +262,110 @@ class TravelRegistrationFragment : Fragment() {
                     .addOnFailureListener { e -> Log.w("Error", "$e") }
         }
     }
+
     //Creacion del Actualizar Datos del viaje
-    fun updateTravels(id: String) {
-        emailUser?.let {
-            val docRef = db.collection("e-Tracker").document(it)
-                .collection("Travels")
+
+    fun getTravels(id: String) {
+        var pos =0
+        var i =0
+        var viaje: MutableList<Travel> = mutableListOf()
+            val docRef = db.collection("e-Tracker")
             val query:Query = docRef.whereEqualTo(FieldPath.documentId(), id)
             query.get().addOnSuccessListener {documentSnapshot->
-                val viajes = documentSnapshot.toObjects(Travel::class.java)
+                 viaje = documentSnapshot.toObjects(Travel::class.java)
+                originCountry!!.setText(viaje[0].originCountry)
+                destinyCountry!!.setText(viaje[0].destinyCountry)
+                centerCost!!.setText(viaje[0].centerCost)
+                cash!!.setText(viaje[0].cash)
+                if (viaje[0].refund == "Si"){
+                    radioYes!!.id
+                }else if (viaje[0].refund=="No"){radioNo!!.id}
+                datePicker!!.setText(viaje[0].initialDate)
+                finisDate!!.setText(viaje[0].finishDate)
+                description!!.setText(viaje[0].description)
+                //Spinner
+                val adapt = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, aproved)
+                adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner!!.adapter = adapt
+                travelAprovRef.get().addOnCompleteListener{
+                    if (it.isSuccessful){
+                        for (document: QueryDocumentSnapshot in it.result!!){
+                            var aprovedTravel = document.getString("Name")
+                            aproved.add(aprovedTravel!!)
+                            var conteo = spinner!!.count
+
+                            for (i in  0..conteo){
+                                if (spinner!!.getItemAtPosition(i).toString().equals(viaje[0].aproved))
+                                    spinner!!.setSelection(i)
+                            }
+                            Log.d("Success", "$aproved")
+                        }
+                        adapt.notifyDataSetChanged()
+                    }
+                    Log.d("No_Success", "datos no funcionando")
+                }
+                //Finish Spinner
+
+                //Finaliza de llenar los datos en el formulario
             }
 
+    }
 
+    fun updateTravel(id: String){
+        if (originCountry!!.text.toString().isEmpty() || destinyCountry!!.text.toString().isEmpty()
+            || centerCost!!.text.toString().isEmpty() || cash!!.text.toString().isEmpty()
+            || (radioGroup!!.checkedRadioButtonId == -1) || datePicker!!.text.toString().isEmpty()
+            || description!!.text.toString().isEmpty()
+        ) {
+            Toast.makeText(activity, activity!!.getString(R.string.error_hint), Toast.LENGTH_SHORT)
+                .show()
+        }
+        if (centerCost!!.length() < 7) {
+            Toast.makeText(
+                activity,
+                activity!!.getString(R.string.error_center_cost),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            var origCountry = originCountry!!.text.toString()
+            var destCountry = destinyCountry!!.text.toString()
+            var cenCost = centerCost!!.text.toString()
+            var cassh = cash!!.text.toString()
+            var datePick = datePicker!!.text.toString()
+            var finishtravel = finisDate!!.text.toString()
+            var descp = description!!.text.toString()
+            var balance = cassh
+            var aproved = spinner!!.selectedItem.toString()
+            emailUser=user!!.email
+            var email = emailUser
+            var date = null
+            var update = getDateTime()
+            //RadioButton
+            var refund:String? = null
+            var selectedId : Int = radioGroup!!.checkedRadioButtonId
+
+            if (selectedId == radioYes!!.id){
+                refund= radioYes?.text.toString()
+            }else if (selectedId == radioNo!!.id){
+                refund= radioNo?.text.toString()
+            }
+            //Termina Radiobuttons
+            val travel = Travel(
+                origCountry,
+                destCountry,
+                cenCost,
+                cassh, email, refund,
+                datePick,finishtravel,date,update,aproved,
+                descp,
+                balance
+            )
+            db.collection("e-Tracker").document(id)
+                .set(travel)
+                .addOnSuccessListener { documentReference ->
+                    Log.d("Enviodata", "$travel")
+                    Toast.makeText(activity, "Registro completado", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e -> Log.w("Error", "$e") }
         }
     }
     @SuppressLint("SimpleDateFormat")
@@ -305,11 +400,10 @@ class TravelRegistrationFragment : Fragment() {
 
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(id: String) =
             TravelRegistrationFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM1, id)
                 }
             }
     }

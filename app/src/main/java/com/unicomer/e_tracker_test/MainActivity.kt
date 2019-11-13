@@ -11,10 +11,12 @@ import android.widget.Toast
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
 class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListener {
+    val idd : String?=null
     override fun envio() {
         var barra: View = findViewById(R.id.toolbar)
         barra.visibility = View.GONE
-        loadRegistrationTravel(TravelRegistrationFragment())
+        //updateRegistrationTravel()
+        loadTravel(TravelRegistrationFragment())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +32,15 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         formmu.commit()
     }
 
-    private fun loadRegistrationTravel(tr: TravelRegistrationFragment){
+    private fun updateRegistrationTravel(){//Funcion para actualizar registro del viaje con el id que se optendra.
+        val registrationFragment = TravelRegistrationFragment.newInstance(idd!!) //Aqui se enviara el id del viaje
+        val formmu = supportFragmentManager.beginTransaction()
+        formmu.replace(R.id.main_fragment_container, registrationFragment).addToBackStack(null)
+        formmu.commit()
+        registrationFragment.arguments
+    }
+
+    private fun loadTravel(tr: TravelRegistrationFragment) { //Funcion para ingresar un viaje
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()

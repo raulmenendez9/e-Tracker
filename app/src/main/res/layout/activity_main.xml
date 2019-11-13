@@ -42,6 +42,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Nuevo Viaje"
+
                 android:textColor="@color/colorSecondary_04_White"
                 tools:layout_editor_absoluteX="16dp" />
 

@@ -46,6 +46,7 @@
                 android:textColor="@color/colorSecondary_04_White"
                 tools:layout_editor_absoluteX="16dp" />
 
+
         </androidx.appcompat.widget.Toolbar>
     </FrameLayout>
 

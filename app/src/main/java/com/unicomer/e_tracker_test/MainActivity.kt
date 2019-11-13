@@ -1,12 +1,17 @@
 package com.unicomer.e_tracker_test
 
+import android.app.SearchManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -20,6 +25,7 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         loadHome(HomeFragment())
         //loadRegistrationTravel(TravelRegistrationFragment())
     }
@@ -46,9 +52,32 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
-        return true
+//        val manager=getSystemService() as SearchManager
+        var searchItem=menu.findItem(R.id.action_search)
+        if (searchItem!=null) {
+
+            var searchView = searchItem.actionView as SearchView
+            searchView.queryHint = "Search"
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
+                    return true
+                }
+
+            })
+        }else{
+            Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
+        }
+
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

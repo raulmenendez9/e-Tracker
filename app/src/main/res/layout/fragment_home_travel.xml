@@ -73,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_edit_24dp"
-                        android:padding="5dp"/>
+                        android:padding="3dp"/>
 
                 </LinearLayout>
 
@@ -214,11 +214,12 @@
             app:layout_constraintTop_toBottomOf="@+id/headerContainer" />
 
         <FrameLayout
+            android:id="@+id/image_bg_recyclerview_homeTravel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerContainer">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -228,14 +229,30 @@
                 <ImageView
                     android:id="@+id/imageView8"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="240dp"
                     android:layout_marginStart="64dp"
+                    android:layout_marginTop="64dp"
                     android:layout_marginEnd="64dp"
+                    android:alpha="0.5"
                     android:src="@drawable/img_background_home"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/helvetica_neue_lts_td_md"
+                    android:text="Para comenzar agrega tu primer gasto."
+                    android:textColor="@color/colorPrimary_01_Blue"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView8"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

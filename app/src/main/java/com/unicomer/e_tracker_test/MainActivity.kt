@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        loadHome(HomeFragment())
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
+        //loadHome(HomeFragment())
+        loadHomeTravel(HomeTravelFragment())
         //loadRegistrationTravel(TravelRegistrationFragment())
     }
 
@@ -39,6 +39,11 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     private fun loadTerms(tyc:TerminosFragment){
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tyc).addToBackStack(null)
+        formmu.commit()
+    }
+    private fun loadHomeTravel(ht:HomeTravelFragment){
+        val formmu = supportFragmentManager.beginTransaction()
+        formmu.replace(R.id.main_fragment_container, ht).addToBackStack(null)
         formmu.commit()
     }
     override fun onSupportNavigateUp(): Boolean {

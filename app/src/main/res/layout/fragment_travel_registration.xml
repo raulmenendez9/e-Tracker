@@ -277,7 +277,7 @@
                 android:background="@drawable/round_edittext_date_picker"
                 android:clickable="true"
                 android:drawableStart="@drawable/ic_date"
-                android:drawableLeft="10dp"
+
                 android:drawablePadding="0dp"
                 android:ems="10"
                 android:focusable="false"

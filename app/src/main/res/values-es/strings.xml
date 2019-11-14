@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_titulo">Titulo</string>
+    <string name="Cash">Efectivo:</string>
+    <string name="app_name">e-Tracker</string>
+    <string name="approved_by">Aprobado por:</string>
+    <string name="cost_center">Centro de coste:</string>
+    <string name="date">Agregar fecha</string>
+    <string name="description">Descripción:</string>
+    <string name="destiny_country">País de destino:</string>
+    <string name="destiny_country_EditText">País donde te diriges</string>
+    <string name="empecemos">Empecemos!</string>
+    <string name="error_center_cost">El centro de coste deben ser de 4 digitos</string>
+    <string name="error_hint">Todos los campos son obligatorio</string>
+    <string name="final_date">Fecha fin:</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="initial">Pero antes, completa el formulario</string>
+    <string name="initial_date">Fecha inicio:</string>
+    <string name="initial_travel">Iniciar viaje</string>
+    <string name="login_button_send">Entrar</string>
+    <string name="login_hint_et_email">Correo electrónico</string>
+    <string name="login_hint_et_password">Contraseña</string>
+    <string name="login_login_issues"><u>¿Problemas para ingresar?</u></string>
+    <string name="login_logo_etracker_app">Logo Unicomer</string>
+    <string name="logo_garagework">Logo Garageworks</string>
+    <string name="motive">Motivo por el cual viaja</string>
+    <string name="no">No</string>
+    <string name="origin_country">País de origen:</string>
+    <string name="origin_country_EditText">País donde te encuentras</string>
+    <string name="refound">Reintegro:</string>
+    <string name="required_email_password">Usuario y contraseña son obligatorios</string>
+    <string name="txt_dialog_login">Instrucciones sobre que hacer en caso de que el usuario no pueda iniciar sesion</string>
+    <string name="txt_dialog_login_header">¿Problemas para iniciar sesión?</string>
+    <string name="txt_loading">Cargando...</string>
+    <string name="txt_record_date">10/08/2019</string>
+    <string name="txt_record_name">La pampa Argentina</string>
+    <string name="wrong_email_password">El usuario o contraseña es incorrecto</string>
+    <string name="yes">Si</string>
+    <string name="nombre_de_registro">Nombre de Registro</string>
+    <string name="tv_fecha">Fecha:</string>
+    <string name="tv_monto">Monto:</string>
+    <string name="tv_categoria">Categoria:</string>
+    <string name="tv_descripcion">Descripción:</string>
+</resources>

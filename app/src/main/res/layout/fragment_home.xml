@@ -66,7 +66,7 @@
             android:layout_marginBottom="20dp"
 
             android:text="Bienvenido"
-            android:textColor="@color/colorPrimary_01_Blue"
+            android:textColor="@color/colorPrimary01Blue"
             android:textSize="50sp"
             app:layout_constraintBottom_toTopOf="@+id/editText_msj_bienvenida"
             app:layout_constraintEnd_toStartOf="@+id/guideline10"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="76dp"
             android:text="Antes de comenzar tu viaje recuerda revisar nuestra seccion TyCS para ver detalles de los terminos  y condiciones de uso"
-            android:textColor="@color/colorPrimary_01_Blue"
+            android:textColor="@color/colorPrimary01Blue"
             app:layout_constraintBottom_toTopOf="@+id/floatingActionButton_addviaje"
             app:layout_constraintEnd_toStartOf="@+id/guideline10"
             app:layout_constraintStart_toStartOf="@+id/guideline9"

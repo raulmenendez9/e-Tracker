@@ -1,6 +1,7 @@
 package com.unicomer.e_tracker_test
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 
-class HomeFragment : Fragment() {
+class AddRegistroFragment : Fragment() {
 
 
 
@@ -20,26 +21,16 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view=inflater.inflate(R.layout.fragment_home, container, false)
-        val fab: View = view.findViewById(R.id.floatingActionButton_addviaje)
-
-        fab.setOnClickListener {
-            listener?.envio()
-        }
-
-        return view
+        return inflater.inflate(R.layout.fragment_add_registro, container, false)
     }
 
-
+    fun onButtonPressed(uri: Uri) {
+        listener?.onFragmentInteraction(uri)
+    }
 
     override fun onAttach(context: Context) {
-
-        listener?.OnAttachHomeFragment()
-
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
             listener = context
@@ -55,19 +46,13 @@ class HomeFragment : Fragment() {
 
 
     interface OnFragmentInteractionListener {
-
-        fun envio()
-
-        fun OnAttachHomeFragment()
+        // TODO: Update argument type and name
+        fun onFragmentInteraction(uri: Uri)
     }
-
-
 
     companion object {
 
-
         @JvmStatic
-        fun newInstance() = HomeFragment()
-            }
+        fun newInstance() = AddRegistroFragment()
     }
-
+}

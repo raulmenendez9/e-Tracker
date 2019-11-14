@@ -3,13 +3,11 @@ package com.unicomer.e_tracker_test
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.solver.widgets.WidgetContainer
 import com.google.android.material.snackbar.Snackbar
 
@@ -50,6 +48,8 @@ class HomeFragment : Fragment() {
 
             return vista
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
 //    fun onButtonPressed(uri: Uri) {

@@ -51,7 +51,8 @@
     <!--Errors -->
     <string name="error_hint">Todos los campos son obligatorio</string>
     <string name="error_center_cost">El centro de coste deben ser de 4 digitos</string>
-
+    <string name="finish_date">Fecha final</string>
+    <string name="a">a</string>
 
     <!--Countries -->
     <string-array name="coutries_array">

@@ -1,12 +1,18 @@
 package com.unicomer.e_tracker_test
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.unicomer.e_tracker_test.models.Travel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,12 +28,24 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeTravelFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
+    //accediendo a los datos de firebase
+    private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    val db = FirebaseFirestore.getInstance()
+    val storageRef: StorageReference = FirebaseStorage.getInstance().reference
+
+    //Obteniendo referencias del layout
+    var originCountry: TextView?=null
+    var destinyCountry: TextView?=null
+    var initDate: TextView?=null
+    var finishDate: TextView?=null
+    var balance: TextView?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -40,7 +58,18 @@ class HomeTravelFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        //Toast.makeText(context,"el usuario es: ${FirebaseUser!!.email}",Toast.LENGTH_LONG).show()
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        originCountry = view.findViewById(R.id.txt_header_originCountry)
+        destinyCountry = view.findViewById(R.id.txt_header_originDestiny)
+        initDate = view.findViewById(R.id.txt_header_initDate)
+        finishDate = view.findViewById(R.id.txt_header_finishDate)
+        balance = view.findViewById(R.id.txt_header_cash)
+        fillForm()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -48,6 +77,21 @@ class HomeTravelFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
+    fun fillForm(){ //metodo para llenar la cabecera de info del viaje
+        var data: MutableList<Travel>
+        db.collection("e-Tracker")
+            .whereEqualTo("emailUser", FirebaseUser!!.email)
+            .whereEqualTo("active", "1")
+            .get()
+            .addOnSuccessListener { documents ->
+                data = documents.toObjects(Travel::class.java)
+                originCountry!!.text = data[0].originCountry
+                destinyCountry!!.text = data[0].destinyCountry
+                initDate!!.text = data[0].initialDate
+                finishDate!!.text = data[0].finishDate
+                balance!!.text = data[0].balance
+            }
+    }
     /*
     override fun onAttach(context: Context) {
         super.onAttach(context)

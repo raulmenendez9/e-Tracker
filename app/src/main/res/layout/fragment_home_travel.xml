@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeTravelFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/toolbarContainer"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/headerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#055EA9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarContainer">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/txt_header_de"
+                        style="@style/HomeTravelHeaderTEXTNOCHANGE"
+                        android:layout_marginStart="5dp"
+                        android:text="De: "/>
+
+                    <TextView
+                        android:id="@+id/txt_header_originCountry"
+                        style="@style/HomeTravelHeaderTEXT"
+                        android:text="-" />
+
+                    <TextView
+                        android:id="@+id/txt_header_a"
+                        style="@style/HomeTravelHeaderTEXTNOCHANGE"
+                        android:text=" a: " />
+
+                    <TextView
+                        android:id="@+id/txt_header_originDestiny"
+                        style="@style/HomeTravelHeaderTEXT"
+                        android:text="-" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                    </FrameLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit_24dp"
+                        android:paddingTop="0dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="5dp"
+                        android:clickable="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_header_initDate"
+                        style="@style/HomeTravelHeaderTEXT"
+                        android:layout_marginStart="5dp"
+                        android:text="-" />
+
+                    <TextView
+                        android:id="@+id/txt_line"
+                        style="@style/HomeTravelHeaderTEXTNOCHANGE"
+                        android:text=" a " />
+
+                    <TextView
+                        android:id="@+id/txt_header_finishDate"
+                        style="@style/HomeTravelHeaderTEXT"
+                        android:text="-" />
+
+                    <TextView
+                        android:id="@+id/txt_cash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorSecondary_04_White"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/helvetica_neue_lts_td_md"
+                        android:text="Saldo: $" />
+                    <TextView
+                        android:id="@+id/txt_header_cash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/colorSecondary_04_White"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/helvetica_neue_lts_td_md"
+                        android:layout_marginEnd="10dp"
+                        android:text="0" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_totalgastos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorSecondary_04_White"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                    android:text="Gastos Totales:" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/image_cat_food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_cat_food_nosquare" />
+
+                    <TextView
+                        android:id="@+id/txt_header_cat_food_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                        android:textColor="@color/colorSecondary_04_White"
+                        android:layout_gravity="center"
+                        android:text="$0" />
+
+                    <ImageView
+                        android:id="@+id/image_cat_car"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_cat_car_nosquare" />
+
+                    <TextView
+                        android:id="@+id/txt_header_cat_car_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                        android:textColor="@color/colorSecondary_04_White"
+                        android:layout_gravity="center"
+                        android:text="$0" />
+
+                    <ImageView
+                        android:id="@+id/image_cat_hotel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_cat_hotel__nosquare" />
+
+                    <TextView
+                        android:id="@+id/txt_header_cat_hotel_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                        android:textColor="@color/colorSecondary_04_White"
+                        android:layout_gravity="center"
+                        android:text="$0" />
+
+                    <ImageView
+                        android:id="@+id/image_cat_other"
+                        android:layout_width="20dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_cat_other_nosquare" />
+
+                    <TextView
+                        android:id="@+id/txt_header_cat_other_total"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                        android:textColor="@color/colorSecondary_04_White"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="$0" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerRecord"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerContainer" />
+
+        <FrameLayout
+            android:id="@+id/image_bg_recyclerview_homeTravel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerContainer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="0dp"
+                    android:layout_height="240dp"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="64dp"
+                    android:layout_marginEnd="64dp"
+                    android:alpha="0.5"
+                    android:src="@drawable/img_background_home"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/helvetica_neue_lts_td_md"
+                    android:text="Para comenzar agrega tu primer gasto."
+                    android:textColor="@color/colorPrimary_01_Blue"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView8"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

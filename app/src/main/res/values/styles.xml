@@ -29,7 +29,24 @@
         <style name="SplashTheme" parent="Theme.AppCompat.Light">
             <item name="android:windowBackground">@drawable/splash_screen_start</item>
         </style>
-
+    <!-- Text with no change HOME TRAVEL HEADER-->
+    <style name="HomeTravelHeaderTEXTNOCHANGE" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/helvetica_neue_lts_td_roman</item>
+        <item name="android:textColor">@color/colorSecondary_03_Gray</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <!-- Text change HOME TRAVEL HEADER-->
+    <style name="HomeTravelHeaderTEXT" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/helvetica_neue_lts_td_roman</item>
+        <item name="android:textColor">@color/colorSecondary_04_White</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 
 
 

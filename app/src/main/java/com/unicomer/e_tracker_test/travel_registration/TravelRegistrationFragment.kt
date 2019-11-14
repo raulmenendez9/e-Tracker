@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import butterknife.Unbinder
@@ -82,7 +83,6 @@ class TravelRegistrationFragment : Fragment() {
     val aprovedRef = FirebaseFirestore.getInstance()
     val travelAprovRef = aprovedRef.collection("travel_approvers")
     var storageRef: StorageReference = FirebaseStorage.getInstance().reference
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,9 +157,11 @@ class TravelRegistrationFragment : Fragment() {
                 registration()
             }
         }else{
-            getTravels(id!!)
+            initialTravel!!.text= "Actualizar"
+            var ll= getTravels(id!!)
+            Log.d("funcion", ll)
             initialTravel!!.setOnClickListener{
-        updateTravel(id!!)}
+        updateTravel(id!!,ll)}
         }
         closeRegistration!!.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()
@@ -245,6 +247,8 @@ class TravelRegistrationFragment : Fragment() {
             }else if (selectedId == radioNo!!.id){
                 refund= radioNo?.text.toString()
             }
+
+
             //Termina Radiobuttons
             val travel = Travel(
                 origCountry,
@@ -267,9 +271,10 @@ class TravelRegistrationFragment : Fragment() {
 
     //Creacion del Actualizar Datos del viaje
 
-    fun getTravels(id: String) {
+    fun getTravels(id: String):String {
         var pos =0
         var i =0
+        var datepersist: String = ""
         var viaje: MutableList<Travel> = mutableListOf()
             val docRef = db.collection("e-Tracker")
             val query:Query = docRef.whereEqualTo(FieldPath.documentId(), id)
@@ -280,11 +285,13 @@ class TravelRegistrationFragment : Fragment() {
                 centerCost!!.setText(viaje[0].centerCost)
                 cash!!.setText(viaje[0].cash)
                 if (viaje[0].refund == "Si"){
-                    radioYes!!.id
-                }else if (viaje[0].refund=="No"){radioNo!!.id}
+                    radioYes!!.isChecked
+                }else if (viaje[0].refund=="No"){radioNo!!.isChecked}
                 datePicker!!.setText(viaje[0].initialDate)
                 finisDate!!.setText(viaje[0].finishDate)
                 description!!.setText(viaje[0].description)
+                datepersist = viaje[0].dateRegister.toString()
+                Log.d("persist", datepersist)
                 //Spinner
                 val adapt = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, aproved)
                 adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -293,14 +300,19 @@ class TravelRegistrationFragment : Fragment() {
                     if (it.isSuccessful){
                         for (document: QueryDocumentSnapshot in it.result!!){
                             var aprovedTravel = document.getString("Name")
-                            aproved.add(aprovedTravel!!)
-                            var conteo = spinner!!.count
 
-                            for (i in  0..conteo){
+                            //document.getString("Name")?.forEach { data ->
+                                aproved.add(aprovedTravel!!)
+                            //}
+
+                           // aproved.add(aprovedTravel!!)
+                            var conteo = aproved.count()
+                            //val conta=0
+                            /*for (i in  0..conteo){
                                 if (spinner!!.getItemAtPosition(i).toString().equals(viaje[0].aproved))
                                     spinner!!.setSelection(i)
-                            }
-                            Log.d("Success", "$aproved")
+                            }*/
+                            Log.d("Success", "$conteo")
                         }
                         adapt.notifyDataSetChanged()
                     }
@@ -310,10 +322,11 @@ class TravelRegistrationFragment : Fragment() {
 
                 //Finaliza de llenar los datos en el formulario
             }
+        return datepersist
 
     }
 
-    fun updateTravel(id: String){
+    fun updateTravel(id: String, persist: String){
         if (originCountry!!.text.toString().isEmpty() || destinyCountry!!.text.toString().isEmpty()
             || centerCost!!.text.toString().isEmpty() || cash!!.text.toString().isEmpty()
             || (radioGroup!!.checkedRadioButtonId == -1) || datePicker!!.text.toString().isEmpty()
@@ -340,7 +353,7 @@ class TravelRegistrationFragment : Fragment() {
             var aproved = spinner!!.selectedItem.toString()
             emailUser=user!!.email
             var email = emailUser
-            var date = null
+            var date = persist
             var update = getDateTime()
             var active = true
             var settled = false

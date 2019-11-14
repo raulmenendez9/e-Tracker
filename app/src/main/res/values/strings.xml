@@ -35,6 +35,7 @@
 
     <!--Buttons -->
     <string name="initial_travel">Iniciar viaje</string>
+    <string name="update_travel">Actualizar</string>
     <string name="login_logo_etracker_app">Application Logo</string>
     <string name="txt_loading">Cargando...</string>
     <string name="logo_garagework">Logo Garagework</string>

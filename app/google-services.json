@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "152650322493-44gif5v77uk821t7ghqcu9hvlldvv6ou.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.unicomer.e_tracker_test",
-            "certificate_hash": "f83df7354ccf65105500c1124e60ac594984d114"
-          }
-        },
-        {
           "client_id": "152650322493-336dlv638u7mg4t5vf61ec79d620ob6n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

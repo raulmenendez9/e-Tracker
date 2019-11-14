@@ -5,8 +5,11 @@ data class Record(val recordName: String,
                   val recordMount: Double,
                   val recordCategory:Int,
                   val recordPhoto:String,
-                  val recordDescription: String){
-    constructor():this("","",0.0,0, "","")
+                  val recordDescription: String,
+                  val recordDateRegister: String,
+                  val recordUpdateRegister: String){
+    constructor():this("","",0.0,0, "","",
+        "","")
 }
 /*
 orden para las categorias:

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,6 +60,7 @@ class HomeTravelFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         //Toast.makeText(context,"el usuario es: ${FirebaseUser!!.email}",Toast.LENGTH_LONG).show()
+        fillForm()
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
 
@@ -69,7 +71,7 @@ class HomeTravelFragment : Fragment() {
         initDate = view.findViewById(R.id.txt_header_initDate)
         finishDate = view.findViewById(R.id.txt_header_finishDate)
         balance = view.findViewById(R.id.txt_header_cash)
-        fillForm()
+        //fillForm()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -81,7 +83,7 @@ class HomeTravelFragment : Fragment() {
         var data: MutableList<Travel>
         db.collection("e-Tracker")
             .whereEqualTo("emailUser", FirebaseUser!!.email)
-            .whereEqualTo("active", "1")
+            .whereEqualTo("active", true)
             .get()
             .addOnSuccessListener { documents ->
                 data = documents.toObjects(Travel::class.java)

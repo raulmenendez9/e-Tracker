@@ -252,7 +252,7 @@ class TravelRegistrationFragment : Fragment() {
                 datePick,finishtravel,date,update,aproved,
                 descp,
                 balance,
-                ""
+                false
             )
             db.collection("e-Tracker")
                 .add(travel)
@@ -359,7 +359,7 @@ class TravelRegistrationFragment : Fragment() {
                 datePick,finishtravel,date,update,aproved,
                 descp,
                 balance,
-                "0"
+                false
             )
             db.collection("e-Tracker").document(id)
                 .set(travel)

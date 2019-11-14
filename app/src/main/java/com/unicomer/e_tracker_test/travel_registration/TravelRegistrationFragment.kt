@@ -234,6 +234,8 @@ class TravelRegistrationFragment : Fragment() {
             var email = emailUser
             var date = getDateTime()
             var update = null
+            var active = true
+            var settled = false
             //RadioButton
             var refund:String? = null
             var selectedId : Int = radioGroup!!.checkedRadioButtonId
@@ -251,7 +253,7 @@ class TravelRegistrationFragment : Fragment() {
                 cassh, email, refund,
                 datePick,finishtravel,date,update,aproved,
                 descp,
-                balance
+                balance,active, settled
             )
                 db.collection("e-Tracker")
                     .add(travel)
@@ -340,6 +342,8 @@ class TravelRegistrationFragment : Fragment() {
             var email = emailUser
             var date = null
             var update = getDateTime()
+            var active = true
+            var settled = false
             //RadioButton
             var refund:String? = null
             var selectedId : Int = radioGroup!!.checkedRadioButtonId
@@ -357,7 +361,7 @@ class TravelRegistrationFragment : Fragment() {
                 cassh, email, refund,
                 datePick,finishtravel,date,update,aproved,
                 descp,
-                balance
+                balance,active, settled
             )
             db.collection("e-Tracker").document(id)
                 .set(travel)

@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         val toolbar = this.findViewById<Toolbar>(R.id.toolbar)
 
         setSupportActionBar(toolbar)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        
 
         loadHome(HomeFragment())
         //loadRegistrationTravel(TravelRegistrationFragment())
@@ -115,6 +118,7 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
                 super.onOptionsItemSelected(item)}
         }
     }
+
 
 }
 //sethasoptionmenu en los fragmentos

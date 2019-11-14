@@ -264,6 +264,9 @@
         <item>Zambia</item>
         <item>Zimbabue</item>
     </string-array>
+    <string name="add_photo">Tomar Foto</string>
+    <string name="agregar_registro">Agregar</string>
+    <string name="et_description_hint">En este campo puede incluir detalles adicionales</string>
 
 
 </resources>

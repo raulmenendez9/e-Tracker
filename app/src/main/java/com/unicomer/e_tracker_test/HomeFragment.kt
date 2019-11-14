@@ -11,7 +11,6 @@ import android.view.ViewGroup
 class HomeFragment : Fragment() {
 
 
-
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

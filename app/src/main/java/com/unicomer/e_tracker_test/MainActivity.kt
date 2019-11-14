@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.unicomer.e_tracker_test.Constants.MAIN_ACTIVITY_KEY
+import com.unicomer.e_tracker_test.Constants.REGISTRATION_TRAVEL_FRAGMENT
+import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
-
+    // End of Declaring FirebaseAuth components
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,41 +29,39 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
 
 
 
-
-        loadHome(HomeFragment())
+        // cargar MainFragment para Inicio de Navegacion en UI
+        loadHomeFragment(HomeFragment())
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
-        //loadRegistrationTravel(TravelRegistrationFragment())
-
-
 
 
 
     }
 
-    private fun loadHome(home: HomeFragment) {
-        val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, home)
-        formmu.commit()
+    private fun loadHomeFragment(homeFragment: HomeFragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.main_fragment_container, homeFragment)
+        fragmentTransaction.commit()
     }
 
-    private fun loadRegistrationTravel(tr: TravelRegistrationFragment){
-        val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, tr)
-        formmu.addToBackStack(null)
-        formmu.commit()
+    private fun loadRegistrationTravelFragment(travelRegistrationFragment: TravelRegistrationFragment){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.main_fragment_container, travelRegistrationFragment)
+        fragmentTransaction.addToBackStack(REGISTRATION_TRAVEL_FRAGMENT)
+        fragmentTransaction.commit()
     }
-    private fun loadTerms(tyc:TerminosFragment){
-        val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, tyc).addToBackStack(null)
-        formmu.commit()
+    private fun loadTermsAndConditionsFragment(termsAndConditionsFragment:TerminosFragment){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.main_fragment_container, termsAndConditionsFragment)
+        fragmentTransaction.addToBackStack(TERMS_AND_CONDITIONS_FRAGMENT)
+        fragmentTransaction.commit()
     }
 
 
     private fun thisIsATestFragment(addRecordFragment: AddRegistroFragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_fragment_container, addRecordFragment)
-        transaction.addToBackStack(MAIN_ACTIVITY_KEY)
-        transaction.commit()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.main_fragment_container, addRecordFragment)
+        fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
+        fragmentTransaction.commit()
     }
 
 
@@ -84,11 +84,46 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         dbAuth = FirebaseAuth.getInstance()
-        // Handle item selection
+
+        // Manejar seleccion de Item en Menu (Toolbar)
         return when (item.itemId) {
 
+            // TODO Cambiar los textos del Toast por Strings
+
+            R.id.item_historial -> {
+
+                // Manejar el evento en item "Historial"
+
+                thisIsATestFragment(AddRegistroFragment())
+
+                true
+            }
+
+            R.id.item_terminos -> {
+                // Manejar el evento en item "Terminos y Condiciones"
+                Toast.makeText(this,"item terminos y condiciones",Toast.LENGTH_SHORT).show()
+                loadTermsAndConditionsFragment(TerminosFragment())
+                true
+            }
+
+            R.id.item_generar -> {
+                // Manejar el evento en item "Generar Reporte"
+
+                Toast.makeText(this,"item generar",Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            R.id.item_fin_viaje -> {
+                // Manejar el evento en item "Finalizar Viaje"
+
+                Toast.makeText(this,"item fin viaje",Toast.LENGTH_SHORT).show()
+                true
+            }
+
             R.id.item_cerrarapp -> {
-                Toast.makeText(this,"La sesion ha finalizado",Toast.LENGTH_LONG).show()
+                // Manejar el evento en item "Cerrar sesion"
+
+                Toast.makeText(this,"La sesion ha finalizado",Toast.LENGTH_SHORT).show()
                 dbAuth?.signOut()
 
                 val intent = Intent(this, LoginActivity::class.java)
@@ -98,36 +133,8 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
                 true
             }
 
-            R.id.item_fin_viaje -> {
-                Toast.makeText(this,"item fin viaje",Toast.LENGTH_LONG).show()
-                true
-            }
-
-            R.id.item_historial -> {
-                // Toast.makeText(this,"item historial",Toast.LENGTH_LONG).show()
-                // This is just a test
-                // TODO Borrar esto
-
-                thisIsATestFragment(AddRegistroFragment())
-
-
-                true
-            }
-
-            R.id.item_generar -> {
-                Toast.makeText(this,"item generar",Toast.LENGTH_LONG).show()
-                true
-            }
-
-            R.id.item_terminos -> {
-                Toast.makeText(this,"item terminos y condiciones",Toast.LENGTH_LONG).show()
-                loadTerms(TerminosFragment())
-                true
-            }
-
-
             else -> {
-                Toast.makeText(this,"ningun item",Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"ningun item",Toast.LENGTH_SHORT).show()
                 super.onOptionsItemSelected(item)}
         }
     }
@@ -136,12 +143,11 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     override fun envio() {
         var barra: View = findViewById(R.id.toolbar)
         barra.visibility = View.GONE
-        loadRegistrationTravel(TravelRegistrationFragment())
+        loadRegistrationTravelFragment(TravelRegistrationFragment())
     }
 
-    override fun OnAttachHomeFragment(){
-        var toolbarMenu : View = findViewById(R.id.toolbar)
-        toolbarMenu.visibility = View.VISIBLE
+    override fun OnAttachHomeFragment() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

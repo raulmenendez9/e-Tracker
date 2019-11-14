@@ -156,8 +156,8 @@
     <style name="HomeTravelHeaderTEXTNOCHANGE" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/helvetica_neue_lts_td_roman</item>
-        <item name="android:textColor">@color/colorSecondary_03_Gray</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorPrimary02Gray</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textSize">17sp</item>
     </style>
@@ -165,8 +165,8 @@
     <style name="HomeTravelHeaderTEXT" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/helvetica_neue_lts_td_roman</item>
-        <item name="android:textColor">@color/colorSecondary_04_White</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textSize">18sp</item>
     </style>

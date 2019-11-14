@@ -5,7 +5,7 @@
     android:layout_width="280dp"
     android:layout_height="180dp"
     android:theme="@style/DialogseTracker"
-    tools:context=".dialogs.LoginDialogFragment">
+    tools:context=".Dialogs.LoginDialogFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

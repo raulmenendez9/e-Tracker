@@ -104,9 +104,9 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="textEnd"
                         android:layout_weight="1"
-                        android:textColor="@color/colorSecondary_04_White"
+                        android:textColor="@color/colorSecondary05LightGray"
                         android:textSize="20sp"
-                        android:fontFamily="@font/helvetica_neue_lts_td_md"
+                        android:fontFamily="@font/helvetica_neue_medium"
                         android:layout_marginEnd="10dp"
                         android:text="Saldo: $2500" />
                 </LinearLayout>
@@ -115,10 +115,10 @@
                     android:id="@+id/txt_totalgastos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorSecondary_04_White"
+                    android:textColor="@color/colorSecondary05LightGray"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="5dp"
-                    android:fontFamily="@font/helvetica_neue_lts_td_roman"
+                    android:fontFamily="@font/helvetica_neue_regular"
                     android:text="Gastos Totales:" />
 
                 <LinearLayout
@@ -140,8 +140,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
-                        android:textColor="@color/colorSecondary_04_White"
+                        android:fontFamily="@font/helvetica_neue_regular"
+                        android:textColor="@color/colorSecondary05LightGray"
                         android:layout_gravity="center"
                         android:text="$650.25" />
 
@@ -157,8 +157,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
-                        android:textColor="@color/colorSecondary_04_White"
+                        android:fontFamily="@font/helvetica_neue_regular"
+                        android:textColor="@color/colorSecondary05LightGray"
                         android:layout_gravity="center"
                         android:text="$225.50" />
 
@@ -174,8 +174,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
-                        android:textColor="@color/colorSecondary_04_White"
+                        android:fontFamily="@font/helvetica_neue_regular"
+                        android:textColor="@color/colorSecondary05LightGray"
                         android:layout_gravity="center"
                         android:text="$569.80" />
 
@@ -190,8 +190,8 @@
                     <TextView
                         android:id="@+id/txt_header_cat_other_total"
                         android:layout_width="wrap_content"
-                        android:fontFamily="@font/helvetica_neue_lts_td_roman"
-                        android:textColor="@color/colorSecondary_04_White"
+                        android:fontFamily="@font/helvetica_neue_regular"
+                        android:textColor="@color/colorSecondary05LightGray"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -244,9 +244,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:fontFamily="@font/helvetica_neue_lts_td_md"
+                    android:fontFamily="@font/helvetica_neue_medium"
                     android:text="Para comenzar agrega tu primer gasto."
-                    android:textColor="@color/colorPrimary_01_Blue"
+                    android:textColor="@color/colorPrimary01Blue"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

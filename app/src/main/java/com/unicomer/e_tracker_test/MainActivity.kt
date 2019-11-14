@@ -11,6 +11,7 @@ import android.view.View
 
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuItemCompat
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
@@ -25,6 +26,10 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toolbar = this.findViewById<Toolbar>(R.id.toolbar)
+
+        setSupportActionBar(toolbar)
 
         loadHome(HomeFragment())
         //loadRegistrationTravel(TravelRegistrationFragment())
@@ -52,7 +57,7 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
+       // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
 //        val manager=getSystemService() as SearchManager
@@ -112,3 +117,6 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     }
 
 }
+//sethasoptionmenu en los fragmentos
+// habilita el toolbart en los demas fragmentos
+

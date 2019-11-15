@@ -2,18 +2,27 @@ package com.unicomer.e_tracker_test
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.models.Travel
+import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,7 +45,10 @@ class HomeTravelFragment : Fragment() {
     //accediendo a los datos de firebase
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
+    var travelRef: CollectionReference = db.collection("e-Tracker")
     val storageRef: StorageReference = FirebaseStorage.getInstance().reference
+    //Instancia del Adapter para el RecyclerView
+    var adapterHt: AdapterHomeTravel? = null
 
     //Obteniendo referencias del layout
     var originCountry: TextView?=null
@@ -72,6 +84,17 @@ class HomeTravelFragment : Fragment() {
         finishDate = view.findViewById(R.id.txt_header_finishDate)
         balance = view.findViewById(R.id.txt_header_cash)
         //fillForm()
+        setUpRecyclerView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapterHt!!.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapterHt!!.startListening()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -81,7 +104,7 @@ class HomeTravelFragment : Fragment() {
 
     fun fillForm(){ //metodo para llenar la cabecera de info del viaje
         var data: MutableList<Travel>
-        db.collection("e-Tracker")
+        travelRef
             .whereEqualTo("emailUser", FirebaseUser!!.email)
             .whereEqualTo("active", true)
             .get()
@@ -93,6 +116,18 @@ class HomeTravelFragment : Fragment() {
                 finishDate!!.text = data[0].finishDate
                 balance!!.text = data[0].balance
             }
+    }
+    fun setUpRecyclerView(){ //metodo para llenar el recyclerview desde firebase
+        var query: Query = travelRef.document("78Z1i0Uu8lhuruplkVLQ")
+            .collection("record").orderBy("recordName")
+        var options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
+            .setQuery(query, Record::class.java)
+            .build()
+        adapterHt = AdapterHomeTravel(options)
+        val recycler = view?.findViewById<RecyclerView>(R.id.recyclerRecord)
+        recycler!!.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(this.context)
+        recycler.adapter = adapterHt
     }
     /*
     override fun onAttach(context: Context) {

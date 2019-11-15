@@ -219,6 +219,7 @@
             android:id="@+id/recyclerRecord"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -228,6 +229,7 @@
 
         <FrameLayout
             android:id="@+id/image_bg_recyclerview_homeTravel"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

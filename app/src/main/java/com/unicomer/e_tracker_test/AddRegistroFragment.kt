@@ -82,14 +82,7 @@ class AddRegistroFragment : Fragment() {
                 radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_selected_background_gradient)
             }
 
-
-            //Toast.makeText(this.context, radioButton?.id.toString() + " is checked.", Toast.LENGTH_SHORT).show()
-            //Toast.makeText(this.context, radioGroup?.checkedRadioButtonId.toString() + " is checked.", Toast.LENGTH_SHORT).show()
-
         }
-
-        radioGroup?.checkedRadioButtonId
-
 
         return view
     }
@@ -117,14 +110,7 @@ class AddRegistroFragment : Fragment() {
 
     }
 
-    fun onCheckedChanged(radioGroup: RadioGroup) {
-        Toast.makeText(
-            this.context, "Radio button clicked " + radioGroup.checkedRadioButtonId, Toast.LENGTH_LONG).show()
-    }
-
-
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 

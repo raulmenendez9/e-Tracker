@@ -130,10 +130,11 @@
 
                     <ImageView
                         android:id="@+id/image_cat_food"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_cat_food_nosquare" />
+                        android:src="@drawable/ic_cat_food_nosquare"
+                        tools:srcCompat="@drawable/ic_category_food" />
 
                     <TextView
                         android:id="@+id/txt_header_cat_food_total"
@@ -147,10 +148,11 @@
 
                     <ImageView
                         android:id="@+id/image_cat_car"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_cat_car_nosquare" />
+                        android:src="@drawable/ic_cat_car_nosquare"
+                        tools:srcCompat="@drawable/ic_category_transportation" />
 
                     <TextView
                         android:id="@+id/txt_header_cat_car_total"
@@ -164,10 +166,11 @@
 
                     <ImageView
                         android:id="@+id/image_cat_hotel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_cat_hotel__nosquare" />
+                        android:src="@drawable/ic_cat_hotel__nosquare"
+                        tools:srcCompat="@drawable/ic_category_hotel" />
 
                     <TextView
                         android:id="@+id/txt_header_cat_hotel_total"
@@ -181,11 +184,12 @@
 
                     <ImageView
                         android:id="@+id/image_cat_other"
-                        android:layout_width="20dp"
-                        android:layout_height="18dp"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_cat_other_nosquare" />
+                        android:src="@drawable/ic_cat_other_nosquare"
+                        app:srcCompat="@drawable/ic_category_other" />
 
                     <TextView
                         android:id="@+id/txt_header_cat_other_total"

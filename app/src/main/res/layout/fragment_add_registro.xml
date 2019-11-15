@@ -111,7 +111,8 @@
                     android:layout_height="52dp"
                     android:layout_weight="1"
                     android:background="@drawable/ic_category_food_background_gradient"
-                    android:button="@drawable/ic_cat_food_nosquare" />
+                    android:button="@drawable/ic_category_food"
+                    android:gravity="center" />
 
                 <RadioButton
                     android:id="@+id/radioButton_hotel"
@@ -119,7 +120,7 @@
                     android:layout_height="52dp"
                     android:layout_weight="1"
                     android:background="@drawable/ic_category_hotel_background_gradient"
-                    android:button="@drawable/ic_cat_hotel__nosquare" />
+                    android:button="@drawable/ic_category_hotel" />
 
                 <RadioButton
                     android:id="@+id/radioButton_transportation"
@@ -127,7 +128,7 @@
                     android:layout_height="52dp"
                     android:layout_weight="1"
                     android:background="@drawable/ic_category_car_background_gradient"
-                    android:button="@drawable/ic_cat_car_nosquare" />
+                    android:button="@drawable/ic_category_transportation" />
 
                 <RadioButton
                     android:id="@+id/radioButton_other"
@@ -135,7 +136,7 @@
                     android:layout_height="52dp"
                     android:layout_weight="1"
                     android:background="@drawable/ic_category_other_background_gradient"
-                    android:button="@drawable/ic_cat_other_nosquare" />
+                    android:button="@drawable/ic_category_other" />
             </RadioGroup>
 
             <TextView

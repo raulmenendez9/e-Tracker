@@ -23,17 +23,19 @@
     <string name="refound">Reintegro:</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
-    <string name="initial_date">Fecha inicio:</string>
+    <string name="initial_date">Fechas:</string>
     <string name="final_date">Fecha fin:</string>
     <string name="approved_by">Aprobado por:</string>
     <string name="description">Descripción:</string>
+    <string name="a">a</string>
     <!--EditTexts -->
     <string name="title_date_range_picker_example" translatable="false">Date Range Picker</string>
     <string name="origin_country_EditText">País donde te encuentras</string>
     <string name="destiny_country_EditText">País donde te diriges</string>
     <string name="cost" translatable="false">0.00</string>
     <string name="motive">Motivo por el cual viaja</string>
-    <string name="date">Agregar fecha</string>
+    <string name="date">Agregar</string>
+    <string name="finish_date">Fecha final</string>
 
     <!--Buttons -->
     <string name="initial_travel">Iniciar viaje</string>
@@ -59,6 +61,12 @@
     <string name="tv_monto">Monto:</string>
     <string name="tv_categoria">Categoria:</string>
     <string name="tv_descripcion">Descripción:</string>
+
+    <!--Toasts -->
+    <string name="register_complete">Registro completado</string>
+    <string name="User_cancel_datapicker">Se canceló el calendario</string>
+    <string name="register_update">Registro actualizado</string>
+
 
 
     <!--Countries -->

@@ -293,6 +293,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
             <TextView
+                android:id="@+id/textA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="3dp"
+                android:text="@string/a"
+                android:textColor="@color/colorSecondary_04_White"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/finishDate"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <EditText
+                android:id="@+id/finishDate"
+                android:layout_width="92dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/colorPrimary_01_Blue"
+                android:clickable="false"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="date"
+                android:textAlignment="center"
+                android:textColor="@color/colorSecondary_04_White"
+                android:textColorHint="@color/hint"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <TextView
                 android:id="@+id/textViewApprovedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

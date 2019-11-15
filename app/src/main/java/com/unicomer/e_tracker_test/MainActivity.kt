@@ -11,13 +11,13 @@ import android.widget.Toast
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
 class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListener {
-    val idd : String = "icyUdkv1QvBRasUxDbjh"
-    val dateinit: String ="2019-11-14 23:43:07+0000"
+    val idd : String = ""
+    val dateinit: String =""
     override fun envio() {
         var barra: View = findViewById(R.id.toolbar)
         barra.visibility = View.GONE
-        updateRegistrationTravel(idd,dateinit)
-        //loadTravel(TravelRegistrationFragment())
+        //updateRegistrationTravel(idd,dateinit)//llamado al metodo para actualizar registro del viaje
+        loadTravel(TravelRegistrationFragment())//LLamado al metodo para registrar viaje
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

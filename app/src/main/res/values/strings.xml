@@ -38,6 +38,7 @@
     <string name="finish_date">Fecha final</string>
 
     <!--Buttons -->
+    <string name="update_travel">Actualizar</string>
     <string name="initial_travel">Iniciar viaje</string>
     <string name="login_logo_etracker_app">Logo Unicomer</string>
     <string name="txt_loading">Cargando...</string>

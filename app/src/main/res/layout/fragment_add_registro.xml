@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/tv_Titulo"
-                android:textAppearance="@style/SmallFont_Bold_Blue"
+                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -54,7 +54,7 @@
 
             <TextView
                 android:id="@+id/tv_Categoria"
-                android:textAppearance="@style/SmallFont_Bold_Blue"
+                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
@@ -64,7 +64,7 @@
 
             <TextView
                 android:id="@+id/tv_Descripcion"
-                android:textAppearance="@style/SmallFont_Bold_Blue"
+                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tv_Fecha"
-                android:textAppearance="@style/SmallFont_Bold_Blue"
+                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -84,7 +84,7 @@
 
             <TextView
                 android:id="@+id/tv_Monto"
-                android:textAppearance="@style/SmallFont_Bold_Blue"
+                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

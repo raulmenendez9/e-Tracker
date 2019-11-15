@@ -17,24 +17,16 @@ import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
-<<<<<<< app/src/main/java/com/unicomer/e_tracker_test/MainActivity.kt
-class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListener, AddRegistroFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, AddRegistroFragment.OnFragmentInteractionListener {
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
     // End of Declaring FirebaseAuth components
-    
-    val idd : String = ""
-    val dateinit: String =""
-    override fun envio() {
-        var barra: View = findViewById(R.id.toolbar)
-        barra.visibility = View.GONE
-        //updateRegistrationTravel(idd,dateinit)//llamado al metodo para actualizar registro del viaje
-        loadTravel(TravelRegistrationFragment())//LLamado al metodo para registrar viaje
-    }
-=======
 
->>>>>>> app/src/main/java/com/unicomer/e_tracker_test/MainActivity.kt
+
+    val idd: String = ""
+    val dateinit: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,12 +44,22 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         }
 
 
-
         // Cargar MainFragment para Inicio de Navegacion en UI
         loadHomeFragment(HomeFragment())
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
 
     }
+
+
+
+
+    private fun envio() {
+        var barra: View = findViewById(R.id.toolbar)
+        barra.visibility = View.GONE
+        //updateRegistrationTravel(idd,dateinit)//llamado al metodo para actualizar registro del viaje
+        loadTravel(TravelRegistrationFragment())//LLamado al metodo para registrar viaje
+    }
+
 
     private fun loadHomeFragment(homeFragment: HomeFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -65,23 +67,26 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         fragmentTransaction.commit()
     }
 
-    private fun loadRegistrationTravelFragment(travelRegistrationFragment: TravelRegistrationFragment){
+    private fun loadRegistrationTravelFragment(travelRegistrationFragment: TravelRegistrationFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.main_fragment_container, travelRegistrationFragment)
         fragmentTransaction.addToBackStack(REGISTRATION_TRAVEL_FRAGMENT)
         fragmentTransaction.commit()
     }
-    private fun loadTermsAndConditionsFragment(termsAndConditionsFragment:TerminosFragment){
+
+    private fun loadTermsAndConditionsFragment(termsAndConditionsFragment: TerminosFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.main_fragment_container, termsAndConditionsFragment)
         fragmentTransaction.addToBackStack(TERMS_AND_CONDITIONS_FRAGMENT)
         fragmentTransaction.commit()
     }
 
-
-<<<<<<< app/src/main/java/com/unicomer/e_tracker_test/MainActivity.kt
-    private fun updateRegistrationTravel(id:String, datein: String){//Funcion para actualizar registro del viaje con el id que se optendra.
-        val registrationFragment = TravelRegistrationFragment.newInstance(id, datein) //Aqui se enviara el id del viaje
+    private fun updateRegistrationTravel(
+        id: String,
+        datein: String
+    ) {//Funcion para actualizar registro del viaje con el id que se optendra.
+        val registrationFragment =
+            TravelRegistrationFragment.newInstance(id, datein) //Aqui se enviara el id del viaje
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, registrationFragment).addToBackStack(null)
         formmu.commit()
@@ -92,15 +97,14 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
-=======
-    private fun thisIsATestFragment(addRecordFragment: AddRegistroFragment){
+    }
+
+    private fun thisIsATestFragment(addRecordFragment: AddRegistroFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.main_fragment_container, addRecordFragment)
         fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
         fragmentTransaction.commit()
->>>>>>> app/src/main/java/com/unicomer/e_tracker_test/MainActivity.kt
     }
-
 
 
     override fun onSupportNavigateUp(): Boolean {
@@ -136,7 +140,7 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
             R.id.item_terminos -> {
                 // Manejar el evento en item "Terminos y Condiciones"
 
-                Toast.makeText(this,"item terminos y condiciones",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "item terminos y condiciones", Toast.LENGTH_SHORT).show()
                 loadTermsAndConditionsFragment(TerminosFragment())
                 true
             }
@@ -144,21 +148,21 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
             R.id.item_generar -> {
                 // Manejar el evento en item "Generar Reporte"
 
-                Toast.makeText(this,"item generar",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "item generar", Toast.LENGTH_SHORT).show()
                 true
             }
 
             R.id.item_fin_viaje -> {
                 // Manejar el evento en item "Finalizar Viaje"
 
-                Toast.makeText(this,"item fin viaje",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "item fin viaje", Toast.LENGTH_SHORT).show()
                 true
             }
 
             R.id.item_cerrarapp -> {
                 // Manejar el evento en item "Cerrar sesion"
 
-                Toast.makeText(this,"La sesion ha finalizado",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "La sesion ha finalizado", Toast.LENGTH_SHORT).show()
                 dbAuth?.signOut()
 
                 val intent = Intent(this, LoginActivity::class.java)
@@ -168,11 +172,11 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
             }
 
             else -> {
-                Toast.makeText(this,"ningun item",Toast.LENGTH_SHORT).show()
-                super.onOptionsItemSelected(item)}
+                Toast.makeText(this, "ningun item", Toast.LENGTH_SHORT).show()
+                super.onOptionsItemSelected(item)
+            }
         }
     }
-
 
 
     override fun openRegistrationTravelFragment() {

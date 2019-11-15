@@ -17,7 +17,10 @@ import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -250,7 +253,7 @@ class TravelRegistrationFragment : Fragment() {
     private fun getTravels(id: String) {
         var viaje: MutableList<Travel>
         val docRef = db.collection("e-Tracker")
-        val query:Query = docRef.whereEqualTo(FieldPath.documentId(), id)
+        val query: Query = docRef.whereEqualTo(FieldPath.documentId(), id)
             query.get().addOnSuccessListener {documentSnapshot->
                  viaje = documentSnapshot.toObjects(Travel::class.java)
                 originCountry!!.setText(viaje[0].originCountry)

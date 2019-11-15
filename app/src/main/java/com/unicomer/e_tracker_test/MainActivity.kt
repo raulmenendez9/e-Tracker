@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         val toolbar = this.findViewById<Toolbar>(R.id.toolbar)
 
         setSupportActionBar(toolbar)
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         
 
         loadHome(HomeFragment())
@@ -39,22 +39,31 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     }
 
     private fun loadHome(home: HomeFragment) {
+        //desactivando el boton de atras
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, home).addToBackStack(null)
         formmu.commit()
     }
 
     private fun loadRegistrationTravel(tr: TravelRegistrationFragment){
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
     private fun loadTerms(tyc:TerminosFragment){
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tyc).addToBackStack(null)
         formmu.commit()
     }
     private fun loadHomeTravel(ht:HomeTravelFragment){
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, ht).addToBackStack(null)
         formmu.commit()

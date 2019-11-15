@@ -36,20 +36,11 @@ import java.util.*
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TravelRegistrationFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TravelRegistrationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val ARG_PARAM2= "param2"
 class TravelRegistrationFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var id: String? = null
-    private var param2: String? = null
+    private var datepersist: String? = null
     private var listener: OnFragmentInteractionListener? = null
     var mycontext : FragmentActivity?=null
     //Date picker
@@ -88,6 +79,7 @@ class TravelRegistrationFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             id = it.getString(ARG_PARAM1)
+            datepersist= it.getString(ARG_PARAM2)
         }
     }
 
@@ -157,11 +149,10 @@ class TravelRegistrationFragment : Fragment() {
                 registration()
             }
         }else{
-            initialTravel!!.text= "Actualizar"
-            var ll= getTravels(id!!)
-            Log.d("funcion", ll)
+            initialTravel!!.text= getString(R.string.update_travel)
+             getTravels(id!!)
             initialTravel!!.setOnClickListener{
-        updateTravel(id!!,ll)}
+        updateTravel(id!!,datepersist!!)}
         }
         closeRegistration!!.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()
@@ -271,10 +262,9 @@ class TravelRegistrationFragment : Fragment() {
 
     //Creacion del Actualizar Datos del viaje
 
-    fun getTravels(id: String):String {
-        var pos =0
-        var i =0
-        var datepersist: String = ""
+
+//obtencion de la data del viaje ingresado
+    fun getTravels(id: String) {
         var viaje: MutableList<Travel> = mutableListOf()
             val docRef = db.collection("e-Tracker")
             val query:Query = docRef.whereEqualTo(FieldPath.documentId(), id)
@@ -285,13 +275,15 @@ class TravelRegistrationFragment : Fragment() {
                 centerCost!!.setText(viaje[0].centerCost)
                 cash!!.setText(viaje[0].cash)
                 if (viaje[0].refund == "Si"){
-                    radioYes!!.isChecked
-                }else if (viaje[0].refund=="No"){radioNo!!.isChecked}
+                    radioYes= radioGroup!!.getChildAt(0) as RadioButton?
+                    radioGroup!!.check(radioYes!!.id)
+                }else if (viaje[0].refund=="No"){
+                    radioNo= radioGroup!!.getChildAt(1) as RadioButton?
+                    radioGroup!!.check(radioNo!!.id)
+                }
                 datePicker!!.setText(viaje[0].initialDate)
                 finisDate!!.setText(viaje[0].finishDate)
                 description!!.setText(viaje[0].description)
-                datepersist = viaje[0].dateRegister.toString()
-                Log.d("persist", datepersist)
                 //Spinner
                 val adapt = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, aproved)
                 adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -315,15 +307,11 @@ class TravelRegistrationFragment : Fragment() {
                             Log.d("Success", "$conteo")
                         }
                         adapt.notifyDataSetChanged()
-                    }
-                    Log.d("No_Success", "datos no funcionando")
+                    }else{ Log.d("No_Success", "datos no funcionando")}
                 }
                 //Finish Spinner
-
                 //Finaliza de llenar los datos en el formulario
             }
-        return datepersist
-
     }
 
     fun updateTravel(id: String, persist: String){
@@ -417,10 +405,11 @@ class TravelRegistrationFragment : Fragment() {
 
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(id: String) =
+        fun newInstance(id: String, datein: String) =
             TravelRegistrationFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, id)
+                    putString(ARG_PARAM2,datein)
                 }
             }
     }

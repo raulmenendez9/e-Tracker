@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    Tamaño de Fuentes-->
+
+    <!--    Small Thin-->
+
+    <style name="SmallFont_Thin_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_thin</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="SmallFont_Thin_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_thin</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    Small Regular-->
+
+    <style name="SmallFont_Regular_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="SmallFont_Regular_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    Small Medium-->
+
+    <style name="SmallFont_Medium_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="SmallFont_Medium_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    Small Bold-->
+
+    <style name="SmallFont_Bold_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="SmallFont_Bold_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    Small Condensed-->
+
+    <style name="SmallFont_Condensed_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="SmallFont_Condensed_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Small_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+
+
+
+
+
+    <!--    Fuente de Tamaño Medio-->
+
+    <!--    Medium Thin-->
+
+    <style name="MediumFont_Thin_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_thin</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="MediumFont_Thin_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_thin</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    Medium Regular-->
+
+    <style name="MediumFont_Regular_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+        <item name="android:textColorHint">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="MediumFont_Regular_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+
+    </style>
+
+    <!--    Medium Medium-->
+
+    <style name="MediumFont_Medium_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+    </style>
+
+    <style name="MediumFont_Medium_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    Medium Bold-->
+
+    <style name="MediumFont_Bold_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="MediumFont_Bold_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    Medium Condensed-->
+
+    <style name="MediumFont_Condensed_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="MediumFont_Condensed_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Medium_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+
+
+    <!--    Fuente de Tamaño Completo-->
+
+    <!--    FullSize Thin-->
+
+    <style name="FullSizeFont_Thin_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_thin</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="FullSizeFont_Thin_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_thin</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    FullSize Regular-->
+
+    <style name="FullSizeFont_Regular_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="FullSizeFont_Regular_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    FullSize Medium-->
+
+    <style name="FullSizeFont_Medium_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="FullSizeFont_Medium_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    FullSize Bold-->
+
+    <style name="FullSizeFont_Bold_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="FullSizeFont_Bold_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+    <!--    FullSize Condensed-->
+
+    <style name="FullSizeFont_Condensed_White" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="FullSizeFont_Condensed_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Full_Size</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+    </style>
+
+</resources>

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary_01_Blue">#055EA9</color>
-    <color name="primaryColor_02_Dark_Blue">#21315d</color>
-    <color name="colorSecondary_01_Blue">#104899</color>
-    <color name="colorSecondary_02_Light_Blue">#0A5FA9</color>
-    <color name="colorSecondary_03_Gray">#C0BFBF</color>
-    <color name="colorSecondary_04_White">#F5F5F5</color>
+    <color name="colorPrimary01Blue">#055EA9</color>
+    <color name="colorPrimary02Gray">#7B868C</color>
+
+
+    <color name="colorSecondary01DarkBlue">#21315d</color>
+    <color name="colorSecondary02Blue">#104899</color>
+    <color name="colorSecondary03LightBlue">#0A5FA9</color>
+    <color name="colorSecondary04Gray">#C0BFBF</color>
+    <color name="colorSecondary05LightGray">#F5F5F5</color>
     <color name="hint">#8EA4CA</color>
 
 </resources>

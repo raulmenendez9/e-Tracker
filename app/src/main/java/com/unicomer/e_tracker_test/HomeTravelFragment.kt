@@ -1,6 +1,7 @@
 package com.unicomer.e_tracker_test
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 
-class HomeFragment : Fragment() {
+class HomeTravelFragment : Fragment() {
 
 
     private var listener: OnFragmentInteractionListener? = null
@@ -23,22 +24,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view=inflater.inflate(R.layout.fragment_home, container, false)
-        val floatingButtonHomeFragment: View = view.findViewById(R.id.floatingActionButton_addviaje)
-
-        floatingButtonHomeFragment.setOnClickListener {
-            listener?.openRegistrationTravelFragment()
-        }
-
-        return view
+        return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
 
-
+    fun onButtonPressed(uri: Uri) {
+        listener?.onFragmentInteraction(uri)
+    }
 
     override fun onAttach(context: Context) {
-
-        listener?.OnAttachHomeFragment()
-
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
             listener = context
@@ -52,20 +45,14 @@ class HomeFragment : Fragment() {
         listener = null
     }
 
-
     interface OnFragmentInteractionListener {
-
-        fun openRegistrationTravelFragment()
-        fun OnAttachHomeFragment()
+        fun onFragmentInteraction(uri: Uri)
     }
-
-
 
     companion object {
 
-
         @JvmStatic
-        fun newInstance() = HomeFragment()
+        fun newInstance() = HomeTravelFragment()
             }
-    }
+}
 

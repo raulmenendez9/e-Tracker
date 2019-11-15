@@ -3,23 +3,84 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary_01_Blue</item>
-        <item name="colorPrimaryDark">@color/primaryColor_02_Dark_Blue</item>
-        <item name="colorAccent">@color/colorSecondary_01_Blue</item>
+        <item name="colorPrimary">@color/colorPrimary01Blue</item>
+        <item name="colorPrimaryDark">@color/colorSecondary01DarkBlue</item>
+        <item name="colorAccent">@color/colorSecondary02Blue</item>
     </style>
+
+
+
+<!--    Login Activity Theme-->
+
+    <!--    EditText Theme-->
+
+    <style name="EditText_Login">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/MediumFont_Regular_White</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+        <item name="android:textColorHint">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <!--    TextView Regular Small Theme-->
+
+    <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/SmallFont_Regular_White</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
+
+    <style name="ButtonWhite_Medium_Size" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">180dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:background">@drawable/btn_background_white</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.09</item>
+    </style>
+
+
+
+    <!--    Button Big Size Style-->
+
+    <style name="ButtonWhite_Big_Size" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">270dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:background">@drawable/btn_background_white</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.09</item>
+    </style>
+
+    <style name="ButtonBlue_Big_Size" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">270dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:background">@drawable/btn_background_blue</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.09</item>
+    </style>
+
+
+    
+    
+    
     <!--Theme for Buttons e-Tracker-->
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/ic_spinner</item>
     </style>
     <!-- Radio buttons-->
     <style name="RadioButtonStyle" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/colorSecondary_04_White</item>
-        <item name="android:textColorSecondary">@color/colorSecondary_04_White</item>
+        <item name="colorAccent">@color/colorSecondary05LightGray</item>
+        <item name="android:textColorSecondary">@color/colorSecondary05LightGray</item>
     </style>
-    <!--Theme for Buttons e-Tracker-->
-    <style name="Buttons" parent="android:Widget.Button">
-        <item name="android:drawable">@drawable/button_white</item>
-    </style>
+
     <!--Theme for Dialogs -->
     <style name="DialogseTracker" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@drawable/dialog_bg_white</item>
@@ -29,7 +90,24 @@
         <style name="SplashTheme" parent="Theme.AppCompat.Light">
             <item name="android:windowBackground">@drawable/splash_screen_start</item>
         </style>
-
+    <!-- Text with no change HOME TRAVEL HEADER-->
+    <style name="HomeTravelHeaderTEXTNOCHANGE" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorPrimary02Gray</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <!-- Text change HOME TRAVEL HEADER-->
+    <style name="HomeTravelHeaderTEXT" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
 
 

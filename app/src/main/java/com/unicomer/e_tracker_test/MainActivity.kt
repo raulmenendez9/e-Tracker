@@ -26,15 +26,12 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val toolbar = this.findViewById<Toolbar>(R.id.toolbar)
-
         setSupportActionBar(toolbar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
-        
-
-        loadHome(HomeFragment())
+        loadHomeTravel(HomeTravelFragment())
+        //loadHome(HomeFragment())
         //loadRegistrationTravel(TravelRegistrationFragment())
     }
 

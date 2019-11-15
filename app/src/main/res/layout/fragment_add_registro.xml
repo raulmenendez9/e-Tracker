@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/tv_Titulo"
-                style="@style/TextView_Blue_Small"
+                android:textAppearance="@style/SmallFont_Bold_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_Fecha" />
 
             <EditText
-                style="@style/EditText_Full_Size"
+                style="@style/EditText_Login"
                 android:id="@+id/editText4"
                 android:layout_marginTop="16dp"
                 android:ems="10"
@@ -54,7 +54,7 @@
 
             <TextView
                 android:id="@+id/tv_Categoria"
-                style="@style/TextView_Blue_Small"
+                android:textAppearance="@style/SmallFont_Bold_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
@@ -64,7 +64,7 @@
 
             <TextView
                 android:id="@+id/tv_Descripcion"
-                style="@style/TextView_Blue_Small"
+                android:textAppearance="@style/SmallFont_Bold_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tv_Fecha"
-                style="@style/TextView_Blue_Small"
+                android:textAppearance="@style/SmallFont_Bold_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -84,7 +84,7 @@
 
             <TextView
                 android:id="@+id/tv_Monto"
-                style="@style/TextView_Blue_Small"
+                android:textAppearance="@style/SmallFont_Bold_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -94,7 +94,7 @@
 
             <EditText
                 android:id="@+id/et_titulo_de_registro"
-                style="@style/EditText_Full_Size"
+                style="@style/EditText_Login"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:ems="10"

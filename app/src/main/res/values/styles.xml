@@ -7,81 +7,29 @@
         <item name="colorPrimaryDark">@color/colorSecondary01DarkBlue</item>
         <item name="colorAccent">@color/colorSecondary02Blue</item>
     </style>
-    
-    
-    
+
+
+
 <!--    Login Activity Theme-->
-
-
-    <style name="TextView_Small" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/helvetica_neue_thin</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor"> @color/colorSecondary05LightGray</item>
-        <item name="android:textColorHint">@color/colorSecondary04Gray</item>
-    </style>
-
-    
-    <style name="TextView_MediumSize" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">270dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor"> @color/colorSecondary05LightGray</item>
-        <item name="android:textColorHint">@color/colorSecondary04Gray</item>
-    </style>
-
-
-    <!--    TextView Theme-->
-
-    <style name="TextView_Blue_Small" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/colorPrimary01Blue</item>
-    </style>
-
 
     <!--    EditText Theme-->
 
-    <style name="EditText_Full_Size" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">match_parent</item>
+    <style name="EditText_Login">
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/colorPrimary02Gray</item>
-        <item name="android:textColorHint">@color/colorPrimary02Gray</item>
-    </style>
-
-
-    <!--    Button Small Size Style-->
-
-    <style name="ButtonWhite_Small_Size" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">46dp</item>
-        <item name="android:background">@drawable/btn_background_white</item>
-        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:letterSpacing">0.09</item>
-    </style>
-
-
-    <style name="ButtonBlue_Small_Size" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">46dp</item>
-        <item name="android:background">@drawable/btn_background_blue</item>
-        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textAppearance">@style/MediumFont_Regular_White</item>
         <item name="android:textColor">@color/colorSecondary05LightGray</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:letterSpacing">0.09</item>
+        <item name="android:textColorHint">@color/colorSecondary05LightGray</item>
     </style>
 
+    <!--    TextView Regular Small Theme-->
 
-<!--    Button Medium Size Style-->
+    <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/SmallFont_Regular_White</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
 
     <style name="ButtonWhite_Medium_Size" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">180dp</item>
@@ -94,16 +42,6 @@
     </style>
 
 
-    <style name="ButtonBlue_Medium_Size" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">270dp</item>
-        <item name="android:layout_height">46dp</item>
-        <item name="android:background">@drawable/btn_background_blue</item>
-        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/colorSecondary05LightGray</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:letterSpacing">0.09</item>
-    </style>
 
     <!--    Button Big Size Style-->
 

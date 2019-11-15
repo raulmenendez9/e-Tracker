@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -26,14 +27,22 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        dbAuth = FirebaseAuth.getInstance()
+        val user = dbAuth!!.currentUser
+
+
+        // Si usuario SI ES null entonces MainActivity NO se ejecuta y pasa directamente a LoginActivity
+        if (user == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
 
-        // cargar MainFragment para Inicio de Navegacion en UI
+        // Cargar MainFragment para Inicio de Navegacion en UI
         loadHomeFragment(HomeFragment())
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
-
-
 
     }
 
@@ -66,7 +75,6 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
 
 
 
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -91,16 +99,15 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
             // TODO Cambiar los textos del Toast por Strings
 
             R.id.item_historial -> {
-
                 // Manejar el evento en item "Historial"
 
                 thisIsATestFragment(AddRegistroFragment())
-
                 true
             }
 
             R.id.item_terminos -> {
                 // Manejar el evento en item "Terminos y Condiciones"
+
                 Toast.makeText(this,"item terminos y condiciones",Toast.LENGTH_SHORT).show()
                 loadTermsAndConditionsFragment(TerminosFragment())
                 true
@@ -129,7 +136,6 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
-
                 true
             }
 
@@ -140,14 +146,16 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
     }
 
 
-    override fun envio() {
-        var barra: View = findViewById(R.id.toolbar)
-        barra.visibility = View.GONE
+
+    override fun openRegistrationTravelFragment() {
+//        var barra: View = findViewById(R.id.toolbar)
+//        barra.visibility = View.GONE
         loadRegistrationTravelFragment(TravelRegistrationFragment())
     }
 
     override fun OnAttachHomeFragment() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var barra: View = findViewById(R.id.toolbar)
+        barra.visibility = View.VISIBLE
     }
 
 

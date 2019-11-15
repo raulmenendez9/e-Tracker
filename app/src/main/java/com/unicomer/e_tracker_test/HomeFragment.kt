@@ -24,10 +24,10 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view=inflater.inflate(R.layout.fragment_home, container, false)
-        val fab: View = view.findViewById(R.id.floatingActionButton_addviaje)
+        val floatingButtonHomeFragment: View = view.findViewById(R.id.floatingActionButton_addviaje)
 
-        fab.setOnClickListener {
-            listener?.envio()
+        floatingButtonHomeFragment.setOnClickListener {
+            listener?.openRegistrationTravelFragment()
         }
 
         return view
@@ -55,8 +55,7 @@ class HomeFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
 
-        fun envio()
-
+        fun openRegistrationTravelFragment()
         fun OnAttachHomeFragment()
     }
 

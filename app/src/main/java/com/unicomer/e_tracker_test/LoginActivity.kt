@@ -14,8 +14,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.unicomer.e_tracker_test.Constants.APP_NAME
 import com.unicomer.e_tracker_test.Constants.LOGIN_ACTIVITY_KEY
+import com.unicomer.e_tracker_test.Constants.LOGIN_DIALOG
 import com.unicomer.e_tracker_test.Constants.USER_LOGGED_IN_KEY
-import com.unicomer.e_tracker_test.Dialogs.LoginDialogFragment
 
 class LoginActivity : AppCompatActivity() {
 
@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
             validateUserSession()
         }
         signInDialog?.setOnClickListener {
-            showDialog()
+            //showDialog()
         }
 
 
@@ -124,11 +124,11 @@ class LoginActivity : AppCompatActivity() {
 
     // TODO REVISAR ESTO
 
-    fun showDialog(){
+/*    fun showDialog(){
         val fm = this.supportFragmentManager
-        val dialog = LoginDialogFragment()
-        dialog.show(fm,"DIALOG_LOGIN")
+        val dialog = LoginDialogFragment
+        dialog.show(fm, LOGIN_DIALOG)
 
-    }
+    }*/
 
 }

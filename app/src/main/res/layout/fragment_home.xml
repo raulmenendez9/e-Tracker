@@ -74,8 +74,8 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
+            style="@style/TextView_Body_Text"
             android:id="@+id/et_texto_bienvenida"
-            android:textAppearance="@style/MediumFont_Regular_Blue"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginBottom="76dp"

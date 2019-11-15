@@ -22,8 +22,8 @@
             android:layout_height="match_parent">
 
             <TextView
+                style="@style/TextView_Title"
                 android:id="@+id/tv_Titulo"
-                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -32,49 +32,20 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/et_Monto"
-                android:layout_width="wrap_content"
+                style="@style/EditText_Regular"
+                android:id="@+id/et_titulo_de_registro"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:ems="10"
-                android:inputType="numberSigned"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_Fecha" />
-
-            <EditText
-                style="@style/EditText_Login"
-                android:id="@+id/editText4"
-                android:layout_marginTop="16dp"
-                android:ems="10"
+                android:hint="@string/nombre_de_registro"
                 android:inputType="textPersonName"
-                android:text="Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_Titulo" />
 
             <TextView
-                android:id="@+id/tv_Categoria"
-                android:textAppearance="@style/MediumFont_Regular_Blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:text="@string/tv_categoria"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Monto" />
-
-            <TextView
-                android:id="@+id/tv_Descripcion"
-                android:textAppearance="@style/MediumFont_Regular_Blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:text="@string/tv_descripcion"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Categoria" />
-
-            <TextView
+                style="@style/TextView_Title"
                 android:id="@+id/tv_Fecha"
-                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -82,27 +53,46 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
 
+            <EditText
+                style="@style/EditText_Regular"
+                android:id="@+id/et_Fecha"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
+
             <TextView
+                style="@style/TextView_Title"
                 android:id="@+id/tv_Monto"
-                android:textAppearance="@style/MediumFont_Regular_Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="32dp"
                 android:text="@string/tv_monto"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_Fecha" />
 
             <EditText
-                android:id="@+id/et_titulo_de_registro"
-                style="@style/EditText_Login"
+                style="@style/EditText_Regular"
+                android:id="@+id/et_Monto"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-                android:hint="@string/nombre_de_registro"
-                android:inputType="textPersonName"
+                android:inputType="numberSigned"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_Fecha" />
+
+            <TextView
+                style="@style/TextView_Title"
+                android:id="@+id/tv_Categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/tv_categoria"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Titulo" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_Monto" />
 
             <RadioGroup
                 android:id="@+id/radioGroup2"
@@ -139,35 +129,45 @@
                     android:text="4" />
             </RadioGroup>
 
-
-            <EditText
-                android:id="@+id/et_Fecha"
+            <TextView
+                style="@style/TextView_Title"
+                android:id="@+id/tv_Descripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="64dp"
+                android:text="@string/tv_descripcion"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Categoria" />
+
+            <EditText
+                style="@style/EditText_Regular"
+                android:id="@+id/editText4"
+                android:layout_marginTop="16dp"
                 android:ems="10"
-                android:inputType="date"
+                android:hint="@string/et_description_hint"
+                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion" />
 
-
+ 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </ScrollView>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.70" />
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
 
     <Button
         android:id="@+id/button"
         style="@style/ButtonWhite_Big_Size"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         android:text="Button"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -185,9 +185,9 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
         android:clickable="true"
         android:src="@drawable/cancel_medium_ff"
         app:layout_constraintBottom_toBottomOf="parent"

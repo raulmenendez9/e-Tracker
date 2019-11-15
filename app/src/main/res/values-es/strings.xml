@@ -43,5 +43,11 @@
     <string name="tv_descripcion">Descripción:</string>
     <string name="add_photo">Tomar Foto</string>
     <string name="agregar_registro">Agregar</string>
-    <string name="et_description_hint">En este campo puede incluir detalles adicionales</string>
+    <string name="et_description_hint">Agregar detalles adicionales</string>
+    <string name="a">a</string>
+    <string name="User_cancel_datapicker">Se canceló el calendario</string>
+    <string name="finish_date">Fecha final</string>
+    <string name="register_update">Registro actualizado</string>
+    <string name="register_complete">Registro completado</string>
+    <string name="update_travel">Actualizar</string>
 </resources>

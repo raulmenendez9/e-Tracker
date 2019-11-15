@@ -17,19 +17,20 @@
     <style name="EditText_Login">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/MediumFont_Regular_White</item>
+        <item name="android:textAppearance">@style/FontStyle_InputFormText</item>
         <item name="android:textColor">@color/colorSecondary05LightGray</item>
         <item name="android:textColorHint">@color/colorSecondary05LightGray</item>
     </style>
 
-    <!--    TextView Regular Small Theme-->
-
-    <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="EditText_Regular" parent="Theme.AppCompat.Light">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/SmallFont_Regular_White</item>
-        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textAppearance">@style/FontStyle_InputFormText</item>
+        <item name="android:textColor">@color/colorSecondary01DarkBlue</item>
+        <item name="android:textColorHint">@color/colorSecondary01DarkBlue</item>
     </style>
+
+    <!--    TextView Regular Small Theme-->
 
     <style name="ButtonWhite_Medium_Size" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">180dp</item>
@@ -40,13 +41,28 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:letterSpacing">0.09</item>
     </style>
+
+    <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/FontStyle_SecondaryText</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
+    </style>
     
-    
-    <style name="TextView_Title_Blue" parent="Theme.AppCompat.Light">
+    <style name="TextView_Title" parent="Theme.AppCompat.Light">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textAppearance">@style/MediumFont_Regular_Blue</item>
+        <item name="android:textAppearance">@style/FontStyle_ListTitleText</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
     </style>
+
+    <style name="TextView_Body_Text" parent="Theme.AppCompat.Light">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">@style/FontStyle_BodyText</item>
+    </style>
+
+
     
 
 

@@ -16,20 +16,21 @@ import com.unicomer.e_tracker_test.Constants.APP_NAME
 import com.unicomer.e_tracker_test.Constants.LOGIN_ACTIVITY_KEY
 import com.unicomer.e_tracker_test.Constants.LOGIN_DIALOG
 import com.unicomer.e_tracker_test.Constants.USER_LOGGED_IN_KEY
+import com.unicomer.e_tracker_test.Dialogs.LoginDialogFragment
 
 class LoginActivity : AppCompatActivity() {
 
-    // Declaring FirebaseAuth components
+    // Declaration of FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
-    // End of Declaring FirebaseAuth components
+    // End of declaration FirebaseAuth components
 
 
-    // Declaring UI variables
+    // Declaration of variables
     var emailText: TextView? = null
     var passwordText: TextView? = null
     var signInButton: Button? = null
     var signInDialog: TextView? = null
-    // End of Declaring UI variables
+    // End of declaration UI variables
 
 
     // Splash for Login (no se muestra si user != null)
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // hideSplash()
 
         // Validar si el usuario ha logeado anteriormente
 
@@ -58,7 +60,6 @@ class LoginActivity : AppCompatActivity() {
 
         emailText = this.findViewById(R.id.et_email)
         passwordText = this.findViewById(R.id.et_password)
-
         signInButton = this.findViewById(R.id.button_sign_in)
         signInDialog = this.findViewById(R.id.txt_signin_problem)
 
@@ -67,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
             validateUserSession()
         }
         signInDialog?.setOnClickListener {
-            //showDialog()
+            showDialog()
         }
 
 
@@ -124,11 +125,11 @@ class LoginActivity : AppCompatActivity() {
 
     // TODO REVISAR ESTO
 
-/*    fun showDialog(){
+    fun showDialog(){
         val fm = this.supportFragmentManager
-        val dialog = LoginDialogFragment
+        val dialog = LoginDialogFragment.newInstance()
         dialog.show(fm, LOGIN_DIALOG)
 
-    }*/
+    }
 
 }

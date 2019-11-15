@@ -275,7 +275,7 @@
     </string-array>
     <string name="add_photo">Tomar Foto</string>
     <string name="agregar_registro">Agregar</string>
-    <string name="et_description_hint">En este campo puede incluir detalles adicionales</string>
+    <string name="et_description_hint">Agregar detalles adicionales</string>
 
 
 </resources>

@@ -17,6 +17,7 @@ import butterknife.Unbinder
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.unicomer.e_tracker_test.travel_registration.DatePickerFragment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,8 +45,11 @@ class AddRegistroFragment : Fragment() {
     var mDateStart: String? = null
     var mDateEnd: String? = null
 
-    //variable del contexto
+    // Variable del contexto
     private var mycontext : FragmentActivity? = null
+
+    // FloatingButton
+    private var floatingActionButton: FloatingActionButton? = null
 
 
 
@@ -60,8 +64,6 @@ class AddRegistroFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_registro, container, false)
-
-
 
         radioButtonFood = view?.findViewById(R.id.radioButton_food)
         radioButtonTransportation = view?.findViewById(R.id.radioButton_transportation)
@@ -78,33 +80,57 @@ class AddRegistroFragment : Fragment() {
 
 
             if (radioButtonSelectedId == radioButtonFood?.id){
+                radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food)
+                radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
+                radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
+                radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
+
                 radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_selected_background_gradient)
                 radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_car_background_gradient)
+                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
                 radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
 
             } else if (radioButtonSelectedId == radioButtonHotel?.id) {
+                radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
+                radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel)
+                radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
+                radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
 
                 radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
                 radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_selected_background_gradient)
-                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_car_background_gradient)
+                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
                 radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
 
             } else if (radioButtonSelectedId == radioButtonTransportation?.id) {
+                radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
+                radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
+                radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation)
+                radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
 
                 radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
                 radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_car_selected_background_gradient)
+                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_selected_background_gradient)
                 radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
 
             } else if (radioButtonSelectedId == radioButtonOther?.id) {
+                radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
+                radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
+                radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
+                radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other)
+
                 radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
                 radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_car_background_gradient)
+                radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
                 radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_selected_background_gradient)
             }
 
         }
+
+        floatingActionButton = view?.findViewById(R.id.floating_action_button_add_record)
+        floatingActionButton?.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStack()
+        }
+
 
         return view
     }
@@ -123,6 +149,8 @@ class AddRegistroFragment : Fragment() {
         datePicker!!.setOnClickListener{
             openDateRangePicker()
         }
+
+
     }
 
     fun onButtonPressed(uri: Uri) {

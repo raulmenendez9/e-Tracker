@@ -61,7 +61,7 @@ class TravelRegistrationFragment : Fragment() {
 
     private var description: EditText? = null
     private var initialTravel: Button? = null
-    private var closeRegistration: FloatingActionButton? = null
+    private var floatingActionButton: FloatingActionButton? = null
     //accediendo a la instancia de Firestore
     private val user = FirebaseAuth.getInstance().currentUser
     private var emailUser: String?=null
@@ -98,7 +98,7 @@ class TravelRegistrationFragment : Fragment() {
         spinner = view.findViewById(R.id.spinnerAproved)
         description = view.findViewById(R.id.editTextMotive)
         initialTravel = view.findViewById(R.id.buttonRegistrations)
-        closeRegistration = view.findViewById(R.id.ButtonCloseRegistration)
+        floatingActionButton = view.findViewById(R.id.ButtonCloseRegistration)
         radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
 
         //AutocompleteTextview
@@ -149,7 +149,7 @@ class TravelRegistrationFragment : Fragment() {
             initialTravel!!.setOnClickListener{
         updateTravel(id!!,datepersist!!)} //Actualizacion de la data
         }
-        closeRegistration!!.setOnClickListener{
+        floatingActionButton!!.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()
         }
     }

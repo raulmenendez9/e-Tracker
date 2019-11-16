@@ -1,6 +1,5 @@
 package com.unicomer.e_tracker_test
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,7 @@ import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
-class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, AddRegistroFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, AddRegistroFragment.OnFragmentInteractionListener, TerminosFragment.OnFragmentInteractionListener {
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
@@ -179,15 +178,20 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
 
+
     override fun openRegistrationTravelFragment() {
-//        var barra: View = findViewById(R.id.toolbar)
-//        barra.visibility = View.GONE
+        hideToolBarOnFragmentViewDissapears()
         loadRegistrationTravelFragment(TravelRegistrationFragment())
     }
 
-    override fun OnAttachHomeFragment() {
-        var barra: View = findViewById(R.id.toolbar)
-        barra.visibility = View.VISIBLE
+    override fun showToolBarOnFragmentViewCreate() {
+        var toolbarMainActivity: View = findViewById(R.id.toolbar)
+        toolbarMainActivity.visibility = View.VISIBLE
+    }
+
+    override fun hideToolBarOnFragmentViewDissapears() {
+        var toolbarMainActivity: View = findViewById(R.id.toolbar)
+        toolbarMainActivity.visibility = View.GONE
     }
 
 

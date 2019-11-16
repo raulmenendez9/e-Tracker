@@ -22,8 +22,6 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.Models.Travel
 import java.text.SimpleDateFormat
@@ -56,8 +54,8 @@ class TravelRegistrationFragment : Fragment() {
     private var radioYes: RadioButton? = null
     private var radioNo: RadioButton?=null
 
-    private var datePicker: EditText? = null
-    private var finisDate: EditText?=null
+    private var initialDatePicker: TextView? = null
+    private var finishDatePicker: TextView?=null
     private var spinner : Spinner? = null
     private var aproved : MutableList<String> = mutableListOf()
 
@@ -95,8 +93,8 @@ class TravelRegistrationFragment : Fragment() {
         cash = view.findViewById(R.id.editTextCost)
         radioYes = view.findViewById(R.id.radioButtonYes)
         radioNo = view.findViewById(R.id.radioButtonNo)
-        datePicker = view.findViewById(R.id.editTextDate)
-        finisDate = view.findViewById(R.id.finishDate)
+        initialDatePicker = view.findViewById(R.id.textView_pick_initial_date)
+        finishDatePicker = view.findViewById(R.id.textView_pick_final_date)
         spinner = view.findViewById(R.id.spinnerAproved)
         description = view.findViewById(R.id.editTextMotive)
         initialTravel = view.findViewById(R.id.buttonRegistrations)
@@ -114,7 +112,11 @@ class TravelRegistrationFragment : Fragment() {
         ButterKnife.bind(this,view)
         unbinder = ButterKnife.bind(this,view)
 
-        datePicker!!.setOnClickListener{
+        initialDatePicker!!.setOnClickListener{
+            openDateRangePicker()
+        }
+
+        finishDatePicker!!.setOnClickListener{
             openDateRangePicker()
         }
         //finish Date picker
@@ -171,8 +173,8 @@ class TravelRegistrationFragment : Fragment() {
                 val initdate = mDateStart
                 val finishdate = mDateEnd
 
-                datePicker!!.setText(initdate)
-                finisDate!!.setText(finishdate)
+                initialDatePicker!!.setText(initdate)
+                finishDatePicker!!.setText(finishdate)
             }
         })
 
@@ -190,7 +192,7 @@ class TravelRegistrationFragment : Fragment() {
     private fun registration() {//Metodo para registrar viaje nuevo
         if (originCountry!!.text.toString().isEmpty() || destinyCountry!!.text.toString().isEmpty()
             || centerCost!!.text.toString().isEmpty() || cash!!.text.toString().isEmpty()
-            || (radioGroup!!.checkedRadioButtonId == -1) || datePicker!!.text.toString().isEmpty()
+            || (radioGroup!!.checkedRadioButtonId == -1) || initialDatePicker!!.text.toString().isEmpty()
             || description!!.text.toString().isEmpty()
         ) {
             Toast.makeText(activity, activity!!.getString(R.string.error_hint), Toast.LENGTH_SHORT)
@@ -207,8 +209,8 @@ class TravelRegistrationFragment : Fragment() {
             val destCountry = destinyCountry!!.text.toString()
             val cenCost = centerCost!!.text.toString()
             val cassh = cash!!.text.toString()
-            val datePick = datePicker!!.text.toString()
-            val finishtravel = finisDate!!.text.toString()
+            val datePick = initialDatePicker!!.text.toString()
+            val finishtravel = finishDatePicker!!.text.toString()
             val descp = description!!.text.toString()
             val balance = cassh
             val aproved = spinner!!.selectedItem.toString()
@@ -269,8 +271,8 @@ class TravelRegistrationFragment : Fragment() {
                     radioGroup!!.check(radioNo!!.id)
                 }
                 //finalizacion del radioButton
-                datePicker!!.setText(viaje[0].initialDate)
-                finisDate!!.setText(viaje[0].finishDate)
+                initialDatePicker!!.setText(viaje[0].initialDate)
+                finishDatePicker!!.setText(viaje[0].finishDate)
                 description!!.setText(viaje[0].description)
                 //Spinner
                 var conteo: Int
@@ -299,7 +301,7 @@ class TravelRegistrationFragment : Fragment() {
     private fun updateTravel(id: String, persist: String){//Creacion del Actualizar Datos del viaje
         if (originCountry!!.text.toString().isEmpty() || destinyCountry!!.text.toString().isEmpty()
             || centerCost!!.text.toString().isEmpty() || cash!!.text.toString().isEmpty()
-            || (radioGroup!!.checkedRadioButtonId == -1) || datePicker!!.text.toString().isEmpty()
+            || (radioGroup!!.checkedRadioButtonId == -1) || initialDatePicker!!.text.toString().isEmpty()
             || description!!.text.toString().isEmpty()
         ) {
             Toast.makeText(activity, activity!!.getString(R.string.error_hint), Toast.LENGTH_SHORT)
@@ -316,8 +318,8 @@ class TravelRegistrationFragment : Fragment() {
             val destCountry = destinyCountry!!.text.toString()
             val cenCost = centerCost!!.text.toString()
             val cassh = cash!!.text.toString()
-            val datePick = datePicker!!.text.toString()
-            val finishtravel = finisDate!!.text.toString()
+            val datePick = initialDatePicker!!.text.toString()
+            val finishtravel = finishDatePicker!!.text.toString()
             val descp = description!!.text.toString()
             val balance = cassh
             val aproved = spinner!!.selectedItem.toString()

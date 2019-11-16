@@ -42,6 +42,30 @@
         <item name="android:letterSpacing">0.09</item>
     </style>
 
+    <style name="TextView_Date_Picker_White" parent="Theme.AppCompat.Light">
+        <item name="android:background">@drawable/date_picker_drawable</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:hint">01-01-2000</item>
+    </style>
+
+    <style name="TextView_Date_Picker_Blue" parent="Theme.AppCompat.Light">
+        <item name="android:background">@drawable/date_picker_blue_drawable</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:hint">01-01-2000</item>
+    </style>
+
     <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

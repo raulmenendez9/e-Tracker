@@ -26,6 +26,8 @@ class HomeFragment : Fragment() {
         var view=inflater.inflate(R.layout.fragment_home, container, false)
         val floatingButtonHomeFragment: View = view.findViewById(R.id.floatingActionButton_addviaje)
 
+        listener?.showToolBarOnFragmentViewCreate()
+
         floatingButtonHomeFragment.setOnClickListener {
             listener?.openRegistrationTravelFragment()
         }
@@ -36,8 +38,6 @@ class HomeFragment : Fragment() {
 
 
     override fun onAttach(context: Context) {
-
-        listener?.OnAttachHomeFragment()
 
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -56,7 +56,9 @@ class HomeFragment : Fragment() {
     interface OnFragmentInteractionListener {
 
         fun openRegistrationTravelFragment()
-        fun OnAttachHomeFragment()
+        fun showToolBarOnFragmentViewCreate()
+        fun hideToolBarOnFragmentViewDissapears()
+
     }
 
 

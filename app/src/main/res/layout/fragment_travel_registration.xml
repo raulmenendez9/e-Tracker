@@ -269,26 +269,13 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRefound" />
 
-            <EditText
-                android:id="@+id/editTextDate"
-                android:layout_width="163dp"
-                android:layout_height="38dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/round_edittext_date_picker"
-                android:clickable="true"
+            <TextView
+                android:id="@+id/textView_pick_initial_date"
+                style="@style/TextView_Date_Picker_Blue"
+                android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/ic_date"
-                android:drawablePadding="0dp"
-                android:ems="10"
-                android:focusable="false"
-                android:fontFamily="@font/helvetica_neue_regular"
-                android:hint="@string/date"
-                android:inputType="date"
-                android:textAlignment="center"
-                android:textColor="@color/colorSecondary05LightGray"
-                android:textColorHint="@color/hint"
-                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.967"
+                app:layout_constraintHorizontal_bias="0.017"
                 app:layout_constraintStart_toEndOf="@+id/textViewInitialDate"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
@@ -296,28 +283,18 @@
                 android:id="@+id/textA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="3dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
                 android:text="@string/a"
                 android:textColor="@color/colorSecondary05LightGray"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/finishDate"
+                app:layout_constraintEnd_toStartOf="@+id/textView_pick_final_date"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
-            <EditText
-                android:id="@+id/finishDate"
-                android:layout_width="92dp"
-                android:layout_height="37dp"
-                android:layout_marginTop="4dp"
-                android:backgroundTint="@color/colorPrimary01Blue"
-                android:clickable="false"
-                android:ems="10"
-                android:focusable="false"
-                android:inputType="date"
-                android:textAlignment="center"
-                android:textColor="@color/colorSecondary05LightGray"
-                android:textColorHint="@color/hint"
-                android:textSize="16sp"
+            <TextView
+                android:id="@+id/textView_pick_final_date"
+                style="@style/TextView_Date_Picker_Blue"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 

@@ -49,12 +49,13 @@
             android:id="@+id/container_bienvenida"
             android:layout_width="0dp"
             android:layout_height="218dp"
-            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/textView_Bienvenida"
 
             app:layout_constraintEnd_toStartOf="@+id/guideline10"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:layout_constraintVertical_bias="0.578"
             app:srcCompat="@mipmap/img_background_new_travel"
             tools:src="@tools:sample/avatars"
             tools:srcCompat="@mipmap/img_background_new_travel" />

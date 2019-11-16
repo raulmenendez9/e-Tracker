@@ -45,7 +45,7 @@
 
             <TextView
                 style="@style/TextView_Title"
-                android:id="@+id/tv_Fecha"
+                android:id="@+id/tv_Pick_Date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -53,13 +53,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
 
-            <EditText
-                android:id="@+id/et_Fecha"
-                style="@style/EditText_Regular"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/et_date_picker"
+                style="@style/TextView_Date_Picker_White"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
                 android:ems="10"
-                android:inputType="date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
 
@@ -71,7 +70,7 @@
                 android:layout_marginTop="32dp"
                 android:text="@string/tv_monto"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Fecha" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_Pick_Date" />
 
             <EditText
                 android:id="@+id/et_Monto"
@@ -82,7 +81,7 @@
                 android:ems="10"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_Fecha" />
+                app:layout_constraintTop_toBottomOf="@+id/et_date_picker" />
 
             <TextView
                 style="@style/TextView_Title"
@@ -99,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

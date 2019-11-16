@@ -79,7 +79,7 @@ class HomeTravelFragment : Fragment() {
             .whereEqualTo("active", true).addSnapshotListener{ querySnapshot, _ ->
                 idTravel = querySnapshot!!.documents[0].id
             }
-
+        Log.i("IDTRAVEL3", "el id es: $idTravel")
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
 
@@ -90,9 +90,10 @@ class HomeTravelFragment : Fragment() {
         initDate = view.findViewById(R.id.txt_header_initDate)
         finishDate = view.findViewById(R.id.txt_header_finishDate)
         balance = view.findViewById(R.id.txt_header_cash)
-        fillForm()
-        //setUpRecyclerView("78Z1i0Uu8lhuruplkVLQ")
-        Log.i("IDTRAVEL2", "el id es: $idTravel")
+        fillForm()//metodo para llenar la cabecera
+
+        setUpRecyclerView("78Z1i0Uu8lhuruplkVLQ")
+        Log.i("IDTRAVEL2", "el id es: $idTravel") //no muestra el id
 
     }
 
@@ -124,7 +125,7 @@ class HomeTravelFragment : Fragment() {
                 initDate!!.text = data[0].initialDate
                 finishDate!!.text = data[0].finishDate
                 balance!!.text = data[0].balance
-                Log.i("IDTRAVEL", "el id es: $idTravel")
+                Log.i("IDTRAVEL", "el id es: $idTravel")//Este si muestra el id
             }
 
     }

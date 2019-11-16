@@ -2,6 +2,7 @@ package com.unicomer.e_tracker_test
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
+import com.google.firebase.firestore.model.Document
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
@@ -46,6 +46,7 @@ class HomeTravelFragment : Fragment() {
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
     var travelRef: CollectionReference = db.collection("e-Tracker")
+    var idTravel: String="" //travelRef.document().toString()
     val storageRef: StorageReference = FirebaseStorage.getInstance().reference
     //Instancia del Adapter para el RecyclerView
     var adapterHt: AdapterHomeTravel? = null
@@ -72,7 +73,13 @@ class HomeTravelFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         //Toast.makeText(context,"el usuario es: ${FirebaseUser!!.email}",Toast.LENGTH_LONG).show()
-        fillForm()
+        //fillForm()
+        travelRef
+            .whereEqualTo("emailUser", FirebaseUser!!.email)
+            .whereEqualTo("active", true).addSnapshotListener{ querySnapshot, _ ->
+                idTravel = querySnapshot!!.documents[0].id
+            }
+
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
 
@@ -83,8 +90,10 @@ class HomeTravelFragment : Fragment() {
         initDate = view.findViewById(R.id.txt_header_initDate)
         finishDate = view.findViewById(R.id.txt_header_finishDate)
         balance = view.findViewById(R.id.txt_header_cash)
-        //fillForm()
-        setUpRecyclerView()
+        fillForm()
+        //setUpRecyclerView("78Z1i0Uu8lhuruplkVLQ")
+        Log.i("IDTRAVEL2", "el id es: $idTravel")
+
     }
 
     override fun onStart() {
@@ -108,17 +117,19 @@ class HomeTravelFragment : Fragment() {
             .whereEqualTo("emailUser", FirebaseUser!!.email)
             .whereEqualTo("active", true)
             .get()
-            .addOnSuccessListener { documents ->
-                data = documents.toObjects(Travel::class.java)
+            .addOnSuccessListener { doc ->
+                data = doc.toObjects(Travel::class.java)
                 originCountry!!.text = data[0].originCountry
                 destinyCountry!!.text = data[0].destinyCountry
                 initDate!!.text = data[0].initialDate
                 finishDate!!.text = data[0].finishDate
                 balance!!.text = data[0].balance
+                Log.i("IDTRAVEL", "el id es: $idTravel")
             }
+
     }
-    fun setUpRecyclerView(){ //metodo para llenar el recyclerview desde firebase
-        var query: Query = travelRef.document("78Z1i0Uu8lhuruplkVLQ")
+    fun setUpRecyclerView(id:String){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
+        var query: Query = travelRef.document(id)
             .collection("record").orderBy("recordName")
         var options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)

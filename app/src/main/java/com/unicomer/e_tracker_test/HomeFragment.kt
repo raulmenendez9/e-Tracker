@@ -24,6 +24,7 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view=inflater.inflate(R.layout.fragment_home, container, false)
+
         val floatingButtonHomeFragment: View = view.findViewById(R.id.floatingActionButton_addviaje)
 
         listener?.showToolBarOnFragmentViewCreate()

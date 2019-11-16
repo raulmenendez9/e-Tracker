@@ -2,6 +2,7 @@ package com.unicomer.e_tracker_test.travel_registration
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -32,8 +33,13 @@ import java.util.*
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2= "param2"
+
+
 class TravelRegistrationFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    private var listener: OnFragmentInteractionListener? = null
+
+
     //variables de los parametros obtenidos del argumento
     private var id: String? = null
     private var datepersist: String? = null
@@ -78,15 +84,20 @@ class TravelRegistrationFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
+
         return inflater.inflate(R.layout.fragment_travel_registration, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Ocultar el toolbar
+        listener?.hideToolBarOnFragmentViewDissapears()
+
+
         originCountry = view.findViewById(R.id.editTextOrigin)
         destinyCountry= view.findViewById(R.id.editTextDestiny)
         centerCost=view.findViewById(R.id.editTextCodProject)
@@ -379,6 +390,11 @@ class TravelRegistrationFragment : Fragment() {
         mycontext= activity as FragmentActivity
                 super.onAttach(activity)
     }
+
+    interface OnFragmentInteractionListener {
+        fun hideToolBarOnFragmentViewDissapears()
+    }
+
 
     companion object {
 

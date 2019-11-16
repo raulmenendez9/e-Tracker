@@ -230,7 +230,6 @@ class AddRegistroFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
-
         fun showToolBarOnFragmentViewCreate()
         fun hideToolBarOnFragmentViewDissapears()
 

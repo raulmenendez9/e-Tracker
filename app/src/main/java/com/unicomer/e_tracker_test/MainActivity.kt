@@ -180,8 +180,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
 
     override fun openRegistrationTravelFragment() {
-        hideToolBarOnFragmentViewDissapears()
         loadRegistrationTravelFragment(TravelRegistrationFragment())
+        hideToolBarOnFragmentViewDissapears()
     }
 
     override fun showToolBarOnFragmentViewCreate() {

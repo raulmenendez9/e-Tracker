@@ -2,27 +2,23 @@ package com.unicomer.e_tracker_test
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.model.Document
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.models.Travel
-import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,13 +37,11 @@ class HomeTravelFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-
     //accediendo a los datos de firebase
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
     var travelRef: CollectionReference = db.collection("e-Tracker")
-    var idTravel: String="" //travelRef.document().toString()
-    val storageRef: StorageReference = FirebaseStorage.getInstance().reference
+    var idTravel: String="" //debe estar inicializado para poder usarse mas adelante
     //Instancia del Adapter para el RecyclerView
     var adapterHt: AdapterHomeTravel? = null
 
@@ -59,7 +53,6 @@ class HomeTravelFragment : Fragment() {
     var balance: TextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -71,18 +64,16 @@ class HomeTravelFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        //Toast.makeText(context,"el usuario es: ${FirebaseUser!!.email}",Toast.LENGTH_LONG).show()
-        //fillForm()
-        travelRef
+        travelRef //no mover de aqui
             .whereEqualTo("emailUser", FirebaseUser!!.email)
             .whereEqualTo("active", true).addSnapshotListener{ querySnapshot, _ ->
                 idTravel = querySnapshot!!.documents[0].id
+                /*Desde aca se carga el id en la variable idTravel pero se cargará unos milisegundos
+                * despues de que la peticion se complete*/
             }
-        Log.i("IDTRAVEL3", "el id es: $idTravel")
+        adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         originCountry = view.findViewById(R.id.txt_header_originCountry)
@@ -90,11 +81,7 @@ class HomeTravelFragment : Fragment() {
         initDate = view.findViewById(R.id.txt_header_initDate)
         finishDate = view.findViewById(R.id.txt_header_finishDate)
         balance = view.findViewById(R.id.txt_header_cash)
-        fillForm()//metodo para llenar la cabecera
-
-        setUpRecyclerView("78Z1i0Uu8lhuruplkVLQ")
-        Log.i("IDTRAVEL2", "el id es: $idTravel") //no muestra el id
-
+        fillForm()//metodo para llenar all de fragment (incluido el recycler)
     }
 
     override fun onStart() {
@@ -106,25 +93,34 @@ class HomeTravelFragment : Fragment() {
         super.onStop()
         adapterHt!!.startListening()
     }
-
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
-    fun fillForm(){ //metodo para llenar la cabecera de info del viaje
+    private fun adapterInit():FirestoreRecyclerOptions<Record>{ //inicializador para el adapter del recyclerview
+        val query: Query = travelRef.document("dummyData") //Se le pone "dummyData" por que no nos interesa que jale datos desde firebase ya que para eso necesitamos el id
+            .collection("record").orderBy("recordName")
+        return FirestoreRecyclerOptions.Builder<Record>()
+            .setQuery(query, Record::class.java)
+            .build()
+    }
+
+    fun fillForm(){ //metodo para llenar la cabecera de info del viaje y el recycler
         var data: MutableList<Travel>
         travelRef
-            .whereEqualTo("emailUser", FirebaseUser!!.email)
-            .whereEqualTo("active", true)
+            .whereEqualTo("emailUser", FirebaseUser!!.email) //verifica que el document sea del usuario
+            .whereEqualTo("active", true) //verifica que este esté como activo (el viaje)
             .get()
             .addOnSuccessListener { doc ->
                 data = doc.toObjects(Travel::class.java)
-                originCountry!!.text = data[0].originCountry
+                originCountry!!.text = data[0].originCountry //seteo los datos
                 destinyCountry!!.text = data[0].destinyCountry
                 initDate!!.text = data[0].initialDate
                 finishDate!!.text = data[0].finishDate
                 balance!!.text = data[0].balance
+                setUpRecyclerView(idTravel) //le mando el id del viaje a este punto la peticion ya a sido existosa
+                adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
                 Log.i("IDTRAVEL", "el id es: $idTravel")//Este si muestra el id
             }
 
@@ -135,7 +131,7 @@ class HomeTravelFragment : Fragment() {
         var options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
-        adapterHt = AdapterHomeTravel(options)
+        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
         val recycler = view?.findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this.context)

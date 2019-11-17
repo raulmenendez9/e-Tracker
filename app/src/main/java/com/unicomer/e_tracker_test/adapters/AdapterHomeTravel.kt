@@ -24,8 +24,7 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
             recordName.text = model.recordName.take(17) //corta el string mostrando los primeros 7 caracteres
             recordPrice.text = model.recordMount
             recordDate.text = model.recordDate
-            imageNumber = model.recordCategory
-            when(imageNumber){
+            when(model.recordCategory){
                 "0" ->{ imageCat.setImageResource(R.drawable.ic_cat_food)}
                 "1" ->{imageCat.setImageResource(R.drawable.ic_cat_car)}
                 "2" ->{imageCat.setImageResource(R.drawable.ic_cat_hotel)}
@@ -40,7 +39,6 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
         var recordPrice: TextView = containerView.findViewById(R.id.txt_record_price)
         var recordDate: TextView = containerView.findViewById(R.id.txt_record_date)
         var imageCat: ImageView = containerView.findViewById(R.id.image_record_cat)
-        var imageNumber: String= ""
         var totalItem:Int? =null
 
     }

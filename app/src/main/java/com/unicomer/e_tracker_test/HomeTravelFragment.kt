@@ -106,7 +106,7 @@ class HomeTravelFragment : Fragment() {
             .build()
     }
 
-    fun fillForm(){ //metodo para llenar la cabecera de info del viaje y el recycler
+    private fun fillForm(){ //metodo para llenar la cabecera de info del viaje y el recycler
         var data: MutableList<Travel>
         travelRef
             .whereEqualTo("emailUser", FirebaseUser!!.email) //verifica que el document sea del usuario
@@ -125,10 +125,10 @@ class HomeTravelFragment : Fragment() {
             }
 
     }
-    fun setUpRecyclerView(id:String){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
-        var query: Query = travelRef.document(id)
+    private fun setUpRecyclerView(id:String){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
+        val query: Query = travelRef.document(id)
             .collection("record").orderBy("recordName")
-        var options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
+        val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
         adapterHt = AdapterHomeTravel(options) //datos reales del adapter

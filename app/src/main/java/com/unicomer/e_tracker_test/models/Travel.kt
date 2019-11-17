@@ -13,8 +13,9 @@ data class Travel(val originCountry: String?,
                   val aproved: String?,
                   val description: String?,
                   val balance: String?,
-                  val active: Boolean){
+                  val active: Boolean,
+                  val settled: Boolean){
     constructor():this("","", "",
         "","","","","","","","",
-        "","", false)
+        "","", false, false)
 }

@@ -9,7 +9,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary_01_Blue"
+    android:background="@color/colorPrimary01Blue"
     android:visibility="visible">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -39,9 +39,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorSecondary_04_White"
+            android:textColor="@color/colorSecondary05LightGray"
             android:textSize="20sp"
-            android:fontFamily="@font/helvetica_neue_lts_td_bd"
+            android:fontFamily="@font/helvetica_neue_bold"
             android:text="@string/txt_loading"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

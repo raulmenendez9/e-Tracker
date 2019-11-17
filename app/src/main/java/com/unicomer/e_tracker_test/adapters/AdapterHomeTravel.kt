@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.models.Record
 import kotlinx.android.extensions.LayoutContainer
 
 class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
@@ -26,7 +26,7 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
             recordDate.text = model.recordDate
             when(model.recordCategory){
                 "0" ->{ imageCat.setImageResource(R.drawable.ic_cat_food)}
-                "1" ->{imageCat.setImageResource(R.drawable.ic_cat_car)}
+                "1" ->{imageCat.setImageResource(R.drawable.ic_category_transportation)}
                 "2" ->{imageCat.setImageResource(R.drawable.ic_cat_hotel)}
                 "3" ->{imageCat.setImageResource(R.drawable.ic_cat_other)}
             }

@@ -5,7 +5,7 @@
     android:layout_width="280dp"
     android:layout_height="180dp"
     android:theme="@style/DialogseTracker"
-    tools:context=".dialogs.LoginDialogFragment">
+    tools:context=".Dialogs.LoginDialogFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,9 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/helvetica_neue_lts_td_md"
+            android:fontFamily="@font/helvetica_neue_medium"
             android:text="@string/txt_dialog_login_header"
-            android:textColor="@color/colorPrimary_01_Blue"
+            android:textColor="@color/colorPrimary01Blue"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
@@ -46,10 +46,10 @@
             android:id="@+id/textView4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/helvetica_neue_ltstd_cn"
+            android:fontFamily="@font/helvetica_neue_condensed"
             android:text="@string/txt_dialog_login"
             android:textAlignment="center"
-            android:textColor="@color/primaryColor_02_Dark_Blue"
+            android:textColor="@color/colorSecondary01DarkBlue"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5" />

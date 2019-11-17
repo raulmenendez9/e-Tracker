@@ -17,6 +17,8 @@ import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuItemCompat
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
+    private var dbFirestore: FirebaseFirestore? = null
+    var dbCollectionReference: CollectionReference? = null
     // End of Declaring FirebaseAuth components
 
 
@@ -35,8 +39,18 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        // Obtener currentUser de Firebase
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
+
+        // Obtener bandera 'viaje'
+        // Si el viaje esta en 'true' entonces la pantalla a mostrar debe ser HomeTravelFragment
+        dbFirestore = FirebaseFirestore.getInstance()
+        dbCollectionReference = dbFirestore!!.collection("e-Tracker")
+
+        // TODO AQUI FALTA INSTANCIAR AL ID DEL VIAJE SEGUN EL ID DEL USUARIO
+        // val viajeActivoONo = dbCollectionReference!!
 
 
         // Si usuario SI ES null entonces MainActivity NO se ejecuta y pasa directamente a LoginActivity
@@ -44,12 +58,11 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        } else {
+            // Cargar MainFragment para Inicio de Navegacion en UI
+            loadHomeFragment(HomeFragment())
+            supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
         }
-
-
-        // Cargar MainFragment para Inicio de Navegacion en UI
-        loadHomeFragment(HomeFragment())
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
 
     }
 

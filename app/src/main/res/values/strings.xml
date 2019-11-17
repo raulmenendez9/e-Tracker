@@ -11,6 +11,13 @@
     <string name="wrong_email_password">El usuario o contraseña es incorrecto</string>
 
 
+    <!--    Otros-->
+
+    <string name="add_photo">Tomar Foto</string>
+    <string name="agregar_registro">Agregar</string>
+    <string name="et_description_hint">Agregar detalles adicionales</string>
+
+
     <!--String del registro de viaje -->
     <!-- TextViews-->
     <string name="empecemos">Empecemos!</string>
@@ -27,7 +34,6 @@
     <string name="final_date">Fecha fin:</string>
     <string name="approved_by">Aprobado por:</string>
     <string name="description">Descripción:</string>
-    <string name="a">a</string>
     <!--EditTexts -->
     <string name="title_date_range_picker_example" translatable="false">Date Range Picker</string>
     <string name="origin_country_EditText">País donde te encuentras</string>
@@ -56,6 +62,7 @@
     <!--Errors -->
     <string name="error_hint">Todos los campos son obligatorio</string>
     <string name="error_center_cost">El centro de coste deben ser de 4 digitos</string>
+    <string name="a">a</string>
     <string name="tv_titulo">Titulo</string>
     <string name="nombre_de_registro">Nombre de Registro</string>
     <string name="tv_fecha">Fecha:</string>
@@ -273,9 +280,9 @@
         <item>Zambia</item>
         <item>Zimbabue</item>
     </string-array>
-    <string name="add_photo">Tomar Foto</string>
-    <string name="agregar_registro">Agregar</string>
-    <string name="et_description_hint">Agregar detalles adicionales</string>
+
+
+
 
 
 </resources>

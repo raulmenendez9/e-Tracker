@@ -2,9 +2,14 @@ package com.unicomer.e_tracker_test.Models
 
 data class Record(val recordName: String,
                   val recordDate: String,
-                  val recordMount: Double,
-                  val recordCategory:Int){
-    constructor():this("","",0.0,0)
+                  val recordMount: String,
+                  val recordCategory:String,
+                  val recordPhoto:String,
+                  val recordDescription: String,
+                  val recordDateRegister: String,
+                  val recordUpdateRegister: String){
+    constructor():this("","","","", "","",
+        "","")
 }
 /*
 orden para las categorias:

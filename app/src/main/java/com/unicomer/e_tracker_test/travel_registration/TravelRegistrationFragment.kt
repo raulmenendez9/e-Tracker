@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.Models.Travel
+import com.unicomer.e_tracker_test.models.Travel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -247,11 +247,19 @@ class TravelRegistrationFragment : Fragment() {
                 origCountry,
                 destCountry,
                 cenCost,
-                cassh, email, refund,
-                datePick,finishtravel,date,update,aproved,
+                cassh,
+                email,
+                refund,
+                datePick,
+                finishtravel,
+                date,
+                update,
+                aproved,
                 descp,
-                balance,active, settled
-            )
+                balance,
+                active,
+                settled)
+
                 db.collection("e-Tracker")
                     .add(travel)
                     .addOnSuccessListener {

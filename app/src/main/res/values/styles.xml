@@ -145,7 +145,7 @@
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
         <item name="android:textColor">@color/colorPrimary02Gray</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
     <!-- Text change HOME TRAVEL HEADER-->
     <style name="HomeTravelHeaderTEXT" parent="Theme.AppCompat.Light">
@@ -154,7 +154,7 @@
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
         <item name="android:textColor">@color/colorSecondary05LightGray</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 

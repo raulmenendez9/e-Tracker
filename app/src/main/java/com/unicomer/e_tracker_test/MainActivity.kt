@@ -2,6 +2,7 @@ package com.unicomer.e_tracker_test
 
 import android.content.Intent
 import android.net.Uri
+import android.app.SearchManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -13,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.unicomer.e_tracker_test.Constants.MAIN_ACTIVITY_KEY
 import com.unicomer.e_tracker_test.Constants.REGISTRATION_TRAVEL_FRAGMENT
 import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuItemCompat
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -116,9 +120,32 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+       // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
-        return true
+//        val manager=getSystemService() as SearchManager
+        var searchItem=menu.findItem(R.id.action_search)
+        if (searchItem!=null) {
+
+            var searchView = searchItem.actionView as SearchView
+            searchView.queryHint = "Search"
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
+                    return true
+                }
+
+            })
+        }else{
+            Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
+        }
+
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -154,24 +181,24 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             R.id.item_fin_viaje -> {
                 // Manejar el evento en item "Finalizar Viaje"
 
-                Toast.makeText(this, "item fin viaje", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "item fin viaje", Toast.LENGTH_SHORT).show()
                 true
             }
 
             R.id.item_cerrarapp -> {
                 // Manejar el evento en item "Cerrar sesion"
 
-                Toast.makeText(this, "La sesion ha finalizado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "La sesion ha finalizado", Toast.LENGTH_SHORT).show()
                 dbAuth?.signOut()
 
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
                 true
             }
 
             else -> {
-                Toast.makeText(this, "ningun item", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "ningun item", Toast.LENGTH_SHORT).show()
                 super.onOptionsItemSelected(item)
             }
         }
@@ -198,5 +225,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }
+
+// sethasoptionmenu en los fragmentos
+// habilita el toolbart en los demas fragmentos
+

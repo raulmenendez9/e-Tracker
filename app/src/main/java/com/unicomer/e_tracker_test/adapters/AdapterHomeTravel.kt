@@ -21,7 +21,7 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
 
     override fun onBindViewHolder(holder: HomeTravelHolder, position: Int, model: Record) {
         holder.apply {
-            recordName.text = model.recordName
+            recordName.text = model.recordName.take(17) //corta el string mostrando los primeros 7 caracteres
             recordPrice.text = model.recordMount
             recordDate.text = model.recordDate
             imageNumber = model.recordCategory
@@ -31,6 +31,7 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
                 "2" ->{imageCat.setImageResource(R.drawable.ic_cat_hotel)}
                 "3" ->{imageCat.setImageResource(R.drawable.ic_cat_other)}
             }
+            totalItem = itemCount
         }
     }
 
@@ -40,5 +41,7 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
         var recordDate: TextView = containerView.findViewById(R.id.txt_record_date)
         var imageCat: ImageView = containerView.findViewById(R.id.image_record_cat)
         var imageNumber: String= ""
+        var totalItem:Int? =null
+
     }
 }

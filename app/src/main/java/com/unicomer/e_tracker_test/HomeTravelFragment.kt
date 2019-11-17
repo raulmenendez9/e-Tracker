@@ -51,6 +51,8 @@ class HomeTravelFragment : Fragment() {
     var initDate: TextView?=null
     var finishDate: TextView?=null
     var balance: TextView?=null
+    //para la imagen de fondo
+    var backgroundImage: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +83,7 @@ class HomeTravelFragment : Fragment() {
         initDate = view.findViewById(R.id.txt_header_initDate)
         finishDate = view.findViewById(R.id.txt_header_finishDate)
         balance = view.findViewById(R.id.txt_header_cash)
+        backgroundImage = view.findViewById(R.id.backgroundRecyclerView)
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
     }
 
@@ -119,9 +122,9 @@ class HomeTravelFragment : Fragment() {
                 initDate!!.text = data[0].initialDate
                 finishDate!!.text = data[0].finishDate
                 balance!!.text = data[0].balance
+
                 setUpRecyclerView(idTravel) //le mando el id del viaje a este punto la peticion ya a sido existosa
                 adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
-                Log.i("IDTRAVEL", "el id es: $idTravel")//Este si muestra el id
             }
 
     }

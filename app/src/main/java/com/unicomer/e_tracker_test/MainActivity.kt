@@ -93,6 +93,9 @@ class MainActivity : AppCompatActivity(),HomeFragment.OnFragmentInteractionListe
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    // logica para filtrar con el recyclerView
+                    //adaptador.getFilter().filter(newText)
+
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
                 }

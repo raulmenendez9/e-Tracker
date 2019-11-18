@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
@@ -37,15 +39,20 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
     var initDate: TextView?=null
     var finishDate: TextView?=null
     var balance: TextView?=null
+
+    private var floatingActionButton: FloatingActionButton? = null
     //totales en cabecera
     var totalFood: TextView?=null
     //para la imagen de fondo
     var backgroundImage: View? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        // Mostrar el toolbar
+        listener?.showToolBarOnFragmentViewCreate()
+
+
         travelRef //no mover de aqui
             .whereEqualTo("emailUser", FirebaseUser!!.email)
             .whereEqualTo("active", true).addSnapshotListener{ querySnapshot, _ ->
@@ -54,13 +61,22 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
                 * despues de que la peticion se complete*/
             }
         adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
+
+        floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
+        floatingActionButton?.setOnClickListener {
+            listener?.goBackToHomeTravelFragment()
+        }
+
+
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
+
 
     override fun totalFood(total: Double) {
         totalFood!!.text = total.toString()
         Log.i("FOODFR","la comida es: ${total.toString()}")
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         originCountry = view.findViewById(R.id.txt_header_originCountry)
@@ -81,7 +97,7 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
 
     override fun onStop() {
         super.onStop()
-        adapterHt!!.startListening()
+        adapterHt!!.stopListening()
     }
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -126,7 +142,8 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
         recycler.layoutManager = LinearLayoutManager(this.context)
         recycler.adapter = adapterHt
     }
-/*
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -140,9 +157,17 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
         super.onDetach()
         listener = null
     }
-*/
+
+    private fun floatingActionButtonHomeTravel(goToHomeTravelFragment: HomeTravelFragment){
+
+
+    }
+
+
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
+        fun goBackToHomeTravelFragment()
+        fun showToolBarOnFragmentViewCreate()
     }
 
     companion object {

@@ -21,6 +21,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.unicomer.e_tracker_test.travel_registration.DatePickerFragment
 import java.text.SimpleDateFormat
 import java.util.*
+import android.R.attr.data
+import androidx.databinding.DataBindingUtil
+import android.R.attr.data
+import androidx.databinding.ViewDataBinding
 
 
 class AddRegistroFragment : Fragment() {
@@ -58,10 +62,12 @@ class AddRegistroFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        listener?.hideToolBarOnFragmentViewDissapears()
+
+
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_registro, container, false)
 

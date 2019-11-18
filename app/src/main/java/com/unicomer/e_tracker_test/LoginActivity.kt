@@ -13,10 +13,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.unicomer.e_tracker_test.Constants.APP_NAME
-import com.unicomer.e_tracker_test.Constants.LOGIN_ACTIVITY_KEY
-import com.unicomer.e_tracker_test.Constants.LOGIN_DIALOG
-import com.unicomer.e_tracker_test.Constants.USER_LOGGED_IN_KEY
+import com.unicomer.e_tracker_test.Constants.*
 import com.unicomer.e_tracker_test.Dialogs.LoginDialogFragment
 
 class LoginActivity : AppCompatActivity() {
@@ -37,6 +34,10 @@ class LoginActivity : AppCompatActivity() {
     // Splash for Login (no se muestra si user != null)
     var splash: View? = null
     // End of Splash declaration
+
+
+
+    // Activity Lifecycle methods here
 
 
 
@@ -94,14 +95,14 @@ class LoginActivity : AppCompatActivity() {
                         // Si authentication funciona aqui se maneja
 
                         Log.i(LOGIN_ACTIVITY_KEY, "signIn:success")
-                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with UID ${it.result?.user?.uid}")
+                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with user ${it.result?.user?.email} and UID ${it.result?.user?.uid}")
 
                         val userLoggedIn = dbAuth?.currentUser
-
 
                         val sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
                         editor.putString(USER_LOGGED_IN_KEY, userLoggedIn!!.email)
+                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn.uid)
                         editor.apply()
 
                         val intent = Intent(this, MainActivity::class.java)
@@ -112,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
 
                         // Si authentication falla aqui puede manejarse
 
-                        Log.w("", "signIn:failure", it.exception)
+                        Log.w(LOGIN_ACTIVITY_KEY, "signIn:failure", it.exception)
                         Toast.makeText(this,R.string.wrong_email_password, Toast.LENGTH_LONG).show()
                     }
                 }

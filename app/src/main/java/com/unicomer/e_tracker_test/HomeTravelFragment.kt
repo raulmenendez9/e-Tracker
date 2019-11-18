@@ -1,8 +1,8 @@
 package com.unicomer.e_tracker_test
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +17,10 @@ import com.google.firebase.firestore.*
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.Models.Travel
+import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel.*
 
 
-class HomeTravelFragment : Fragment() {
-
+class HomeTravelFragment : Fragment(), ShowDataInterface {
 
     private var listener: OnFragmentInteractionListener? = null
     //accediendo a los datos de firebase
@@ -37,13 +37,10 @@ class HomeTravelFragment : Fragment() {
     var initDate: TextView?=null
     var finishDate: TextView?=null
     var balance: TextView?=null
+    //totales en cabecera
+    var totalFood: TextView?=null
     //para la imagen de fondo
     var backgroundImage: View? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +56,11 @@ class HomeTravelFragment : Fragment() {
         adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
+
+    override fun totalFood(total: Double) {
+        totalFood!!.text = total.toString()
+        Log.i("FOODFR","la comida es: ${total.toString()}")
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         originCountry = view.findViewById(R.id.txt_header_originCountry)
@@ -67,6 +69,8 @@ class HomeTravelFragment : Fragment() {
         finishDate = view.findViewById(R.id.txt_header_finishDate)
         balance = view.findViewById(R.id.txt_header_cash)
         backgroundImage = view.findViewById(R.id.backgroundRecyclerView)
+        totalFood = view.findViewById(R.id.txt_header_cat_food_total)
+        Log.i("FOOD","soy el onViewCreated")
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
     }
 
@@ -104,8 +108,8 @@ class HomeTravelFragment : Fragment() {
                 initDate!!.text = data[0].initialDate
                 finishDate!!.text = data[0].finishDate
                 balance!!.text = data[0].balance
-
                 setUpRecyclerView(idTravel) //le mando el id del viaje a este punto la peticion ya a sido existosa
+
                 adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
             }
 
@@ -122,7 +126,7 @@ class HomeTravelFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(this.context)
         recycler.adapter = adapterHt
     }
-
+/*
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -136,7 +140,7 @@ class HomeTravelFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-
+*/
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
     }

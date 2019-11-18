@@ -34,5 +34,16 @@
 
     </FrameLayout>
 
+    <include
+        android:id="@+id/MainSplash"
+        android:visibility="visible"
+        layout="@layout/splash_screen_loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_fragment_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,9 +2,9 @@ package com.unicomer.e_tracker_test
 
 import android.content.Intent
 import android.net.Uri
-import android.app.SearchManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -15,14 +15,15 @@ import com.unicomer.e_tracker_test.Constants.MAIN_ACTIVITY_KEY
 import com.unicomer.e_tracker_test.Constants.REGISTRATION_TRAVEL_FRAGMENT
 import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuItemCompat
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
-class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, AddRegistroFragment.OnFragmentInteractionListener, TerminosFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(),
+    HomeFragment.OnFragmentInteractionListener,
+    AddRegistroFragment.OnFragmentInteractionListener,
+    TerminosFragment.OnFragmentInteractionListener {
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
@@ -38,21 +39,18 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
         // Obtener currentUser de Firebase
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
-
-        // Obtener bandera 'viaje'
-        // Si el viaje esta en 'true' entonces la pantalla a mostrar debe ser HomeTravelFragment
+        //inicializar la toolbar
+        val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        //instancia de firebase
         dbFirestore = FirebaseFirestore.getInstance()
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
-
-        // TODO AQUI FALTA INSTANCIAR AL ID DEL VIAJE SEGUN EL ID DEL USUARIO
-        // val viajeActivoONo = dbCollectionReference!!
-
-
+        var splashScreen: View = findViewById(R.id.MainSplash)
         // Si usuario SI ES null entonces MainActivity NO se ejecuta y pasa directamente a LoginActivity
         if (user == null) {
             val intent = Intent(this, LoginActivity::class.java)
@@ -60,14 +58,22 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             finish()
         } else {
             // Cargar MainFragment para Inicio de Navegacion en UI
-            loadHomeFragment(HomeFragment())
-            supportActionBar?.setDisplayHomeAsUpEnabled(true) //para el back button del toolbar
+            //loadHomeFragment(HomeFragment())
+            dbCollectionReference!! //Genera la busqueda en base al email y al estado del viaje actual
+                .whereEqualTo("emailUser", user.email)
+                .whereEqualTo("active", true)
+                .get()
+                .addOnSuccessListener {querySnapshot -> //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
+                    if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
+                        loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
+                        splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
+                    }else{
+                        loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                        splashScreen.visibility = View.GONE
+                    }
+                }
         }
-
     }
-
-
-
 
     private fun envio() {
         var barra: View = findViewById(R.id.toolbar)
@@ -76,7 +82,11 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         loadTravel(TravelRegistrationFragment())//LLamado al metodo para registrar viaje
     }
 
-
+    private fun loadHomeTravelFragment(homeTravelFragment: HomeTravelFragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.main_fragment_container, homeTravelFragment)
+        fragmentTransaction.commit()
+    }
     private fun loadHomeFragment(homeFragment: HomeFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.main_fragment_container, homeFragment)
@@ -126,10 +136,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -216,8 +222,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             }
         }
     }
-
-
 
     override fun openRegistrationTravelFragment() {
         loadRegistrationTravelFragment(TravelRegistrationFragment())

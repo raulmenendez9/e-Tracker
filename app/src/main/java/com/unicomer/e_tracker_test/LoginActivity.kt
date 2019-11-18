@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -44,8 +45,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // hideSplash()
-
         // Validar si el usuario ha logeado anteriormente
 
         dbAuth = FirebaseAuth.getInstance()
@@ -63,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
         signInButton = this.findViewById(R.id.button_sign_in)
         signInDialog = this.findViewById(R.id.txt_signin_problem)
 
-
         signInButton?.setOnClickListener {
             validateUserSession()
         }
@@ -71,9 +69,8 @@ class LoginActivity : AppCompatActivity() {
             showDialog()
         }
 
-
-
     }
+
 
     fun hideSplash(){
         splash = findViewById(R.id.splashlogin)

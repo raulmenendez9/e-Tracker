@@ -34,7 +34,6 @@ import com.unicomer.e_tracker_test.Models.Travel
 class AddRegistroFragment : Fragment() {
 
 
-
     private var listener: OnFragmentInteractionListener? = null
 
     // Elementos de UI
@@ -234,19 +233,26 @@ class AddRegistroFragment : Fragment() {
 
             val firebaseDB = FirebaseFirestore.getInstance()
             val travelReference: CollectionReference = firebaseDB.collection("e-Tracker")
+            var travelID: String? = null
 
-            val travelID = firebaseDB.collection("e-Tracker").document().id
+            travelReference!!.whereEqualTo("emailUser", currentFirebaseEmailUser)
+                .whereEqualTo("active", true)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    travelID = querySnapshot.documents[0].id
 
-
-            firebaseDB.collection("e-Tracker").document(travelID).collection("record")
-                .add(addNewRecord)
-                .addOnFailureListener {
-                    Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
-                    Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje")
                 }
-                .addOnSuccessListener {
-                    Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
-                    Log.i(ADD_RECORD_FRAGMENT, "Error $it")
+                .addOnCompleteListener {
+                    firebaseDB.collection("e-Tracker").document(travelID!!).collection("record")
+                        .add(addNewRecord)
+                        .addOnFailureListener {
+                            Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
+                            Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $travelID")
+                        }
+                        .addOnSuccessListener {
+                            Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
+                            Log.i(ADD_RECORD_FRAGMENT, "Error $it")
+                        }
                 }
         }
 

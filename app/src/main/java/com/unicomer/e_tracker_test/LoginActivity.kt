@@ -98,6 +98,8 @@ class LoginActivity : AppCompatActivity() {
 
                         val userLoggedIn = dbAuth?.currentUser
 
+                        // Guardar los datos en SharedPreferences (Informacion Local)
+
                         val sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
                         editor.putString(FIREBASE_CURRENT_USER_KEY, userLoggedIn.toString())

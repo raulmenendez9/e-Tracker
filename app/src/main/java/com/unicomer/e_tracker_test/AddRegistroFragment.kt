@@ -203,9 +203,18 @@ class AddRegistroFragment : Fragment() {
 
         } else {
 
+            // INICIALIZANDO INSTANCIA DE FIREBASE
+
+            val firebaseDB = FirebaseFirestore.getInstance()
+
+            // SHAREDPREFERENCES
             val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-            val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_CURRENT_USER_KEY)
-            val currentFirebaseEmailUser = sharedPreferences?.getString(APP_NAME, FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
+            var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
+            val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_CURRENT_USER_KEY)
+            val currentFirebaseEmailUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
+
+            // Elementos de UI
+
             val recordName: String? = editTextName?.text.toString()
             val recordDate: String? = fecha?.text.toString()
             val recordAmmount: String? = monto?.text.toString()
@@ -214,6 +223,8 @@ class AddRegistroFragment : Fragment() {
             val recordDescription: String = editTextDescripcion?.text.toString()
             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
+
+            // Envio de Datos usando el Modelo de Datos
 
             val addNewRecord = Record(
             recordName!!,
@@ -225,11 +236,6 @@ class AddRegistroFragment : Fragment() {
             recordDateRegistered!!,
             recordDateLastUpdate!!
             )
-
-            // INICIALIZANDO INSTANCIA DE FIREBASE
-
-            val firebaseDB = FirebaseFirestore.getInstance()
-            var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
 
             firebaseDB.collection("e-Tracker").document(viajeID!!).collection("record")
                 .add(addNewRecord)

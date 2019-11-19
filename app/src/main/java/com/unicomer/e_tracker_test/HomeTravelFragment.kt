@@ -41,6 +41,7 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
     var balance: TextView?=null
 
     private var floatingActionButton: FloatingActionButton? = null
+
     //totales en cabecera
     var totalFood: TextView?=null
     //para la imagen de fondo
@@ -64,7 +65,7 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
 
         floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
-            listener?.goBackToHomeTravelFragment()
+            listener?.openAddRecordFragment()
         }
 
 
@@ -164,6 +165,7 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
 
 
     interface OnFragmentInteractionListener {
+        fun openAddRecordFragment()
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()

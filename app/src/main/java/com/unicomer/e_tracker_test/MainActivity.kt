@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity(),
     HomeFragment.OnFragmentInteractionListener,
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
-    HomeTravelFragment.OnFragmentInteractionListener{
+    HomeTravelFragment.OnFragmentInteractionListener
+{
 
 
     // Declaring FirebaseAuthLocalClass components
@@ -39,10 +40,6 @@ class MainActivity : AppCompatActivity(),
     // End of Declaring FirebaseAuthLocalClass components
 
 
-    val idd: String = ""
-    val dateinit: String = ""
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity(),
 
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
-        dbCollectionReference = dbFirestore?.collection("e-Tracker")
+
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
@@ -83,6 +80,8 @@ class MainActivity : AppCompatActivity(),
 
             // Cargar MainFragment para Inicio de Navegacion en UI
 
+            dbCollectionReference = dbFirestore?.collection("e-Tracker")
+
             dbCollectionReference!! //Genera la busqueda en base al email y al estado del viaje actual
                 .whereEqualTo("emailUser", user.email)
                 .whereEqualTo("active", true)
@@ -112,17 +111,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun envio() {
-        var barra: View = findViewById(R.id.toolbar)
-        barra.visibility = View.GONE
 
-        //updateRegistrationTravel(idd,dateinit)//llamado al metodo para actualizar registro del viaje
-        loadTravel(TravelRegistrationFragment())//LLamado al metodo para registrar viaje
-    }
-
-
-    // CALLING FRAGMENTS FROM MAIN ACTIVITY METHODS
-
+    // Metodos para llamar los Fragments desde MainActivity
 
     private fun loadHomeTravelFragment(homeTravelFragment: HomeTravelFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -278,6 +268,10 @@ class MainActivity : AppCompatActivity(),
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
         loadHomeTravelFragment(HomeTravelFragment())
+    }
+
+    override fun openAddRecordFragment(){
+        loadAddRecordFragment(AddRegistroFragment())
     }
 
     override fun showToolBarOnFragmentViewCreate() {

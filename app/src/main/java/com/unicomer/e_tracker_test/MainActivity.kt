@@ -55,12 +55,14 @@ class MainActivity : AppCompatActivity(),
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
 
-        val viajeID = dbCollectionReference!!.whereEqualTo("emailUser", FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
-            .whereEqualTo("active", true)
-            .addSnapshotListener{
-                querySnapshot, _ ->
-                editor.putString(FIREBASE_TRAVEL_ID, querySnapshot!!.documents[0].id)
-            }
+
+
+//        dbCollectionReference!!.whereEqualTo("emailUser", FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
+//            .whereEqualTo("active", true)
+//            .addSnapshotListener{
+//                querySnapshot, _ ->
+//                editor.putString(FIREBASE_TRAVEL_ID, querySnapshot!!.documents[0].id)
+//            }
 
         //inicializar la toolbar
 
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity(),
                 .whereEqualTo("active", true)
                 .get()
                 .addOnSuccessListener {querySnapshot -> //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
-
+                    editor.putString(FIREBASE_TRAVEL_ID, querySnapshot!!.documents[0].id)
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
                         loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde

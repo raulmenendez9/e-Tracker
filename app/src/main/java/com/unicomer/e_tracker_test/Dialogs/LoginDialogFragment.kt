@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.Dialogs
 
 import android.content.Context
 import android.net.Uri
@@ -7,38 +7,42 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+
+import com.unicomer.e_tracker_test.R
 
 
-class TerminosFragment : Fragment() {
+class LoginDialogFragment : DialogFragment() {
 
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        arguments?.let {
+        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-
-        listener?.hideToolBarOnFragmentViewDissapears()
-
-        return inflater.inflate(R.layout.fragment_terminos, container, false)
+        return inflater.inflate(R.layout.fragment_login_dialog, container, false)
     }
 
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
+//    override fun onAttach(context: Context) {
+//
+//        super.onAttach(context)
+//        if (context is LoginFragmentListener) {
+//            listener = context
+//        } else {
+//            throw RuntimeException(context.toString() + " must implement LoginFragmentListener")
+//        }
+//    }
 
     override fun onDetach() {
         super.onDetach()
@@ -47,13 +51,11 @@ class TerminosFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
-        fun showToolBarOnFragmentViewCreate()
-        fun hideToolBarOnFragmentViewDissapears()
     }
 
     companion object {
 
         @JvmStatic
-        fun newInstance() = TerminosFragment()
+        fun newInstance() = LoginDialogFragment()
     }
 }

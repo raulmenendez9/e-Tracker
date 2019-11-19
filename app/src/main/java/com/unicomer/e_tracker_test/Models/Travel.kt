@@ -1,4 +1,5 @@
-package com.unicomer.e_tracker_test.models
+package com.unicomer.e_tracker_test.Models
+
 
 data class Travel(val originCountry: String?,
                   val destinyCountry: String?,
@@ -8,13 +9,14 @@ data class Travel(val originCountry: String?,
                   val refund: String?,
                   val initialDate: String?,
                   val finishDate: String?,
-                  val DateRegister: String?,
+                  val dateRegister: String?,
                   val UpdateRegister: String?,
                   val aproved: String?,
                   val description: String?,
                   val balance: String?,
-                  val active: Boolean){
+                  val active: Boolean,
+                  val settled: Boolean){
     constructor():this("","", "",
         "","","","","","","","",
-        "","", false)
+        "","", false,false)
 }

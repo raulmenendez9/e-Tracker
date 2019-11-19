@@ -3,10 +3,19 @@
 
     <!-- Strings del Login   -->
 
-    <string name="login_login_issues">Problemas para ingresar?</string>
+    <string name="required_email_password">Usuario y contraseña son obligatorios</string>
+    <string name="login_login_issues"><u>¿Problemas para ingresar?</u></string>
     <string name="login_button_send">Entrar</string>
-    <string name="login_hint_et_email">Correo</string>
-    <string name="login_hint_et_password">Contrasena</string>
+    <string name="login_hint_et_email">Correo electrónico</string>
+    <string name="login_hint_et_password">Contraseña</string>
+    <string name="wrong_email_password">El usuario o contraseña es incorrecto</string>
+
+
+    <!--    Otros-->
+
+    <string name="add_photo">Tomar Foto</string>
+    <string name="agregar_registro">Agregar</string>
+    <string name="et_description_hint">Agregar detalles adicionales</string>
 
 
     <!--String del registro de viaje -->
@@ -16,32 +25,34 @@
     <string name="origin_country">País de origen:</string>
     <string name="destiny_country">País de destino:</string>
     <string name="cost_center">Centro de coste:</string>
-    <string name="cod_project">(O código de proyecto)</string>
+    <string name="cod_project" translatable="false">(O código de proyecto)</string>
     <string name="Cash">Efectivo:</string>
     <string name="refound">Reintegro:</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
-    <string name="initial_date">Fecha inicio:</string>
+    <string name="initial_date">Fechas:</string>
     <string name="final_date">Fecha fin:</string>
     <string name="approved_by">Aprobado por:</string>
     <string name="description">Descripción:</string>
     <!--EditTexts -->
-    <string name="title_date_range_picker_example">Date Range Picker</string>
+    <string name="title_date_range_picker_example" translatable="false">Date Range Picker</string>
     <string name="origin_country_EditText">País donde te encuentras</string>
     <string name="destiny_country_EditText">País donde te diriges</string>
-    <string name="cost">0.00</string>
+    <string name="cost" translatable="false">0.00</string>
     <string name="motive">Motivo por el cual viaja</string>
-    <string name="date">Agregar fecha</string>
+    <string name="date">Agregar</string>
+    <string name="finish_date">Fecha final</string>
 
     <!--Buttons -->
+    <string name="update_travel">Actualizar</string>
     <string name="initial_travel">Iniciar viaje</string>
-    <string name="login_logo_etracker_app">Application Logo</string>
+    <string name="login_logo_etracker_app">Logo Unicomer</string>
     <string name="txt_loading">Cargando...</string>
-    <string name="logo_garagework">Logo Garagework</string>
+    <string name="logo_garagework">Logo Garageworks</string>
     <string name="txt_record_name">La pampa Argentina</string>
     <string name="txt_record_date">10/08/2019</string>
-    <string name="txt_record_price">$45</string>
-    <string name="category_image">category image</string>
+    <string name="txt_record_price" translatable="false">$45</string>
+    <string name="category_image" translatable="false">category image</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -51,8 +62,20 @@
     <!--Errors -->
     <string name="error_hint">Todos los campos son obligatorio</string>
     <string name="error_center_cost">El centro de coste deben ser de 4 digitos</string>
-    <string name="finish_date">Fecha final</string>
     <string name="a">a</string>
+    <string name="tv_titulo">Titulo</string>
+    <string name="nombre_de_registro">Nombre de Registro</string>
+    <string name="tv_fecha">Fecha:</string>
+    <string name="tv_monto">Monto:</string>
+    <string name="tv_categoria">Categoria:</string>
+    <string name="tv_descripcion">Descripción:</string>
+
+    <!--Toasts -->
+    <string name="register_complete">Registro completado</string>
+    <string name="User_cancel_datapicker">Se canceló el calendario</string>
+    <string name="register_update">Registro actualizado</string>
+
+
 
     <!--Countries -->
     <string-array name="coutries_array">
@@ -257,6 +280,9 @@
         <item>Zambia</item>
         <item>Zimbabue</item>
     </string-array>
+
+
+
 
 
 </resources>

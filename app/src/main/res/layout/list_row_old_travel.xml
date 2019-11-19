@@ -47,9 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/helvetica_neue_lts_td_md"
+            android:fontFamily="@font/helvetica_neue_medium"
             android:text="Pais Actual"
-            android:textColor="@color/colorPrimary_01_Blue"
+            android:textColor="@color/colorPrimary01Blue"
             app:layout_constraintStart_toEndOf="@+id/imageView6"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/helvetica_neue_lts_td_md"
+            android:fontFamily="@font/helvetica_neue_medium"
             android:text="a"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="parent" />
@@ -70,9 +70,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/helvetica_neue_lts_td_md"
+            android:fontFamily="@font/helvetica_neue_medium"
             android:text="Pais de Destino"
-            android:textColor="@color/colorPrimary_01_Blue"
+            android:textColor="@color/colorPrimary01Blue"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,9 +83,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/helvetica_neue_ltstd_cn"
+            android:fontFamily="@font/helvetica_neue_condensed"
             android:text="10/10/2019"
-            android:textColor="@color/colorPrimary_01_Blue"
+            android:textColor="@color/colorPrimary01Blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView6"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -97,7 +97,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/helvetica_neue_ltstd_cn"
+            android:fontFamily="@font/helvetica_neue_condensed"
             android:text="$2500"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView8"

@@ -23,10 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.util.Log
 import com.google.firebase.firestore.*
-import com.unicomer.e_tracker_test.Constants.ADD_RECORD_FRAGMENT
-import com.unicomer.e_tracker_test.Constants.APP_NAME
-import com.unicomer.e_tracker_test.Constants.FIREBASE_CURRENT_USER_KEY
-import com.unicomer.e_tracker_test.Constants.FIREBASE_USER_EMAIL_LOGGED_IN_KEY
+import com.unicomer.e_tracker_test.Constants.*
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.Models.Travel
 
@@ -232,27 +229,16 @@ class AddRegistroFragment : Fragment() {
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
-            val travelReference: CollectionReference = firebaseDB.collection("e-Tracker")
-            var travelID: String? = null
 
-            travelReference!!.whereEqualTo("emailUser", currentFirebaseEmailUser)
-                .whereEqualTo("active", true)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    travelID = querySnapshot.documents[0].id
-
+            firebaseDB.collection("e-Tracker").document(FIREBASE_TRAVEL_ID).collection("record")
+                .add(addNewRecord)
+                .addOnFailureListener {
+                    Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
+                    Log.i(ADD_RECORD_FRAGMENT, "Error $it")
                 }
-                .addOnCompleteListener {
-                    firebaseDB.collection("e-Tracker").document(travelID!!).collection("record")
-                        .add(addNewRecord)
-                        .addOnFailureListener {
-                            Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
-                            Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $travelID")
-                        }
-                        .addOnSuccessListener {
-                            Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
-                            Log.i(ADD_RECORD_FRAGMENT, "Error $it")
-                        }
+                .addOnSuccessListener {
+                    Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
+                    Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID")
                 }
         }
 

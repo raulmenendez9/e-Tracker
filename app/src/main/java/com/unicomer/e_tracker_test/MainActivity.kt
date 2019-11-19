@@ -1,6 +1,8 @@
 package com.unicomer.e_tracker_test
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,12 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.unicomer.e_tracker_test.Constants.MAIN_ACTIVITY_KEY
-import com.unicomer.e_tracker_test.Constants.REGISTRATION_TRAVEL_FRAGMENT
-import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
 import androidx.appcompat.widget.SearchView
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.unicomer.e_tracker_test.Constants.*
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity(),
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
+
+    // Mandar a llamar al SharedPreferences
+    var sharedPreferences: SharedPreferences? = null
 
     // End of Declaring FirebaseAuthLocalClass components
 
@@ -48,6 +51,16 @@ class MainActivity : AppCompatActivity(),
 
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
+        dbCollectionReference = dbFirestore?.collection("e-Tracker")
+        sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+
+        val viajeID = dbCollectionReference!!.whereEqualTo("emailUser", FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
+            .whereEqualTo("active", true)
+            .addSnapshotListener{
+                querySnapshot, _ ->
+                editor.putString(FIREBASE_TRAVEL_ID, querySnapshot!!.documents[0].id)
+            }
 
         //inicializar la toolbar
 

@@ -9,6 +9,8 @@ package com.unicomer.e_tracker_test.Constants
 const val FIREBASE_CURRENT_USER_KEY = ""
 const val FIREBASE_USER_EMAIL_LOGGED_IN_KEY = ""
 const val FIREBASE_USER_UID_KEY = ""
+const val FIREBASE_TRAVEL_ID = ""
+
 const val APP_NAME = "UNICOMER_GROUP_E_TRACKER"
 
 

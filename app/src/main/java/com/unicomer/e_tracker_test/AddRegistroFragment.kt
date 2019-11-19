@@ -229,8 +229,9 @@ class AddRegistroFragment : Fragment() {
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
+            var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
 
-            firebaseDB.collection("e-Tracker").document(FIREBASE_TRAVEL_ID).collection("record")
+            firebaseDB.collection("e-Tracker").document(viajeID!!).collection("record")
                 .add(addNewRecord)
                 .addOnFailureListener {
                     Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()

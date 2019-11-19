@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -53,16 +54,9 @@ class MainActivity : AppCompatActivity(),
         val user = dbAuth!!.currentUser
         dbCollectionReference = dbFirestore?.collection("e-Tracker")
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+        var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+        var idDeViajeQueVieneDeFirestore: String? = null
 
-
-
-//        dbCollectionReference!!.whereEqualTo("emailUser", FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
-//            .whereEqualTo("active", true)
-//            .addSnapshotListener{
-//                querySnapshot, _ ->
-//                editor.putString(FIREBASE_TRAVEL_ID, querySnapshot!!.documents[0].id)
-//            }
 
         //inicializar la toolbar
 
@@ -94,12 +88,22 @@ class MainActivity : AppCompatActivity(),
                 .whereEqualTo("active", true)
                 .get()
                 .addOnSuccessListener {querySnapshot -> //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
-                    editor.putString(FIREBASE_TRAVEL_ID, querySnapshot!!.documents[0].id)
+
+
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
                         loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
+
+                        idDeViajeQueVieneDeFirestore = querySnapshot!!.documents[0].id
+                        editor.putString(FIREBASE_TRAVEL_ID, idDeViajeQueVieneDeFirestore)
+                        editor.apply()
+
+                        var nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
+
+                        Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
+                        Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
 
                         loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
                         splashScreen.visibility = View.GONE

@@ -160,7 +160,6 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
 
     private fun floatingActionButtonHomeTravel(goToHomeTravelFragment: HomeTravelFragment){
 
-
     }
 
 

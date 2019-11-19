@@ -26,13 +26,13 @@ class MainActivity : AppCompatActivity(),
     HomeTravelFragment.OnFragmentInteractionListener{
 
 
-    // Declaring FirebaseAuth components
+    // Declaring FirebaseAuthLocalClass components
 
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
 
-    // End of Declaring FirebaseAuth components
+    // End of Declaring FirebaseAuthLocalClass components
 
 
     val idd: String = ""
@@ -270,7 +270,6 @@ class MainActivity : AppCompatActivity(),
         var toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.GONE
     }
-
 
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

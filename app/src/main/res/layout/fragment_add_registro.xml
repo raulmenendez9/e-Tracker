@@ -56,7 +56,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
 
             <TextView
-                android:id="@+id/et_date_picker"
+                android:id="@+id/textview_record_date_selection"
                 style="@style/TextView_Date_Picker_White"
                 android:layout_height="30dp"
                 android:layout_marginTop="8dp"
@@ -83,7 +83,7 @@
                 android:ems="10"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_date_picker" />
+                app:layout_constraintTop_toBottomOf="@+id/textview_record_date_selection" />
 
             <TextView
                 style="@style/TextView_Title"
@@ -151,7 +151,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup_Category" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/editText_record_description"
                 style="@style/EditText_Regular"
                 android:layout_marginTop="16dp"
                 android:ems="10"
@@ -177,24 +177,24 @@
         app:layout_constraintGuide_percent="0.65" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_tomar_foto"
         style="@style/ButtonWhite_Big_Size"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         android:text="@string/add_photo"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_agregar_registro"
         style="@style/ButtonBlue_Big_Size"
         android:text="@string/agregar_registro"
         app:layout_constraintBottom_toTopOf="@+id/floating_action_button_add_record"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button_add_record"
@@ -206,7 +206,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_agregar_registro" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

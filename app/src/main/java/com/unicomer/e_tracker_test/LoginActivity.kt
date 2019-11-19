@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -18,9 +17,9 @@ import com.unicomer.e_tracker_test.Dialogs.LoginDialogFragment
 
 class LoginActivity : AppCompatActivity() {
 
-    // Declaration of FirebaseAuth components
+    // Declaration of FirebaseAuthLocalClass components
     private var dbAuth: FirebaseAuth? = null
-    // End of declaration FirebaseAuth components
+    // End of declaration FirebaseAuthLocalClass components
 
 
     // Declaration of variables
@@ -101,7 +100,8 @@ class LoginActivity : AppCompatActivity() {
 
                         val sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-                        editor.putString(USER_LOGGED_IN_KEY, userLoggedIn!!.email)
+                        editor.putString(FIREBASE_CURRENT_USER_KEY, userLoggedIn.toString())
+                        editor.putString(FIREBASE_USER_EMAIL_LOGGED_IN_KEY, userLoggedIn!!.email)
                         editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn.uid)
                         editor.apply()
 

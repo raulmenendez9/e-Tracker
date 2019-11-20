@@ -15,8 +15,15 @@ import com.unicomer.e_tracker_test.Constants.MAIN_ACTIVITY_KEY
 import com.unicomer.e_tracker_test.Constants.REGISTRATION_TRAVEL_FRAGMENT
 import com.unicomer.e_tracker_test.Constants.TERMS_AND_CONDITIONS_FRAGMENT
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.unicomer.e_tracker_test.Models.Record
+import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -26,12 +33,15 @@ class MainActivity : AppCompatActivity(),
     TerminosFragment.OnFragmentInteractionListener {
 
     // Declaring FirebaseAuth components
+    private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
+    val db = FirebaseFirestore.getInstance()
+    var travelRef: CollectionReference = db.collection("e-Tracker")
     // End of Declaring FirebaseAuth components
-
-
+    var adapterHt: AdapterHomeTravel? = null
+    var idTravel:String=""
     val idd: String = ""
     val dateinit: String = ""
 
@@ -39,6 +49,13 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //para saber cual es el id del documento actual
+        travelRef //no mover de aqui
+            .whereEqualTo("emailUser", FirebaseUser!!.email)
+            .whereEqualTo("active", true).addSnapshotListener { querySnapshot, _ ->
+                idTravel = querySnapshot!!.documents[0].id
+            }
+
         // Obtener currentUser de Firebase
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
@@ -175,15 +192,18 @@ class MainActivity : AppCompatActivity(),
                 override fun onQueryTextChange(newText: String?): Boolean {
                     // logica para filtrar con el recyclerView
                     //adaptador.getFilter().filter(newText)
-
+                    setUpRecyclerView(idTravel,newText)
+                    adapterHt!!.startListening()
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
                 }
 
             })
         }else{
+
             Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
         }
+
 
 
         return super.onCreateOptionsMenu(menu)
@@ -243,6 +263,22 @@ class MainActivity : AppCompatActivity(),
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun setUpRecyclerView(id:String,consulta:String?){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
+        val query: Query = travelRef.document(id)
+            .collection("record")
+            //.whereEqualTo("recordName",consulta)
+            .orderBy("recordName")
+            .startAt(consulta).endAt(consulta+"\uf8ff")
+        val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
+            .setQuery(query, Record::class.java)
+            .build()
+        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
+        recycler!!.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapterHt
     }
 
     override fun openRegistrationTravelFragment() {

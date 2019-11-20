@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity(),
     HomeFragment.OnFragmentInteractionListener,
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
-    HomeTravelFragment.OnFragmentInteractionListener,
-    TravelRegistrationFragment.OnFragmentInteractionListener
+    HomeTravelFragment.OnFragmentInteractionListener
 {
 
 
@@ -123,7 +122,7 @@ class MainActivity : AppCompatActivity(),
     }
     private fun loadHomeFragment(homeFragment: HomeFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.main_fragment_container, homeFragment)
+        fragmentTransaction.replace(R.id.main_fragment_container, homeFragment)
         fragmentTransaction.commit()
     }
 
@@ -165,9 +164,7 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
         fragmentTransaction.commit()
     }
-    override fun homeTravelFragment() {
-        loadHomeTravelFragment(HomeTravelFragment())
-    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

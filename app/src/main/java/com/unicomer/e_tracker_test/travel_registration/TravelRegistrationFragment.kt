@@ -96,6 +96,7 @@ class TravelRegistrationFragment : Fragment() {
 
         // Ocultar el toolbar
         listener?.hideToolBarOnFragmentViewDissapears()
+        listener?.homeTravelFragment()
 
 
         originCountry = view.findViewById(R.id.editTextOrigin)
@@ -153,6 +154,7 @@ class TravelRegistrationFragment : Fragment() {
             //Finish Spinner
             initialTravel!!.setOnClickListener {
                 registration()
+                listener?.homeTravelFragment()
             }
         }else{
             initialTravel!!.text= getString(R.string.update_travel) //Cambio de texto del boton
@@ -401,6 +403,7 @@ class TravelRegistrationFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun hideToolBarOnFragmentViewDissapears()
+        fun homeTravelFragment()
     }
 
 

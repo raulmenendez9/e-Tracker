@@ -24,8 +24,10 @@ class MainActivity : AppCompatActivity(),
     HomeFragment.OnFragmentInteractionListener,
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
-    HomeTravelFragment.OnFragmentInteractionListener
+    HomeTravelFragment.OnFragmentInteractionListener,
+    TravelRegistrationFragment.OnFragmentInteractionListener
 {
+
 
 
     // Declaring FirebaseAuthLocalClass components
@@ -163,7 +165,9 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
         fragmentTransaction.commit()
     }
-
+    override fun homeTravelFragment() {
+        loadHomeTravelFragment(HomeTravelFragment())
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

@@ -70,7 +70,7 @@
     </style>
 
     <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/FontStyle_SecondaryText</item>
         <item name="android:textColor">@color/colorSecondary05LightGray</item>

@@ -13,6 +13,20 @@
         android:layout_height="match_parent"
         android:background="@drawable/login_gradient">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine_VerticalRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine_VerticalLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_top"
             android:layout_width="0dp"
@@ -93,14 +107,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline_vertical_bottom">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideLine_VerticalRightBottomConstraint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.8" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideLine_VerticalLeftBottomConstraint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.2" />
+
             <TextView
                 android:id="@+id/txt_signin_problem"
                 style="@style/TextView_Small_Login"
-                android:clickable="true"
                 android:padding="5dp"
                 android:text="@string/login_login_issues"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideLine_VerticalRightBottomConstraint"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
@@ -108,8 +134,8 @@
                 style="@style/ButtonWhite_Medium_Size"
                 android:text="@string/login_button_send"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideLine_VerticalRightBottomConstraint"
+                app:layout_constraintStart_toStartOf="@+id/guideLine_VerticalLeftBottomConstraint"
                 app:layout_constraintTop_toBottomOf="@+id/txt_signin_problem" />
 
             <ImageView
@@ -124,20 +150,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideLine_VerticalLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.2" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideLine_VerticalRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.8" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

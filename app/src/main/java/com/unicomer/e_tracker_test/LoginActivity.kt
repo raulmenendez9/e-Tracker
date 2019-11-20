@@ -134,7 +134,7 @@ class LoginActivity : AppCompatActivity() {
                         // Si authentication funciona aqui se maneja
 
                         Log.i(LOGIN_ACTIVITY_KEY, "signIn:success")
-                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with user ${it.result?.user?.email} and UID ${it.result?.user?.uid}")
+
 
                         val userLoggedIn = dbAuth?.currentUser
 
@@ -142,10 +142,15 @@ class LoginActivity : AppCompatActivity() {
 
                         val sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-                        editor.putString(FIREBASE_CURRENT_USER_KEY, userLoggedIn.toString())
                         editor.putString(FIREBASE_USER_EMAIL_LOGGED_IN_KEY, userLoggedIn!!.email)
-                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn.uid)
+                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn!!.uid)
                         editor.apply()
+
+                        var userUID: String? = sharedPreferences?.getString(FIREBASE_USER_UID_KEY, "")
+
+                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with user ${it.result?.user?.email} and UID ${it.result?.user?.uid}")
+                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with UID $userUID")
+
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)

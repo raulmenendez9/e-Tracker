@@ -44,13 +44,16 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Log.i(MAIN_ACTIVITY_KEY, "In method onCreate")
+
 
         // Obtener currentUser de Firebase
 
         dbAuth = FirebaseAuth.getInstance()
+        sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val user = dbAuth!!.currentUser
 
-        sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
+
         var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
 
@@ -69,21 +72,14 @@ class MainActivity : AppCompatActivity(),
         var splashScreen: View = findViewById(R.id.MainSplash)
 
 
-        // Si usuario SI ES null entonces MainActivity NO se ejecuta y pasa directamente a LoginActivity
 
-        if (user == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-
-        } else {
 
             // Cargar MainFragment para Inicio de Navegacion en UI
 
             dbCollectionReference = dbFirestore?.collection("e-Tracker")
 
             dbCollectionReference!! //Genera la busqueda en base al email y al estado del viaje actual
-                .whereEqualTo("emailUser", user.email)
+                .whereEqualTo("emailUser", user!!.email)
                 .whereEqualTo("active", true)
                 .get()
                 .addOnSuccessListener {querySnapshot -> //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
@@ -108,9 +104,43 @@ class MainActivity : AppCompatActivity(),
                         splashScreen.visibility = View.GONE
                     }
                 }
-        }
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.i(MAIN_ACTIVITY_KEY, "In method onStart")
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(MAIN_ACTIVITY_KEY, "In method onResume")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i(MAIN_ACTIVITY_KEY, "In method onPause")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(MAIN_ACTIVITY_KEY, "In method onStop")
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i(MAIN_ACTIVITY_KEY, "In method onRestart")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(MAIN_ACTIVITY_KEY, "In method onDestroy")
+
+    }
 
     // Metodos para llamar los Fragments desde MainActivity
 
@@ -139,10 +169,7 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
-    private fun updateRegistrationTravel(
-        id: String,
-        datein: String
-    ) {//Funcion para actualizar registro del viaje con el id que se optendra.
+    private fun updateRegistrationTravel(id: String, datein: String) {//Funcion para actualizar registro del viaje con el id que se optendra.
         val registrationFragment =
             TravelRegistrationFragment.newInstance(id, datein) //Aqui se enviara el id del viaje
         val formmu = supportFragmentManager.beginTransaction()

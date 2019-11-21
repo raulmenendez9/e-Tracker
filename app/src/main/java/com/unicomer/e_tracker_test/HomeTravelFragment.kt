@@ -16,10 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.Models.Travel
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel.*
+import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel.*
 
 
 class HomeTravelFragment : Fragment(), ShowDataInterface {

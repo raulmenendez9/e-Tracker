@@ -197,7 +197,7 @@ class AddRegistroFragment : Fragment() {
         if (editTextName?.text!!.isEmpty() or fecha?.text!!.isEmpty() or monto?.text!!.isEmpty() or editTextDescripcion?.text!!.isEmpty()) {
             Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-            val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_CURRENT_USER_KEY)
+            val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_USER_UID_KEY)
             Log.i(ADD_RECORD_FRAGMENT, "CurrentUser is ${currentFirebaseUser.toString()}")
 
 
@@ -210,7 +210,7 @@ class AddRegistroFragment : Fragment() {
             // SHAREDPREFERENCES
             val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
             var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
-            val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_CURRENT_USER_KEY)
+            val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_UID_KEY)
             val currentFirebaseEmailUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
 
             // Elementos de UI

@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test.adapters
+package com.unicomer.e_tracker_test.Adapters
 
 import android.util.Log
 import android.view.LayoutInflater

@@ -65,6 +65,8 @@
             style="@style/EditText_Login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/sym_action_email"
+            android:drawablePadding="5dp"
             android:hint="@string/login_hint_et_email"
             android:inputType="textEmailAddress"
             android:nextFocusDown="@id/et_password"
@@ -76,6 +78,8 @@
         <EditText
             android:id="@+id/et_password"
             style="@style/EditText_Login"
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+            android:drawablePadding="5dp"
             android:hint="@string/login_hint_et_password"
             android:inputType="textPassword"
             android:nextFocusDown="@id/button_sign_in"

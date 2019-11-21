@@ -1,9 +1,7 @@
 package com.unicomer.e_tracker_test
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +13,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.unicomer.e_tracker_test.models.TotalRecord
 import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel.*
 import com.unicomer.e_tracker_test.models.Record
 
 
-class HomeTravelFragment : Fragment(), ShowDataInterface {
+class HomeTravelFragment : Fragment(){
 
     private var listener: OnFragmentInteractionListener? = null
     //accediendo a los datos de firebase
@@ -58,27 +54,10 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
                 /*Desde aca se carga el id en la variable idTravel pero se cargará unos milisegundos
                 * despues de que la peticion se complete*/
             }
-        adapterHt = AdapterHomeTravel(adapterInit(), this) //Se inicializa por primera y unica vez al adapter como uno vacio
+        adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
-    //Listener del Adapter para obtener los totales
 
-    override fun totalFood(total: Double) {
-      //  totalFood!!.text = total.toString()
-        Log.i("FOODFR","la comida es: ${total}")
-    }
-    override fun totalCar(total: Double) {
-        //totalCar!!.text = total.toString()
-        Log.i("FOODFR","la comida es: ${total}")
-    }
-    override fun totalHotel(total: Double) {
-        //totalHotel!!.text = total.toString()
-        Log.i("FOODFR","la comida es: ${total}")
-    }
-    override fun totalOther(total: Double) {
-        //totalOther!!.text = total.toString()
-        Log.i("FOODFR","la comida es: ${total}")
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -115,13 +94,12 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
 
     private fun adapterInit():FirestoreRecyclerOptions<Record>{ //inicializador para el adapter del recyclerview
         val query: Query = travelRef.document("dummyData") //Se le pone "dummyData" por que no nos interesa que jale datos desde firebase ya que para eso necesitamos el id
-            .collection("record").orderBy("recordDate", Query.Direction.ASCENDING)
+            .collection("record").orderBy("recordDate", Query.Direction.DESCENDING)
         return FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
     }
 
-    @SuppressLint("SetTextI18n")
     private fun fillForm(){ //metodo para llenar la cabecera de info del viaje y el recycler
         var data: MutableList<Travel>
         var totalFoodC = 0.0
@@ -136,9 +114,9 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
                 data = doc.toObjects(Travel::class.java)
                 originCountry!!.text = data[0].originCountry //seteo los datos
                 destinyCountry!!.text = data[0].destinyCountry
-                initDate!!.text = data[0].initialDate
-                finishDate!!.text = data[0].finishDate
-                balance!!.text = data[0].balance
+                initDate!!.text = data[0].initialDate!!.substring(0, data[0].initialDate!!.length-5)
+                finishDate!!.text = data[0].finishDate!!.substring(0, data[0].initialDate!!.length-5)
+                //balance!!.text = data[0].balance
                 setUpRecyclerView(idTravel) //le mando el id del viaje a este punto la peticion ya a sido existosa
                 adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
                 //llenar los totales
@@ -162,13 +140,16 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
                         totalCar!!.text = "$$totalCarC"
                         totalHotel!!.text = "$$totalhotelC"
                         totalOther!!.text = "$$totalOtherC"
+                        //muestro el total de gastos disminuidos
+                        val balanceReg = data[0].balance!!.toDouble() - totalFoodC - totalCarC -totalhotelC -totalOtherC
+                        balance!!.text = balanceReg.toString()
                     }
             }
 
     }
     private fun setUpRecyclerView(id:String){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
         val query: Query = travelRef.document(id)
-            .collection("record").orderBy("recordName")
+            .collection("record").orderBy("recordDate", Query.Direction.DESCENDING)
         val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
@@ -177,7 +158,7 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
                 backgroundImage!!.visibility = View.GONE
             }
         }
-        adapterHt = AdapterHomeTravel(options, this) //datos reales del adapter
+        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
         val recycler = view?.findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this.context)

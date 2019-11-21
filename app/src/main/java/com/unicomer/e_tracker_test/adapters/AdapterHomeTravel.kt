@@ -12,7 +12,7 @@ import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Record
 import kotlinx.android.extensions.LayoutContainer
 
-class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, private var listener: ShowDataInterface):
+class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
     FirestoreRecyclerAdapter<Record, AdapterHomeTravel.HomeTravelHolder>(options){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTravelHolder {
@@ -28,19 +28,15 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, private var li
             when(model.recordCategory){
                 "0" ->{
                     imageCat.setImageResource(R.drawable.ic_cat_food)
-                    listener.totalFood(model.recordMount.toDouble())
                 }
                 "1" ->{
                     imageCat.setImageResource(R.drawable.ic_cat_car)
-                    listener.totalCar(model.recordMount.toDouble())
                 }
                 "2" ->{
                     imageCat.setImageResource(R.drawable.ic_cat_hotel)
-                    listener.totalHotel(model.recordMount.toDouble())
                 }
                 "3" ->{
                     imageCat.setImageResource(R.drawable.ic_cat_other)
-                    listener.totalOther(model.recordMount.toDouble())
                 }
             }
         }
@@ -52,10 +48,6 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, private var li
         var recordDate: TextView = containerView.findViewById(R.id.txt_record_date)
         var imageCat: ImageView = containerView.findViewById(R.id.image_record_cat)
     }
-    interface ShowDataInterface{
-        fun totalFood(total:Double)
-        fun totalHotel(total:Double)
-        fun totalCar(total:Double)
-        fun totalOther(total:Double)
-    }
+    //interface ShowDataInterface{
+    //}
 }

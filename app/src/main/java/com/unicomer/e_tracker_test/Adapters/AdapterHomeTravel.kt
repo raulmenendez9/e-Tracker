@@ -10,15 +10,19 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.Models.Record
+import com.unicomer.e_tracker_test.viewmodels.TravelViewModel
 import kotlinx.android.extensions.LayoutContainer
 
-class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
+class AdapterHomeTravel(
+    private val viewModel: TravelViewModel,
+    options:FirestoreRecyclerOptions<Record>):
     FirestoreRecyclerAdapter<Record, AdapterHomeTravel.HomeTravelHolder>(options){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTravelHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_row_new_record, parent, false)
         return HomeTravelHolder(view)
     }
+
     override fun onBindViewHolder(holder: HomeTravelHolder, position: Int, model: Record) {
         holder.apply {
             recordName.text = model.recordName.take(17) //corta el string mostrando los primeros 17 caracteres

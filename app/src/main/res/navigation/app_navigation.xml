@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/homeTravelFragment">
+
+    <fragment
+        android:id="@+id/homeTravelFragment"
+        android:name="com.unicomer.e_tracker_test.HomeTravelFragment"
+        android:label="fragment_home_travel"
+        tools:layout="@layout/fragment_home_travel" >
+
+        <action
+            android:id="@+id/action_homeTravelFragment_to_addRegistroFragment"
+            app:destination="@id/addRegistroFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_close_enter"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/travelRegistrationFragment"
+        android:name="com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment"
+        android:label="fragment_travel_registration"
+        tools:layout="@layout/fragment_travel_registration" />
+
+    <fragment
+        android:id="@+id/addRegistroFragment"
+        android:name="com.unicomer.e_tracker_test.AddRegistroFragment"
+        android:label="fragment_add_registro"
+        tools:layout="@layout/fragment_add_registro" />
+
+    <fragment
+        android:id="@+id/item_terminos"
+        android:name="com.unicomer.e_tracker_test.TerminosFragment"
+        android:label="fragment_terminos"
+        tools:layout="@layout/fragment_terminos" />
+
+</navigation>

@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test.Models
+package com.unicomer.e_tracker_test.data
 
 data class Travel(val originCountry: String?,
                   val destinyCountry: String?,
@@ -18,4 +18,5 @@ data class Travel(val originCountry: String?,
     constructor():this("","", "",
         "","","","","","","","",
         "","", false, false)
+
 }

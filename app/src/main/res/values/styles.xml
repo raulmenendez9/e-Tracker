@@ -142,7 +142,7 @@
             <item name="android:windowBackground">@drawable/splash_screen_start</item>
         </style>
     <!-- Text with no change HOME TRAVEL HEADER-->
-    <style name="HomeTravelHeaderTEXTNOCHANGE" parent="Theme.AppCompat.Light">
+    <style name="homeTravelHeaderTEXTNOCHANGE" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
@@ -151,7 +151,7 @@
         <item name="android:textSize">15sp</item>
     </style>
     <!-- Text change HOME TRAVEL HEADER-->
-    <style name="HomeTravelHeaderTEXT" parent="Theme.AppCompat.Light">
+    <style name="homeTravelHeaderTEXT" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>

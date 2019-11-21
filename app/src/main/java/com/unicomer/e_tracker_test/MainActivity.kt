@@ -3,7 +3,6 @@ package com.unicomer.e_tracker_test
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,22 +13,19 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.widget.SearchView
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.unicomer.e_tracker_test.Constants.*
+import com.unicomer.e_tracker_test.databinding.ActivityMainBinding
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
-class MainActivity : AppCompatActivity(),
-    HomeFragment.OnFragmentInteractionListener,
-    AddRegistroFragment.OnFragmentInteractionListener,
-    TerminosFragment.OnFragmentInteractionListener,
-    HomeTravelFragment.OnFragmentInteractionListener
-{
-
-
-
-    // Declaring FirebaseAuthLocalClass components
+class MainActivity : AppCompatActivity() {
 
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
@@ -38,16 +34,25 @@ class MainActivity : AppCompatActivity(),
     // Mandar a llamar al SharedPreferences
     var sharedPreferences: SharedPreferences? = null
 
-    // End of Declaring FirebaseAuthLocalClass components
-
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        navController = findNavController(R.id.main_fragment_container)
+        setSupportActionBar(binding.toolbar)
+
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+
+        setupActionBarWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController)
 
         // Obtener currentUser de Firebase
-
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
 
@@ -56,22 +61,14 @@ class MainActivity : AppCompatActivity(),
         var idDeViajeQueVieneDeFirestore: String? = null
 
 
-        //inicializar la toolbar
-
-        val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         //instancia de firebase
-
         dbFirestore = FirebaseFirestore.getInstance()
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
         var splashScreen: View = findViewById(R.id.MainSplash)
 
 
         // Si usuario SI ES null entonces MainActivity NO se ejecuta y pasa directamente a LoginActivity
-
         if (user == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -89,9 +86,10 @@ class MainActivity : AppCompatActivity(),
                 .get()
                 .addOnSuccessListener {querySnapshot -> //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
 
+                    //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
+                    if (querySnapshot.documents.toString()=="[]"){
 
-                    if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
-                        loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
+                        // loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
@@ -105,7 +103,7 @@ class MainActivity : AppCompatActivity(),
                         Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
 
-                        loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                        //loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
                         splashScreen.visibility = View.GONE
                     }
                 }
@@ -113,32 +111,12 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    // Metodos para llamar los Fragments desde MainActivity
-
-    private fun loadHomeTravelFragment(homeTravelFragment: HomeTravelFragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, homeTravelFragment)
-        fragmentTransaction.commit()
-    }
-    private fun loadHomeFragment(homeFragment: HomeFragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, homeFragment)
-        fragmentTransaction.commit()
+    override fun onBackPressed() {
+        super.onBackPressed()
+        navController.navigateUp()
     }
 
-    private fun loadRegistrationTravelFragment(travelRegistrationFragment: TravelRegistrationFragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, travelRegistrationFragment)
-        fragmentTransaction.addToBackStack(REGISTRATION_TRAVEL_FRAGMENT)
-        fragmentTransaction.commit()
-    }
 
-    private fun loadTermsAndConditionsFragment(termsAndConditionsFragment: TerminosFragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, termsAndConditionsFragment)
-        fragmentTransaction.addToBackStack(TERMS_AND_CONDITIONS_FRAGMENT)
-        fragmentTransaction.commit()
-    }
 
     private fun updateRegistrationTravel(
         id: String,
@@ -172,9 +150,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
         // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
-
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
         // val manager=getSystemService() as SearchManager
@@ -204,6 +180,7 @@ class MainActivity : AppCompatActivity(),
         return super.onCreateOptionsMenu(menu)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         dbAuth = FirebaseAuth.getInstance()
 
@@ -215,8 +192,7 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
-
-                loadAddRecordFragment(AddRegistroFragment())
+                (AddRegistroFragment())
                 true
             }
 
@@ -224,7 +200,7 @@ class MainActivity : AppCompatActivity(),
                 // Manejar el evento en item "Terminos y Condiciones"
 
                 Toast.makeText(this, "item terminos y condiciones", Toast.LENGTH_SHORT).show()
-                loadTermsAndConditionsFragment(TerminosFragment())
+                // loadTermsAndConditionsFragment(TerminosFragment())
                 true
             }
 
@@ -261,31 +237,4 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun openRegistrationTravelFragment() {
-        loadRegistrationTravelFragment(TravelRegistrationFragment())
-        hideToolBarOnFragmentViewDissapears()
-    }
-
-    override fun goBackToHomeTravelFragment(){
-        showToolBarOnFragmentViewCreate()
-        loadHomeTravelFragment(HomeTravelFragment())
-    }
-
-    override fun openAddRecordFragment(){
-        loadAddRecordFragment(AddRegistroFragment())
-    }
-
-    override fun showToolBarOnFragmentViewCreate() {
-        var toolbarMainActivity: View = findViewById(R.id.toolbar)
-        toolbarMainActivity.visibility = View.VISIBLE
-    }
-
-    override fun hideToolBarOnFragmentViewDissapears() {
-        var toolbarMainActivity: View = findViewById(R.id.toolbar)
-        toolbarMainActivity.visibility = View.GONE
-    }
-
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

@@ -25,13 +25,11 @@ import android.util.Log
 import com.google.firebase.firestore.*
 import com.unicomer.e_tracker_test.Constants.*
 import com.unicomer.e_tracker_test.Models.Record
-import com.unicomer.e_tracker_test.Models.Travel
 
 
 class AddRegistroFragment : Fragment() {
 
 
-    private var listener: OnFragmentInteractionListener? = null
 
     // Elementos de UI
     private var editTextName: EditText? = null
@@ -83,7 +81,7 @@ class AddRegistroFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         // Ocultar el Toolbar al inicio
-        listener?.hideToolBarOnFragmentViewDissapears()
+        // listener?.hideToolBarOnFragmentViewDissapears()
 
     }
 
@@ -140,7 +138,7 @@ class AddRegistroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listener?.hideToolBarOnFragmentViewDissapears()
+        // listener?.hideToolBarOnFragmentViewDissapears()
 
         datePicker = view.findViewById(R.id.textview_record_date_selection)
 
@@ -155,23 +153,6 @@ class AddRegistroFragment : Fragment() {
 
     }
 
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
 
     override fun onDestroy() {
         super.onDestroy()

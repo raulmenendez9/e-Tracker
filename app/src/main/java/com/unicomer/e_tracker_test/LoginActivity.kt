@@ -12,17 +12,14 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.unicomer.e_tracker_test.Constants.APP_NAME
-import com.unicomer.e_tracker_test.Constants.LOGIN_ACTIVITY_KEY
-import com.unicomer.e_tracker_test.Constants.LOGIN_DIALOG
-import com.unicomer.e_tracker_test.Constants.USER_LOGGED_IN_KEY
+import com.unicomer.e_tracker_test.Constants.*
 import com.unicomer.e_tracker_test.Dialogs.LoginDialogFragment
 
 class LoginActivity : AppCompatActivity() {
 
-    // Declaration of FirebaseAuth components
+    // Declaration of FirebaseAuthLocalClass components
     private var dbAuth: FirebaseAuth? = null
-    // End of declaration FirebaseAuth components
+    // End of declaration FirebaseAuthLocalClass components
 
 
     // Declaration of variables
@@ -39,12 +36,14 @@ class LoginActivity : AppCompatActivity() {
 
 
 
+    // Activity Lifecycle methods here
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        // hideSplash()
 
         // Validar si el usuario ha logeado anteriormente
 
@@ -63,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
         signInButton = this.findViewById(R.id.button_sign_in)
         signInDialog = this.findViewById(R.id.txt_signin_problem)
 
-
         signInButton?.setOnClickListener {
             validateUserSession()
         }
@@ -71,9 +69,8 @@ class LoginActivity : AppCompatActivity() {
             showDialog()
         }
 
-
-
     }
+
 
     fun hideSplash(){
         splash = findViewById(R.id.splashlogin)
@@ -97,14 +94,17 @@ class LoginActivity : AppCompatActivity() {
                         // Si authentication funciona aqui se maneja
 
                         Log.i(LOGIN_ACTIVITY_KEY, "signIn:success")
-                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with UID ${it.result?.user?.uid}")
+                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with user ${it.result?.user?.email} and UID ${it.result?.user?.uid}")
 
                         val userLoggedIn = dbAuth?.currentUser
 
+                        // Guardar los datos en SharedPreferences (Informacion Local)
 
                         val sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-                        editor.putString(USER_LOGGED_IN_KEY, userLoggedIn!!.email)
+                        editor.putString(FIREBASE_CURRENT_USER_KEY, userLoggedIn.toString())
+                        editor.putString(FIREBASE_USER_EMAIL_LOGGED_IN_KEY, userLoggedIn!!.email)
+                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn.uid)
                         editor.apply()
 
                         val intent = Intent(this, MainActivity::class.java)
@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
                         // Si authentication falla aqui puede manejarse
 
-                        Log.w("", "signIn:failure", it.exception)
+                        Log.w(LOGIN_ACTIVITY_KEY, "signIn:failure", it.exception)
                         Toast.makeText(this,R.string.wrong_email_password, Toast.LENGTH_LONG).show()
                     }
                 }

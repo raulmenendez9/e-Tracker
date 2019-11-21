@@ -22,8 +22,9 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.unicomer.e_tracker_test.HomeTravelFragment
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.models.Travel
+import com.unicomer.e_tracker_test.Models.Travel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -264,8 +265,10 @@ class TravelRegistrationFragment : Fragment() {
                     .addOnSuccessListener {
                         Log.d("Enviodata", "$travel")
                         Toast.makeText(activity, getString(R.string.register_complete), Toast.LENGTH_SHORT).show()
+                        homeTravelFragment(HomeTravelFragment())
                     }
                     .addOnFailureListener { e -> Log.w("Error", "$e") }
+
         }
     }
 
@@ -385,6 +388,11 @@ class TravelRegistrationFragment : Fragment() {
         } catch (e: Exception) {
             e.toString()
         }
+    }
+    fun homeTravelFragment(homeTravel: HomeTravelFragment){
+        var homeTravelFragment = mycontext!!.supportFragmentManager.beginTransaction()
+        homeTravelFragment.replace(R.id.main_fragment_container, homeTravel)
+        homeTravelFragment.commit()
     }
 
     override fun onDestroy() {

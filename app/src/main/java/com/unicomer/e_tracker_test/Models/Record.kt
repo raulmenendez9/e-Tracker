@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test.models
+package com.unicomer.e_tracker_test.Models
 
 data class Record(val recordName: String,
                   val recordDate: String,

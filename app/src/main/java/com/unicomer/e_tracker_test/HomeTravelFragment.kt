@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,12 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.unicomer.e_tracker_test.models.Travel
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
-import com.unicomer.e_tracker_test.models.Record
+import com.unicomer.e_tracker_test.Models.Travel
+import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.Models.Record
 
 
 class HomeTravelFragment : Fragment(){
@@ -35,6 +37,9 @@ class HomeTravelFragment : Fragment(){
     var initDate: TextView?=null
     var finishDate: TextView?=null
     var balance: TextView?=null
+
+    private var floatingActionButton: FloatingActionButton? = null
+
     //totales en cabecera
     var totalFood: TextView?=null
     var totalCar: TextView?=null
@@ -44,9 +49,12 @@ class HomeTravelFragment : Fragment(){
     var backgroundImage: View? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        // Mostrar el toolbar
+        listener?.showToolBarOnFragmentViewCreate()
+
+
         travelRef //no mover de aqui
             .whereEqualTo("emailUser", FirebaseUser!!.email)
             .whereEqualTo("active", true).addSnapshotListener{ querySnapshot, _ ->
@@ -55,6 +63,13 @@ class HomeTravelFragment : Fragment(){
                 * despues de que la peticion se complete*/
             }
         adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
+
+        floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
+        floatingActionButton?.setOnClickListener {
+            listener?.openAddRecordFragment()
+        }
+
+
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
 
@@ -164,7 +179,8 @@ class HomeTravelFragment : Fragment(){
         recycler.layoutManager = LinearLayoutManager(this.context)
         recycler.adapter = adapterHt
     }
-/*
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -178,9 +194,17 @@ class HomeTravelFragment : Fragment(){
         super.onDetach()
         listener = null
     }
-*/
+
+    private fun floatingActionButtonHomeTravel(goToHomeTravelFragment: HomeTravelFragment){
+
+    }
+
+
     interface OnFragmentInteractionListener {
+        fun openAddRecordFragment()
         fun onFragmentInteraction(uri: Uri)
+        fun goBackToHomeTravelFragment()
+        fun showToolBarOnFragmentViewCreate()
     }
 
     companion object {

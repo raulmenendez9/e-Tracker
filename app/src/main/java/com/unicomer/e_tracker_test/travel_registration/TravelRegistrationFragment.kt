@@ -390,7 +390,7 @@ class TravelRegistrationFragment : Fragment() {
         }
     }
     fun homeTravelFragment(homeTravel: HomeTravelFragment){
-        var homeTravelFragment = mycontext!!.supportFragmentManager.beginTransaction()
+        val homeTravelFragment = mycontext!!.supportFragmentManager.beginTransaction()
         homeTravelFragment.replace(R.id.main_fragment_container, homeTravel)
         homeTravelFragment.commit()
     }

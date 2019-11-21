@@ -124,7 +124,10 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
     @SuppressLint("SetTextI18n")
     private fun fillForm(){ //metodo para llenar la cabecera de info del viaje y el recycler
         var data: MutableList<Travel>
-        var totalData: MutableList<TotalRecord>
+        var totalFoodC = 0.0
+        var totalCarC = 0.0
+        var totalhotelC = 0.0
+        var totalOtherC = 0.0
         travelRef
             .whereEqualTo("emailUser", FirebaseUser!!.email) //verifica que el document sea del usuario
             .whereEqualTo("active", true) //verifica que este esté como activo (el viaje)
@@ -140,12 +143,25 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
                 adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
                 //llenar los totales
                 travelRef.document(idTravel)
-                    .collection("totalRecord")
-                    .document("total")
+                    .collection("record")
                     .get()
-                    .addOnSuccessListener {querySnapShot ->
-                        totalFood!!.text = "$${querySnapShot.data!!.getValue("totalFood")}"
-                        //totalData = querySnapshot.toObject(TotalRecord::class.java)
+                    .addOnSuccessListener {querySnapShot -> //obtengo todos los registros de gastos del viaje
+                        for (i in 0 until querySnapShot.count()){ //count me da el total de registros
+                            when (querySnapShot.documents[i].data!!["recordCategory"].toString()) { //verifco la categoria a la que pertecene cada gasto
+                                "0" -> //si es comida acumula su cantidad en una variable
+                                    totalFoodC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
+                                "1" -> // transporte
+                                    totalCarC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
+                                "2" -> //hospedaje
+                                    totalhotelC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
+                                "3" -> //Otros
+                                    totalOtherC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
+                            }
+                        }
+                        totalFood!!.text = "$$totalFoodC"
+                        totalCar!!.text = "$$totalCarC"
+                        totalHotel!!.text = "$$totalhotelC"
+                        totalOther!!.text = "$$totalOtherC"
                     }
             }
 

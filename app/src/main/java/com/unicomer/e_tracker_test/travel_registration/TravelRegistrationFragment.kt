@@ -2,7 +2,6 @@ package com.unicomer.e_tracker_test.travel_registration
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.Models.Travel
+import com.unicomer.e_tracker_test.models.Travel
 import java.text.SimpleDateFormat
 import java.util.*
 

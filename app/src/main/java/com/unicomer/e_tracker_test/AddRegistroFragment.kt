@@ -1,10 +1,19 @@
 package com.unicomer.e_tracker_test
 
+import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.ContentResolver
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,10 +31,16 @@ import com.unicomer.e_tracker_test.travel_registration.DatePickerFragment
 import java.text.SimpleDateFormat
 import java.util.*
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.Constants.*
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.Models.Travel
+import java.util.jar.Manifest
 
 
 class AddRegistroFragment : Fragment() {
@@ -33,11 +48,16 @@ class AddRegistroFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
 
+    //FireStorage
+    var storageRef: StorageReference = FirebaseStorage.getInstance().reference
+    val imageRef = storageRef.child("record-image/${System.currentTimeMillis()}_image_ticket.png")//nombre del archivo a publicar
+
     // Elementos de UI
     private var editTextName: EditText? = null
     private var fecha: TextView? = null
     private var monto: EditText? = null
     private var editTextDescripcion: EditText? = null
+    private var pathImage: TextView? = null
 
     // Contenedor RadioGroup
     private var radioGroup: RadioGroup? = null
@@ -57,7 +77,8 @@ class AddRegistroFragment : Fragment() {
     // Boton Tomar Foto
 
     private var buttonTakePhoto: Button? = null
-
+    private val SELECT_IMAGE : Int =23748
+    private val TAKE_PICTURE : Int =55535
     // Boton Agregar Registro
 
     private var buttonAddRecord: Button? = null
@@ -91,6 +112,8 @@ class AddRegistroFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_registro, container, false)
 
+        pathImage = view?.findViewById(R.id.pathImage)
+
         // RadioGroup contenedor de RadioButton
         radioGroup = view?.findViewById(R.id.radioGroup_Category)
 
@@ -117,9 +140,19 @@ class AddRegistroFragment : Fragment() {
 
         }
 
+
         // Listener de los Botones
 
         buttonTakePhoto = view?.findViewById(R.id.btn_tomar_foto)
+        buttonTakePhoto?.setOnClickListener{
+            //Permisos
+            if (permissionValidation()){
+                buttonTakePhoto!!.isEnabled
+                dialogPhoto()
+            }else {
+                buttonTakePhoto!!.isEnabled
+            }
+        }
 
         buttonAddRecord = view?.findViewById(R.id.btn_agregar_registro)
         buttonAddRecord?.setOnClickListener {
@@ -154,6 +187,52 @@ class AddRegistroFragment : Fragment() {
 
 
     }
+
+    //Permisos de camara, lectura y escritura
+    private fun permissionValidation(): Boolean {
+        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
+            return true
+        }
+        if ((checkSelfPermission(context!!, CAMERA)==PackageManager.PERMISSION_GRANTED)&&
+            (checkSelfPermission(context!!, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)&&
+            (checkSelfPermission(context!!, READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)){
+            return true
+        }
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity!!,CAMERA)||ActivityCompat.shouldShowRequestPermissionRationale(
+                activity!!,WRITE_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(
+                activity!!,READ_EXTERNAL_STORAGE)){
+            permissionDialog()
+
+        }else{requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE, CAMERA),100)}
+
+        return false
+    }
+
+    fun permissionDialog(){
+        val dialogPermission: AlertDialog.Builder = AlertDialog.Builder(context)
+        dialogPermission.setTitle("Permisos Desactivados")
+        dialogPermission.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la app")
+        dialogPermission.setPositiveButton("Aceptar", DialogInterface.OnClickListener(){ dialogInterface: DialogInterface, i: Int ->
+                requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE, CAMERA),100)
+        })
+        dialogPermission.show()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode==100){
+            if (grantResults.size == 3 && grantResults[0] ==PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED &&
+                grantResults[2]== PackageManager.PERMISSION_GRANTED){
+                buttonTakePhoto!!.isEnabled
+            }
+        }
+    }
+    //Fin de permisos
 
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -206,8 +285,11 @@ class AddRegistroFragment : Fragment() {
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
+            var image = Uri.parse(pathImage?.text.toString())
+            imageRef.putFile(image).addOnSuccessListener {
+                imageRef.downloadUrl.addOnCompleteListener{taskSnapshot ->
 
-            // SHAREDPREFERENCES
+                // SHAREDPREFERENCES
             val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
             var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
             val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_CURRENT_USER_KEY)
@@ -219,7 +301,7 @@ class AddRegistroFragment : Fragment() {
             val recordDate: String? = fecha?.text.toString()
             val recordAmmount: String? = monto?.text.toString()
             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-            val recordPhoto: String? = "Esto deberia ser el URI de la foto"
+            val recordPhoto =taskSnapshot.result
             val recordDescription: String = editTextDescripcion?.text.toString()
             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
@@ -231,7 +313,7 @@ class AddRegistroFragment : Fragment() {
             recordDate!!,
             recordAmmount!!,
             recordCategory!!,
-            recordPhoto!!,
+            "$recordPhoto",
             recordDescription,
             recordDateRegistered!!,
             recordDateLastUpdate!!
@@ -247,6 +329,9 @@ class AddRegistroFragment : Fragment() {
                     Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
                     Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID")
                 }
+                }
+            }
+
         }
 
     }
@@ -349,6 +434,57 @@ class AddRegistroFragment : Fragment() {
         super.onAttach(activity)
     }
 
+    private fun dialogPhoto(){
+        try {
+            val items = arrayOf<CharSequence>("Seleccionar de la galería", "Hacer una foto")
+          val builder :AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setTitle("Seleccionar una foto")
+            builder.setItems(items, DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
+                    when(i){
+                        0-> {
+                        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                            intent.type = "image/*"
+                            startActivityForResult(intent,SELECT_IMAGE)
+                        }
+                        1->{
+                            startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PICTURE)
+                        }
+                    }
+
+            })
+            val alertDialog:AlertDialog = builder.create()
+            alertDialog.show()
+        }
+        catch (e:Exception){
+            Log.e("ERROR", "$e")
+            Toast.makeText(this.context, "ERROR", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        try {
+            if (requestCode==SELECT_IMAGE)
+                if (resultCode==Activity.RESULT_OK){
+                    var selectedImage:Uri = data?.data!!
+                    pathImage!!.text = selectedImage.toString()
+                }
+            if (requestCode ==TAKE_PICTURE)
+                if (resultCode==Activity.RESULT_OK){
+                    var selectedImage:Uri = data?.data!!
+                    pathImage!!.text = selectedImage.toString()
+                }
+        } catch (e:java.lang.Exception){}
+    }
+
+    fun getPath(uri: Uri):String{
+        val projection= arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor = context!!.contentResolver.query(uri,projection,null,null,null)!!
+        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        return  cursor.getString(column_index)
+    }
+
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
@@ -362,3 +498,5 @@ class AddRegistroFragment : Fragment() {
         fun newInstance() = AddRegistroFragment()
     }
 }
+
+

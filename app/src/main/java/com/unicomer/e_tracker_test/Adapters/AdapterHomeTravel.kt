@@ -1,57 +1,48 @@
 package com.unicomer.e_tracker_test.Adapters
 
+import java.lang.Integer
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.viewmodels.TravelViewModel
-import kotlinx.android.extensions.LayoutContainer
 
 class AdapterHomeTravel(
     private val viewModel: TravelViewModel,
     options:FirestoreRecyclerOptions<Record>):
     FirestoreRecyclerAdapter<Record, AdapterHomeTravel.HomeTravelHolder>(options){
 
+    private var viewDataBinding: ViewDataBinding? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTravelHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_row_new_record, parent, false)
-        return HomeTravelHolder(view)
+        val layoutInflaterx = LayoutInflater.from(parent.context)
+        viewDataBinding = DataBindingUtil.inflate(layoutInflaterx, viewType, parent, false)
+        return HomeTravelHolder(viewDataBinding!!)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return R.layout.list_row_new_record
     }
 
     override fun onBindViewHolder(holder: HomeTravelHolder, position: Int, model: Record) {
-        holder.apply {
-            recordName.text = model.recordName.take(17) //corta el string mostrando los primeros 17 caracteres
-            recordPrice.text = model.recordMount
-            recordDate.text = model.recordDate
+        holder.bind(viewModel, position, model)
+    }
 
-            when(model.recordCategory){
-                "0" ->{
-                    imageCat.setImageResource(R.drawable.ic_cat_food)
-                }
-                "1" ->{
-                    imageCat.setImageResource(R.drawable.ic_cat_car)
-                }
-                "2" ->{
-                    imageCat.setImageResource(R.drawable.ic_cat_hotel)
-                }
-                "3" ->{
-                    imageCat.setImageResource(R.drawable.ic_cat_other)
-                }
-            }
+    inner class HomeTravelHolder(val binding: ViewDataBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(viewModel: TravelViewModel, index: Int, model: Record) {
+            binding.setVariable(BR.viewModel, viewModel)
+            binding.setVariable(BR.position, index)
+            binding.setVariable(BR.model, model)
+            binding.executePendingBindings()
         }
     }
 
-    inner class HomeTravelHolder(override val containerView: View):RecyclerView.ViewHolder(containerView), LayoutContainer{
-        var recordName: TextView = containerView.findViewById(R.id.txt_record_name)
-        var recordPrice: TextView = containerView.findViewById(R.id.txt_record_price)
-        var recordDate: TextView = containerView.findViewById(R.id.txt_record_date)
-        var imageCat: ImageView = containerView.findViewById(R.id.image_record_cat)
-    }
-    //interface ShowDataInterface{
-    //}
 }

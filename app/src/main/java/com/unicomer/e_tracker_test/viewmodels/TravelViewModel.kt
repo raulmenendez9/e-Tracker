@@ -1,5 +1,8 @@
 package com.unicomer.e_tracker_test.viewmodels
 
+import android.util.Log
+import java.lang.Integer
+import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +13,9 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
-import com.unicomer.e_tracker_test.Models.Record
+import com.unicomer.e_tracker_test.data.AppDatabase
+import com.unicomer.e_tracker_test.data.RecordRepository
+import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.data.Travel
 import com.unicomer.e_tracker_test.data.TotalData
 
@@ -29,6 +34,9 @@ class TravelViewModel: ViewModel() {
     var data: MutableLiveData<MutableList<Travel>> = MutableLiveData()
     var dataId: MutableLiveData<String>? = MutableLiveData()
     var totalData: MutableLiveData<TotalData>? = MutableLiveData()
+
+    var record: MutableLiveData<MutableList<Record>> = MutableLiveData()
+    var recordSelected: MutableLiveData<Record> = MutableLiveData()
 
     var balance: ObservableField<String> = ObservableField("")
 
@@ -49,6 +57,12 @@ class TravelViewModel: ViewModel() {
             }
     }
 
+
+    fun setRecordData(position: Int) {
+        recordSelected.postValue(record.value?.get(position))
+    }
+
+
     /**
      * Inicializador para el adapter del recyclerview
      *
@@ -58,7 +72,7 @@ class TravelViewModel: ViewModel() {
         // Se le pone "dummyData" por que no nos interesa que jale datos desde firebase ya que para
         // eso necesitamos el id
         val query: Query = travelReference.document("dummyData")
-            .collection("record").orderBy("recordDate", Query.Direction.DESCENDING)
+            .collection("record").orderBy("recordDate", Query.Direction.ASCENDING)
         return FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
@@ -74,12 +88,18 @@ class TravelViewModel: ViewModel() {
             .whereEqualTo("active", true)
             .get()
             .addOnSuccessListener { doc ->
+
                 data.postValue(doc.toObjects(Travel::class.java))
+
                 travelReference.document(dataId?.value!!)
                     .collection("record")
                     .get()
                     .addOnSuccessListener {querySnapShot -> //obtengo todos los registros de gastos del viaje
+
+                        record.postValue(doc.toObjects(Record::class.java))
+
                         for (i in 0 until querySnapShot.count()){ //count me da el TotalData de registros
+
                             //verifco la categoria a la que pertecene cada gasto
                             when (querySnapShot.documents[i].data!!["recordCategory"].toString()) {
                                 "0" -> //si es comida acumula su cantidad en una variable

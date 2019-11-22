@@ -13,7 +13,8 @@
 
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -61,29 +62,10 @@
                             android:layout_marginStart="5dp"
                             android:text="@{`De: ` + travel.originCountry + ` hasta: ` + travel.destinyCountry}"/>
 
-                        <TextView
-                            android:id="@+id/txt_header_originCountry"
-                            style="@style/homeTravelHeaderTEXT"
-                            android:text="-" />
-
-                        <TextView
-                            android:id="@+id/txt_header_a"
-                            style="@style/homeTravelHeaderTEXTNOCHANGE"
-                            android:text=" a: " />
-
-                        <!-- style="@style/HomeTravelHeaderTEXTNOCHANGE" -->
-
-                        <TextView
-                            android:id="@+id/txt_header_originDestiny"
-                            style="@style/homeTravelHeaderTEXT"
-                            android:text="-" />
-
                         <FrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                        </FrameLayout>
+                            android:layout_weight="1"/>
 
                         <ImageView
                             android:id="@+id/id_editTravel_button"
@@ -108,17 +90,7 @@
                             android:id="@+id/txt_header_initDate"
                             style="@style/homeTravelHeaderTEXT"
                             android:layout_marginStart="5dp"
-                            android:text="-" />
-
-                        <TextView
-                            android:id="@+id/txt_line"
-                            style="@style/homeTravelHeaderTEXTNOCHANGE"
-                            android:text=" a " />
-
-                        <TextView
-                            android:id="@+id/txt_header_finishDate"
-                            style="@style/homeTravelHeaderTEXT"
-                            android:text="-" />
+                            android:text="@{ `De: ` + travel.initialDate + ` a: ` + travel.finishDate}" />
 
                         <TextView
                             android:id="@+id/txt_cash"

@@ -24,7 +24,7 @@ import java.util.*
 import android.util.Log
 import com.google.firebase.firestore.*
 import com.unicomer.e_tracker_test.Constants.*
-import com.unicomer.e_tracker_test.Models.Record
+import com.unicomer.e_tracker_test.models.Record
 
 
 class AddRegistroFragment : Fragment() {
@@ -208,6 +208,7 @@ class AddRegistroFragment : Fragment() {
             // Envio de Datos usando el Modelo de Datos
 
             val addNewRecord = Record(
+                0,
             recordName!!,
             recordDate!!,
             recordAmmount!!,

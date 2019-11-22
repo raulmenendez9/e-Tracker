@@ -19,6 +19,14 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
+        <action
+            android:id="@+id/action_homeTravelFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
     </fragment>
 
     <fragment
@@ -38,5 +46,9 @@
         android:name="com.unicomer.e_tracker_test.TerminosFragment"
         android:label="fragment_terminos"
         tools:layout="@layout/fragment_terminos" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.unicomer.e_tracker_test.DetailFragment"
+        android:label="DetailFragment" />
 
 </navigation>

@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity(),
 {
 
 
-
-    // Declaring FirebaseAuthLocalClass components
-
+    // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
@@ -65,31 +63,31 @@ class MainActivity : AppCompatActivity(),
         var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
 
-
         //inicializar la toolbar
-
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         //instancia de firebase
-
         dbFirestore = FirebaseFirestore.getInstance()
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
         var splashScreen: View = findViewById(R.id.MainSplash)
 
+        //para saber cual es el id del documento actual
+        dbCollectionReference!! //no mover de aqui
+            .whereEqualTo("emailUser", user!!.email)
+            .whereEqualTo("active", true).addSnapshotListener { querySnapshot, _ ->
+                idTravel = querySnapshot!!.documents[0].id
+            }
 
         // Si usuario SI ES null entonces MainActivity NO se ejecuta y pasa directamente a LoginActivity
-
         if (user == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-
         } else {
-
             // Cargar MainFragment para Inicio de Navegacion en UI
+            //loadHomeFragment(HomeFragment())
             dbCollectionReference!! //Genera la busqueda en base al email y al estado del viaje actual
                 .whereEqualTo("emailUser", user.email)
                 .whereEqualTo("active", true)
@@ -142,7 +140,10 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
+
     private fun loadTermsAndConditionsFragment(termsAndConditionsFragment: TerminosFragment) {
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.main_fragment_container, termsAndConditionsFragment)
         fragmentTransaction.addToBackStack(TERMS_AND_CONDITIONS_FRAGMENT)
@@ -162,8 +163,24 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun loadTravel(tr: TravelRegistrationFragment) { //Funcion para ingresar un viaje
-        val formmu = supportFragmentManager.beginTransaction()
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
+    val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
+        formmu.commit()
+    }
+    private fun loadTerms(tyc:TerminosFragment){
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+        val formmu = supportFragmentManager.beginTransaction()
+        formmu.replace(R.id.main_fragment_container, tyc).addToBackStack(null)
+        formmu.commit()
+    }
+    private fun loadHomeTravel(ht:HomeTravelFragment){
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
+        val formmu = supportFragmentManager.beginTransaction()
+        formmu.replace(R.id.main_fragment_container, ht).addToBackStack(null)
         formmu.commit()
     }
 
@@ -181,12 +198,10 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
-        // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
-
+       // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
-        // val manager=getSystemService() as SearchManager
+//        val manager=getSystemService() as SearchManager
         var searchItem=menu.findItem(R.id.action_search)
         if (searchItem!=null) {
 
@@ -204,13 +219,10 @@ class MainActivity : AppCompatActivity(),
                     adapterHt!!.startListening()
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
-
                 }
 
             })
-
-        }   else    {
-
+        }else{
             Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
         }
 
@@ -222,7 +234,6 @@ class MainActivity : AppCompatActivity(),
         dbAuth = FirebaseAuth.getInstance()
 
         // Manejar seleccion de Item en Menu (Toolbar)
-
         return when (item.itemId) {
 
             // TODO Cambiar los textos del Toast por Strings
@@ -313,6 +324,7 @@ class MainActivity : AppCompatActivity(),
         var toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.GONE
     }
+
 
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

@@ -73,12 +73,6 @@ class MainActivity : AppCompatActivity(),
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
         var splashScreen: View = findViewById(R.id.MainSplash)
 
-        //para saber cual es el id del documento actual
-        dbCollectionReference!! //no mover de aqui
-            .whereEqualTo("emailUser", user!!.email)
-            .whereEqualTo("active", true).addSnapshotListener { querySnapshot, _ ->
-                idTravel = querySnapshot!!.documents[0].id
-            }
 
         // Si usuario SI ES null entonces MainActivity NO se ejecuta y pasa directamente a LoginActivity
         if (user == null) {
@@ -92,7 +86,10 @@ class MainActivity : AppCompatActivity(),
                 .whereEqualTo("emailUser", user.email)
                 .whereEqualTo("active", true)
                 .get()
-                .addOnSuccessListener {querySnapshot -> //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
+                .addOnSuccessListener {querySnapshot ->
+                    //idTravel = querySnapshot!!.documents[0].id
+                    //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
+                    Log.i("ERROR2","el snapshot tiene: ${querySnapshot.documents}")
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
                         loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
@@ -100,25 +97,22 @@ class MainActivity : AppCompatActivity(),
                         idDeViajeQueVieneDeFirestore = querySnapshot!!.documents[0].id
                         editor.putString(FIREBASE_TRAVEL_ID, idDeViajeQueVieneDeFirestore)
                         editor.apply()
-
                         var nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
-
+                        idTravel = nuevoIdCreadoLocal.toString()
                         Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
-
                         loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
                         splashScreen.visibility = View.GONE
                     }
+                }.addOnFailureListener {
+                    Log.i("ERROR","datos: $it")
+                    loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                    splashScreen.visibility = View.GONE
                 }
         }
     }
 
-    private fun envio() {
-        var barra: View = findViewById(R.id.toolbar)
-        barra.visibility = View.GONE
-        //updateRegistrationTravel(idd,dateinit)//llamado al metodo para actualizar registro del viaje
-        loadTravel(TravelRegistrationFragment())//LLamado al metodo para registrar viaje
-    }
+
 
     // Metodos para llamar los Fragments desde MainActivity
 
@@ -169,20 +163,7 @@ class MainActivity : AppCompatActivity(),
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
-    private fun loadTerms(tyc:TerminosFragment){
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
-        val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, tyc).addToBackStack(null)
-        formmu.commit()
-    }
-    private fun loadHomeTravel(ht:HomeTravelFragment){
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
-        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
-        val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, ht).addToBackStack(null)
-        formmu.commit()
-    }
+
 
     private fun loadAddRecordFragment(addRecordFragment: AddRegistroFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()

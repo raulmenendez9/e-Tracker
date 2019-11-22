@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.travel_registration.HistoryTravelFragment
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -146,6 +147,14 @@ class MainActivity : AppCompatActivity(),
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
+    private fun loadHistoryTravel(ht:HistoryTravelFragment){
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+        val formmu = supportFragmentManager.beginTransaction()
+        formmu.replace(R.id.main_fragment_container, ht).addToBackStack(null)
+        formmu.commit()
+    }
+
     private fun loadTerms(tyc:TerminosFragment){
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
@@ -219,8 +228,8 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
-
-                thisIsATestFragment(AddRegistroFragment())
+                loadHistoryTravel(HistoryTravelFragment())
+               // thisIsATestFragment(AddRegistroFragment())
                 true
             }
 

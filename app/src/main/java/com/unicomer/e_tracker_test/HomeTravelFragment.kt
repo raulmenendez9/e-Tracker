@@ -121,6 +121,7 @@ class HomeTravelFragment : Fragment(), ShowDataInterface {
             .setQuery(query, Record::class.java)
             .build()
         adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+
         val recycler = view?.findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this.context)

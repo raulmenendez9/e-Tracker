@@ -12,8 +12,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.unicomer.e_tracker_test.Constants.*
-import com.unicomer.e_tracker_test.Dialogs.LoginDialogFragment
+import com.unicomer.e_tracker_test.constants.*
+import com.unicomer.e_tracker_test.dialogs.LoginDialogFragment
 
 class LoginActivity : AppCompatActivity() {
 

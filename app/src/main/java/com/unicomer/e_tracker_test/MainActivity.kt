@@ -20,9 +20,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
-import com.unicomer.e_tracker_test.Constants.*
-import com.unicomer.e_tracker_test.Models.Record
+import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.constants.*
+import com.unicomer.e_tracker_test.models.Record
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 

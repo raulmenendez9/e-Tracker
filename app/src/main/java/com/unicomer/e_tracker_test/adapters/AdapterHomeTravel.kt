@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test.Adapters
+package com.unicomer.e_tracker_test.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.Models.Record
+import com.unicomer.e_tracker_test.models.Record
 import kotlinx.android.extensions.LayoutContainer
 
 class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):

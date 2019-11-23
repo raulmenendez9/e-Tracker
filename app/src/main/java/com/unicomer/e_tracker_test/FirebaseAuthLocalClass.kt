@@ -1,6 +1,6 @@
 package com.unicomer.e_tracker_test
 
-import com.unicomer.e_tracker_test.Constants.FIREBASE_USER_UID_KEY
+import com.unicomer.e_tracker_test.constants.FIREBASE_USER_UID_KEY
 
 class FirebaseAuthLocalClass {
 

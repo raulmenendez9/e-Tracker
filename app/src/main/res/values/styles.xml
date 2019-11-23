@@ -64,9 +64,11 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">@color/colorSecondary05LightGray</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_horizontal|center_vertical</item>
-        <item name="android:hint">01-01-2000</item>
+        <item name="android:hint">Agregar</item>
+        <item name="android:textColorHint">@color/hint</item>
     </style>
 
     <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
@@ -146,7 +148,7 @@
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
         <item name="android:textColor">@color/colorPrimary02Gray</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
     <!-- Text change HOME TRAVEL HEADER-->
     <style name="HomeTravelHeaderTEXT" parent="Theme.AppCompat.Light">
@@ -155,7 +157,7 @@
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
         <item name="android:textColor">@color/colorSecondary05LightGray</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 

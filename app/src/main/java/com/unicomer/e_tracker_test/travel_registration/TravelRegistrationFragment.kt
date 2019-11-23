@@ -2,7 +2,6 @@ package com.unicomer.e_tracker_test.travel_registration
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,8 +22,9 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.unicomer.e_tracker_test.HomeTravelFragment
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.Models.Travel
+import com.unicomer.e_tracker_test.models.Travel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -110,7 +110,7 @@ class TravelRegistrationFragment : Fragment() {
         description = view.findViewById(R.id.editTextMotive)
         initialTravel = view.findViewById(R.id.buttonRegistrations)
         floatingActionButton = view.findViewById(R.id.ButtonCloseRegistration)
-        radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
+        radioGroup = view.findViewById(R.id.radioGroup)
 
         //AutocompleteTextview
         val countries = resources.getStringArray(R.array.coutries_array)
@@ -184,8 +184,8 @@ class TravelRegistrationFragment : Fragment() {
                 val initdate = mDateStart
                 val finishdate = mDateEnd
 
-                initialDatePicker!!.setText(initdate)
-                finishDatePicker!!.setText(finishdate)
+                initialDatePicker!!.text=initdate
+                finishDatePicker!!.text=finishdate
             }
         })
 
@@ -223,7 +223,6 @@ class TravelRegistrationFragment : Fragment() {
             val datePick = initialDatePicker!!.text.toString()
             val finishtravel = finishDatePicker!!.text.toString()
             val descp = description!!.text.toString()
-            val balance = cassh
             val aproved = spinner!!.selectedItem.toString()
             emailUser=user!!.email
             val email = emailUser
@@ -256,7 +255,7 @@ class TravelRegistrationFragment : Fragment() {
                 update,
                 aproved,
                 descp,
-                balance,
+                cassh,
                 active,
                 settled)
 
@@ -265,8 +264,10 @@ class TravelRegistrationFragment : Fragment() {
                     .addOnSuccessListener {
                         Log.d("Enviodata", "$travel")
                         Toast.makeText(activity, getString(R.string.register_complete), Toast.LENGTH_SHORT).show()
+                        homeTravelFragment(HomeTravelFragment())
                     }
                     .addOnFailureListener { e -> Log.w("Error", "$e") }
+
         }
     }
 
@@ -290,8 +291,8 @@ class TravelRegistrationFragment : Fragment() {
                     radioGroup!!.check(radioNo!!.id)
                 }
                 //finalizacion del radioButton
-                initialDatePicker!!.setText(viaje[0].initialDate)
-                finishDatePicker!!.setText(viaje[0].finishDate)
+                initialDatePicker!!.text = viaje[0].initialDate
+                finishDatePicker!!.text = viaje[0].finishDate
                 description!!.setText(viaje[0].description)
                 //Spinner
                 var conteo: Int
@@ -340,11 +341,9 @@ class TravelRegistrationFragment : Fragment() {
             val datePick = initialDatePicker!!.text.toString()
             val finishtravel = finishDatePicker!!.text.toString()
             val descp = description!!.text.toString()
-            val balance = cassh
             val aproved = spinner!!.selectedItem.toString()
             emailUser=user!!.email
             val email = emailUser
-            val date = persist
             val update = getDateTime()
             val active = true
             val settled = false
@@ -365,9 +364,9 @@ class TravelRegistrationFragment : Fragment() {
                 destCountry,
                 cenCost,
                 cassh, email, refund,
-                datePick,finishtravel,date,update,aproved,
+                datePick,finishtravel, persist,update,aproved,
                 descp,
-                balance,active, settled
+                cassh,active, settled
             )
             db.collection("e-Tracker").document(id)
                 .set(travel) //Realiza el seteo de la data en firebase
@@ -386,6 +385,11 @@ class TravelRegistrationFragment : Fragment() {
         } catch (e: Exception) {
             e.toString()
         }
+    }
+    private fun homeTravelFragment(homeTravel: HomeTravelFragment){
+        val homeTravelFragment = mycontext!!.supportFragmentManager.beginTransaction()
+        homeTravelFragment.replace(R.id.main_fragment_container, homeTravel)
+        homeTravelFragment.commit()
     }
 
     override fun onDestroy() {

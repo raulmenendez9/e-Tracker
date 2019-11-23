@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test.Models
+package com.unicomer.e_tracker_test.models
 
 data class Travel(val originCountry: String?,
                   val destinyCountry: String?,

@@ -14,9 +14,16 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.constants.*
+import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.Classes.CallFragment
 import com.unicomer.e_tracker_test.Constants.*
 
@@ -40,6 +47,10 @@ class MainActivity : AppCompatActivity(),
     var sharedPreferences: SharedPreferences? = null
 
     // End of Declaring FirebaseAuthLocalClass components
+    var adapterHt: AdapterHomeTravel? = null
+    var idTravel:String=""
+    val idd: String = ""
+    val dateinit: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +63,8 @@ class MainActivity : AppCompatActivity(),
         // Obtener currentUser de Firebase
 
         dbAuth = FirebaseAuth.getInstance()
-        sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val user = dbAuth!!.currentUser
-
+        sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
 
@@ -83,9 +93,10 @@ class MainActivity : AppCompatActivity(),
                 .whereEqualTo("emailUser", user!!.email)
                 .whereEqualTo("active", true)
                 .get()
-                .addOnSuccessListener {querySnapshot -> //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
-
-
+                .addOnSuccessListener {querySnapshot ->
+                    //idTravel = querySnapshot!!.documents[0].id
+                    //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
+                    Log.i("ERROR2","el snapshot tiene: ${querySnapshot.documents}")
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
                         addFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
@@ -97,7 +108,7 @@ class MainActivity : AppCompatActivity(),
                         editor.apply()
 
                         var nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
-
+                        idTravel = nuevoIdCreadoLocal.toString()
                         Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
 
@@ -105,6 +116,10 @@ class MainActivity : AppCompatActivity(),
                         replaceFragment(HomeTravelFragment())
                         splashScreen.visibility = View.GONE
                     }
+                }.addOnFailureListener {
+                    Log.i("ERROR","datos: $it")
+                    loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                    splashScreen.visibility = View.GONE
                 }
     }
 
@@ -178,7 +193,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun loadTravel(tr: TravelRegistrationFragment) { //Funcion para ingresar un viaje
-        val formmu = supportFragmentManager.beginTransaction()
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
+    val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
@@ -207,6 +224,10 @@ class MainActivity : AppCompatActivity(),
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    // logica para filtrar con el recyclerView
+                    //adaptador.getFilter().filter(newText)
+                    setUpRecyclerView(idTravel,newText)
+                    adapterHt!!.startListening()
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
                 }
@@ -277,6 +298,22 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
+    private fun setUpRecyclerView(id:String,consulta:String?){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
+        val query: Query = dbCollectionReference!!.document(id)
+            .collection("record")
+            //.whereEqualTo("recordName",consulta)
+            .orderBy("recordName")
+            .startAt(consulta).endAt(consulta+"\uf8ff")
+        val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
+            .setQuery(query, Record::class.java)
+            .build()
+        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
+        recycler!!.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapterHt
+    }
+
     override fun openRegistrationTravelFragment() {
         addFragmentWithBackStack(TravelRegistrationFragment(), REGISTRATION_TRAVEL_FRAGMENT)
         hideToolBarOnFragmentViewDissapears()
@@ -300,6 +337,7 @@ class MainActivity : AppCompatActivity(),
         var toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.GONE
     }
+
 
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

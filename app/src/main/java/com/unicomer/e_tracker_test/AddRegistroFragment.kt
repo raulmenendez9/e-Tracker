@@ -4,15 +4,14 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentResolver
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,12 +33,15 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.ContextCompat.getExternalFilesDirs
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.Constants.*
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.Models.Travel
+import java.io.File
+import java.io.IOException
 import java.util.jar.Manifest
 
 
@@ -79,6 +81,7 @@ class AddRegistroFragment : Fragment() {
     private var buttonTakePhoto: Button? = null
     private val SELECT_IMAGE : Int =23748
     private val TAKE_PICTURE : Int =55535
+    private var mPhotoUri: Uri? = null
     // Boton Agregar Registro
 
     private var buttonAddRecord: Button? = null
@@ -447,10 +450,27 @@ class AddRegistroFragment : Fragment() {
                             startActivityForResult(intent,SELECT_IMAGE)
                         }
                         1->{
-                            startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PICTURE)
+                            var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            if (intent.resolveActivity(context!!.packageManager) != null){
+                                var photoFile: File? = null
+                                try {
+                                    photoFile = createImageFile()
+                                }catch (ex : IOException){}
+                                if (photoFile != null){
+                                    var values: ContentValues?=null
+                                    values!!.put(MediaStore.Images.Media.TITLE, "Ticket")
+                                    values.put(MediaStore.Images.Media.DESCRIPTION, "Photo take on ${System.currentTimeMillis()}")
+                                    mPhotoUri = context!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
+                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoUri)
+                                    startActivityForResult(intent, TAKE_PICTURE)
+                                }
+                            }
+
+                            Log.i("ERROR", "$intent")
+                            //startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PICTURE)
                         }
                     }
-
             })
             val alertDialog:AlertDialog = builder.create()
             alertDialog.show()
@@ -460,21 +480,30 @@ class AddRegistroFragment : Fragment() {
             Toast.makeText(this.context, "ERROR", Toast.LENGTH_SHORT).show()
         }
     }
+    @Throws(IOException::class)
+    private fun createImageFile(): File?{
+        var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var imageFileName = "JPGE $timeStamp _"
+        var storageDir: File = context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        val image = File.createTempFile(imageFileName,".jpg",storageDir)
+       // mCurrentPhotoPath = image.absolutePath
+        return image
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        try {
-            if (requestCode==SELECT_IMAGE)
-                if (resultCode==Activity.RESULT_OK){
+        //try {
+            if (requestCode==SELECT_IMAGE && resultCode==Activity.RESULT_OK){
                     var selectedImage:Uri = data?.data!!
                     pathImage!!.text = selectedImage.toString()
                 }
-            if (requestCode ==TAKE_PICTURE)
-                if (resultCode==Activity.RESULT_OK){
+            if (requestCode ==TAKE_PICTURE && resultCode==Activity.RESULT_OK){
                     var selectedImage:Uri = data?.data!!
                     pathImage!!.text = selectedImage.toString()
                 }
-        } catch (e:java.lang.Exception){}
+       // } catch (e:java.lang.Exception){
+            //Log.i("photo2", "message->${e}")
+        //}
     }
 
     fun getPath(uri: Uri):String{

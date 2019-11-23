@@ -14,8 +14,10 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.unicomer.e_tracker_test.Classes.CallFragment
 import com.unicomer.e_tracker_test.Constants.*
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
@@ -53,7 +55,6 @@ class MainActivity : AppCompatActivity(),
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val user = dbAuth!!.currentUser
 
-
         var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
 
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity(),
 
 
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
-                        loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
+                        addFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
@@ -100,7 +101,8 @@ class MainActivity : AppCompatActivity(),
                         Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
 
-                        loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                        //y si el viaje ya fue registrado cargara homeTravel
+                        replaceFragment(HomeTravelFragment())
                         splashScreen.visibility = View.GONE
                     }
                 }
@@ -144,30 +146,27 @@ class MainActivity : AppCompatActivity(),
 
     // Metodos para llamar los Fragments desde MainActivity
 
-    private fun loadHomeTravelFragment(homeTravelFragment: HomeTravelFragment) {
+
+    fun addFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, homeTravelFragment)
-        fragmentTransaction.commit()
-    }
-    private fun loadHomeFragment(homeFragment: HomeFragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.main_fragment_container, homeFragment)
+        fragmentTransaction.add(R.id.main_fragment_container, fragment)
         fragmentTransaction.commit()
     }
 
-    private fun loadRegistrationTravelFragment(travelRegistrationFragment: TravelRegistrationFragment) {
+    fun addFragmentWithBackStack(fragment: Fragment, TAG: String){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, travelRegistrationFragment)
-        fragmentTransaction.addToBackStack(REGISTRATION_TRAVEL_FRAGMENT)
+        fragmentTransaction.replace(R.id.main_fragment_container, fragment)
+        fragmentTransaction.addToBackStack(TAG)
         fragmentTransaction.commit()
     }
 
-    private fun loadTermsAndConditionsFragment(termsAndConditionsFragment: TerminosFragment) {
+    fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, termsAndConditionsFragment)
-        fragmentTransaction.addToBackStack(TERMS_AND_CONDITIONS_FRAGMENT)
+        fragmentTransaction.replace(R.id.main_fragment_container, fragment)
         fragmentTransaction.commit()
     }
+
+
 
     private fun updateRegistrationTravel(id: String, datein: String) {//Funcion para actualizar registro del viaje con el id que se optendra.
         val registrationFragment =
@@ -182,13 +181,6 @@ class MainActivity : AppCompatActivity(),
         val formmu = supportFragmentManager.beginTransaction()
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
-    }
-
-    private fun loadAddRecordFragment(addRecordFragment: AddRegistroFragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, addRecordFragment)
-        fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
-        fragmentTransaction.commit()
     }
 
 
@@ -242,7 +234,7 @@ class MainActivity : AppCompatActivity(),
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
 
-                loadAddRecordFragment(AddRegistroFragment())
+                addFragmentWithBackStack(AddRegistroFragment(), ADD_RECORD_FRAGMENT)
                 true
             }
 
@@ -250,14 +242,12 @@ class MainActivity : AppCompatActivity(),
                 // Manejar el evento en item "Terminos y Condiciones"
 
                 Toast.makeText(this, "item terminos y condiciones", Toast.LENGTH_SHORT).show()
-                loadTermsAndConditionsFragment(TerminosFragment())
+                addFragmentWithBackStack(TerminosFragment(), TERMS_AND_CONDITIONS_FRAGMENT)
                 true
             }
 
             R.id.item_generar -> {
                 // Manejar el evento en item "Generar Reporte"
-
-                Toast.makeText(this, "item generar", Toast.LENGTH_SHORT).show()
                 true
             }
 
@@ -288,17 +278,17 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun openRegistrationTravelFragment() {
-        loadRegistrationTravelFragment(TravelRegistrationFragment())
+        addFragmentWithBackStack(TravelRegistrationFragment(), REGISTRATION_TRAVEL_FRAGMENT)
         hideToolBarOnFragmentViewDissapears()
     }
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
-        loadHomeTravelFragment(HomeTravelFragment())
+        replaceFragment(HomeTravelFragment())
     }
 
     override fun openAddRecordFragment(){
-        loadAddRecordFragment(AddRegistroFragment())
+         addFragmentWithBackStack(AddRegistroFragment(), ADD_RECORD_FRAGMENT)
     }
 
     override fun showToolBarOnFragmentViewCreate() {

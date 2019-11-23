@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -16,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.Classes.CallFragment
+import com.unicomer.e_tracker_test.constants.ADD_RECORD_FRAGMENT
 import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.models.Record
 
@@ -48,6 +53,17 @@ class HomeTravelFragment : Fragment(){
     //para la imagen de fondo
     var backgroundImage: View? = null
 
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -64,9 +80,17 @@ class HomeTravelFragment : Fragment(){
             }
         adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
 
+
         floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
+
         floatingActionButton?.setOnClickListener {
-            listener?.openAddRecordFragment()
+
+            Toast.makeText(this.context, "Hola", Toast.LENGTH_SHORT).show()
+
+            fragmentManager?.let {
+                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
+            }
+
         }
 
 
@@ -87,6 +111,9 @@ class HomeTravelFragment : Fragment(){
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
+
+
+
     }
 
     override fun onStart() {
@@ -180,15 +207,6 @@ class HomeTravelFragment : Fragment(){
         recycler.adapter = adapterHt
     }
 
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
 
     override fun onDetach() {
         super.onDetach()

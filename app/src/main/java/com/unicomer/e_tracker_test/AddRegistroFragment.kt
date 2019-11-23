@@ -96,8 +96,25 @@ class AddRegistroFragment : Fragment() {
 
 
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onAttach")
+
+
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method OnCreate")
 
         // Ocultar el Toolbar al inicio
         listener?.hideToolBarOnFragmentViewDissapears()
@@ -107,6 +124,8 @@ class AddRegistroFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_registro, container, false)
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onCreateView")
 
         pathImage = view?.findViewById(R.id.pathImage)
 
@@ -168,6 +187,8 @@ class AddRegistroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.i(ADD_RECORD_FRAGMENT, "In method onViewCreated")
+
         listener?.hideToolBarOnFragmentViewDissapears()
 
         datePicker = view.findViewById(R.id.textview_record_date_selection)
@@ -182,6 +203,29 @@ class AddRegistroFragment : Fragment() {
 
 
     }
+
+
+    override fun onDestroy() {
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onDestroy")
+
+
+        super.onDestroy()
+        unbinder!!.unbind()
+    }
+
+
+    override fun onDetach() {
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onDetach")
+
+        super.onDetach()
+        listener = null
+    }
+
+
+
+
 
     //Permisos de camara, lectura y escritura
     private fun permissionValidation(): Boolean {
@@ -231,25 +275,6 @@ class AddRegistroFragment : Fragment() {
 
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unbinder!!.unbind()
     }
 
 

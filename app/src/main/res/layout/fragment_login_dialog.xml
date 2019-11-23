@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dp"
-    android:layout_height="180dp"
+    android:layout_height="220dp"
     android:theme="@style/DialogseTracker"
     tools:context=".dialogs.LoginDialogFragment">
 
@@ -12,22 +12,45 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
+            android:id="@+id/guidelineDialogLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.12" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineDialogRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.88" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineDialogHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineDialogBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.88" />
+
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="0dp"
             android:layout_height="64dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="Dialog Image"
             android:src="@drawable/ic_sms_failed_black"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toStartOf="@+id/guideline6"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDialogRight"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDialogLeft"
+            app:layout_constraintTop_toTopOf="@+id/guidelineDialogHeader" />
 
         <TextView
             android:id="@+id/textView3"
@@ -36,8 +59,8 @@
             android:fontFamily="@font/helvetica_neue_medium"
             android:text="@string/txt_dialog_login_header"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
-            app:layout_constraintEnd_toStartOf="@+id/guideline6"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDialogRight"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDialogLeft"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             app:layout_constraintVertical_bias="0.5" />
 
@@ -47,34 +70,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/txt_dialog_login"
             android:textAlignment="center"
             android:textColor="@color/colorSecondary01DarkBlue"
-            app:layout_constraintBottom_toTopOf="@+id/guideline7"
-            app:layout_constraintEnd_toStartOf="@+id/guideline6"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineDialogBottom"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDialogRight"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDialogLeft"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.9" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

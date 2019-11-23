@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telecom.Call
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.Classes.CallFragment
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
@@ -81,21 +83,25 @@ class MainActivity : AppCompatActivity(),
 
 
 
-
             // Cargar MainFragment para Inicio de Navegacion en UI
 
             dbCollectionReference = dbFirestore?.collection("e-Tracker")
 
             dbCollectionReference!! //Genera la busqueda en base al email y al estado del viaje actual
+
                 .whereEqualTo("emailUser", user!!.email)
                 .whereEqualTo("active", true)
                 .get()
                 .addOnSuccessListener {querySnapshot ->
-                    //idTravel = querySnapshot!!.documents[0].id
+
+
                     //Dato curioso, encuentre o no lo que busca firebase igual devuelve una respuesta aunque sea vacia pero siempre es success
                     Log.i("ERROR2","el snapshot tiene: ${querySnapshot.documents}")
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
-                        addFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
+
+                        //por tanto si devuelve vacio cargará homeFragment
+                        CallFragment().addFragment(this.supportFragmentManager, HomeFragment(), true, false, true)
+
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
@@ -110,13 +116,15 @@ class MainActivity : AppCompatActivity(),
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
 
                         //y si el viaje ya fue registrado cargara homeTravel
-                        replaceFragment(HomeTravelFragment())
+
+                        CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, false, false)
+
                         splashScreen.visibility = View.GONE
                     }
                 }.addOnFailureListener {
                     Log.i("ERROR","datos: $it")
                     //y si el viaje ya fue registrado cargara homeTravel
-                    addFragment(HomeTravelFragment())
+                    CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, false, false)
                     splashScreen.visibility = View.GONE
                 }
     }
@@ -157,27 +165,6 @@ class MainActivity : AppCompatActivity(),
 
     }
 
-    // Metodos para llamar los Fragments desde MainActivity
-
-
-    fun addFragment(fragment: Fragment){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.main_fragment_container, fragment)
-        fragmentTransaction.commit()
-    }
-
-    fun addFragmentWithBackStack(fragment: Fragment, TAG: String){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, fragment)
-        fragmentTransaction.addToBackStack(TAG)
-        fragmentTransaction.commit()
-    }
-
-    fun replaceFragment(fragment: Fragment){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, fragment)
-        fragmentTransaction.commit()
-    }
 
 
     override fun onSupportNavigateUp(): Boolean {
@@ -234,15 +221,14 @@ class MainActivity : AppCompatActivity(),
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
 
-                addFragmentWithBackStack(AddRegistroFragment(), ADD_RECORD_FRAGMENT)
+                CallFragment().addFragment(this.supportFragmentManager, AddRegistroFragment(), true, true, true)
                 true
             }
 
             R.id.item_terminos -> {
                 // Manejar el evento en item "Terminos y Condiciones"
 
-                Toast.makeText(this, "item terminos y condiciones", Toast.LENGTH_SHORT).show()
-                addFragmentWithBackStack(TerminosFragment(), TERMS_AND_CONDITIONS_FRAGMENT)
+                CallFragment().addFragment(this.supportFragmentManager, TerminosFragment(), true, true, true)
                 true
             }
 
@@ -295,17 +281,19 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun openRegistrationTravelFragment() {
-        addFragmentWithBackStack(TravelRegistrationFragment(), REGISTRATION_TRAVEL_FRAGMENT)
         hideToolBarOnFragmentViewDissapears()
+        CallFragment().addFragment(this.supportFragmentManager, TravelRegistrationFragment(), true, true, true)
+
     }
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
-        replaceFragment(HomeTravelFragment())
+        CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, true, true)
     }
 
     override fun openAddRecordFragment(){
-         addFragmentWithBackStack(AddRegistroFragment(), ADD_RECORD_FRAGMENT)
+        CallFragment().addFragment(this.supportFragmentManager, AddRegistroFragment(), true, true, true)
+
     }
 
     override fun showToolBarOnFragmentViewCreate() {

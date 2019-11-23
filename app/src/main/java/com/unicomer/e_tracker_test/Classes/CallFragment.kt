@@ -9,6 +9,16 @@ import com.unicomer.e_tracker_test.R
 
 class CallFragment{
 
+    /**
+     *  @sample CallFragment().addFragment(this.supportFragmentManager, TravelRegistrationFragment(), true, true, true)
+     *
+     *  @param1 FragmentManager from Activity (this@Activity.supportFragmentManager)
+     *  @param2 Fragment needs to be opened
+     *  @param3 If the fragment needs to be replaced or added
+     *  @param4 If the fragment needs to be added to backStack
+     *  @param5 If animations are needed
+     */
+
     fun addFragment(
         fragmentManager: FragmentManager,
         fragment: Fragment,

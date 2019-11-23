@@ -187,7 +187,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btn_agregar_registro"
@@ -202,7 +203,6 @@
         android:id="@+id/floating_action_button_add_record"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_marginTop="16dp"
         android:clickable="true"
         android:src="@drawable/cancel_medium_ff"
         app:layout_constraintBottom_toBottomOf="parent"

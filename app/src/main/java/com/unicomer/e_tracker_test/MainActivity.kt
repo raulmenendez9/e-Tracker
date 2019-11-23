@@ -21,12 +21,9 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.models.Record
-import com.unicomer.e_tracker_test.Classes.CallFragment
-import com.unicomer.e_tracker_test.Constants.*
-
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
 class MainActivity : AppCompatActivity(),
@@ -65,7 +62,7 @@ class MainActivity : AppCompatActivity(),
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-        var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
 
 
@@ -80,7 +77,7 @@ class MainActivity : AppCompatActivity(),
 
         dbFirestore = FirebaseFirestore.getInstance()
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
-        var splashScreen: View = findViewById(R.id.MainSplash)
+        val splashScreen: View = findViewById(R.id.MainSplash)
 
 
 
@@ -107,7 +104,7 @@ class MainActivity : AppCompatActivity(),
                         editor.putString(FIREBASE_TRAVEL_ID, idDeViajeQueVieneDeFirestore)
                         editor.apply()
 
-                        var nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
+                        val nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
                         idTravel = nuevoIdCreadoLocal.toString()
                         Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
@@ -118,7 +115,8 @@ class MainActivity : AppCompatActivity(),
                     }
                 }.addOnFailureListener {
                     Log.i("ERROR","datos: $it")
-                    loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                    //y si el viaje ya fue registrado cargara homeTravel
+                    addFragment(HomeTravelFragment())
                     splashScreen.visibility = View.GONE
                 }
     }
@@ -182,25 +180,6 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-
-    private fun updateRegistrationTravel(id: String, datein: String) {//Funcion para actualizar registro del viaje con el id que se optendra.
-        val registrationFragment =
-            TravelRegistrationFragment.newInstance(id, datein) //Aqui se enviara el id del viaje
-        val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, registrationFragment).addToBackStack(null)
-        formmu.commit()
-        registrationFragment.arguments
-    }
-
-    private fun loadTravel(tr: TravelRegistrationFragment) { //Funcion para ingresar un viaje
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
-        getSupportActionBar()?.setDisplayShowHomeEnabled(false)
-    val formmu = supportFragmentManager.beginTransaction()
-        formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
-        formmu.commit()
-    }
-
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -213,10 +192,10 @@ class MainActivity : AppCompatActivity(),
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
         // val manager=getSystemService() as SearchManager
-        var searchItem=menu.findItem(R.id.action_search)
+        val searchItem=menu.findItem(R.id.action_search)
         if (searchItem!=null) {
 
-            var searchView = searchItem.actionView as SearchView
+            val searchView = searchItem.actionView as SearchView
             searchView.queryHint = "Search"
             searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -307,6 +286,7 @@ class MainActivity : AppCompatActivity(),
         val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
+
         adapterHt = AdapterHomeTravel(options) //datos reales del adapter
         val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
@@ -329,12 +309,12 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun showToolBarOnFragmentViewCreate() {
-        var toolbarMainActivity: View = findViewById(R.id.toolbar)
+        val toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.VISIBLE
     }
 
     override fun hideToolBarOnFragmentViewDissapears() {
-        var toolbarMainActivity: View = findViewById(R.id.toolbar)
+        val toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.GONE
     }
 

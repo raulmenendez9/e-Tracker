@@ -15,8 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.unicomer.e_tracker_test.Adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.models.Travel
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.models.Record
 
 
@@ -151,10 +151,10 @@ class HomeTravelFragment : Fragment(){
                                     totalOtherC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
                             }
                         }
-                        totalFood!!.text = "$$totalFoodC"
-                        totalCar!!.text = "$$totalCarC"
-                        totalHotel!!.text = "$$totalhotelC"
-                        totalOther!!.text = "$$totalOtherC"
+                        totalFood!!.text = "$totalFoodC"
+                        totalCar!!.text = "$totalCarC"
+                        totalHotel!!.text = "$totalhotelC"
+                        totalOther!!.text = "$totalOtherC"
                         //muestro el total de gastos disminuidos
                         val balanceReg = data[0].balance!!.toDouble() - totalFoodC - totalCarC -totalhotelC -totalOtherC
                         balance!!.text = balanceReg.toString()
@@ -196,7 +196,7 @@ class HomeTravelFragment : Fragment(){
     }
 
     private fun floatingActionButtonHomeTravel(goToHomeTravelFragment: HomeTravelFragment){
-
+        //TODO Needs to call AddRecordFragment
     }
 
 

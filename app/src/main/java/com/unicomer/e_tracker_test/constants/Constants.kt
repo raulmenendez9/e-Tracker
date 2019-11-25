@@ -2,7 +2,9 @@ package com.unicomer.e_tracker_test.constants
 
 
 
-
+/**
+ * Constant values used throughout the app
+ */
 
 // FIREBASE TAGS
 

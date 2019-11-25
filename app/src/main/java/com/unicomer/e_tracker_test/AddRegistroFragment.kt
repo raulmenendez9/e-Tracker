@@ -66,9 +66,9 @@ class AddRegistroFragment : Fragment() {
 
     // Variables para ID de cada RadioButton
     private val buttonFoodId: Int? = 0
-    private val buttonHotelId: Int? = 2
-    private val buttonTransportationId: Int? = 1
-    private val buttonOtherId: Int? = 3
+    private val buttonHotelId: Int? = 1 //2
+    private val buttonTransportationId: Int? = 2 //1
+    private val buttonOtherId: Int? = 3 //3
 
     // Boton Tomar Foto
 
@@ -358,50 +358,50 @@ class AddRegistroFragment : Fragment() {
 
     private fun radioButtonSelection(radioButtonId: Int){
 
-        if (radioButtonId == radioButtonFood?.id){
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
-
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_selected_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
-
-        } else if (radioButtonId == radioButtonHotel?.id) {
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
-
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_selected_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
-
-        } else if (radioButtonId == radioButtonTransportation?.id) {
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
-
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_selected_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
-
-        } else if (radioButtonId == radioButtonOther?.id) {
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other)
-
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_selected_background_gradient)
-        }
+//        if (radioButtonId == radioButtonFood?.id){
+//            radioButtonFood?.setButtonDrawable(R.drawable.ic_cat_food_on)
+//            radioButtonHotel?.setButtonDrawable(R.drawable.ic_cat_hotel_off)
+//            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_cat_transportation_off)
+//            radioButtonOther?.setButtonDrawable(R.drawable.ic_cat_other_off)
+//
+//            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_on)
+//            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_off)
+//            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_off)
+//            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_off)
+//
+//        } else if (radioButtonId == radioButtonHotel?.id) {
+//            radioButtonFood?.setButtonDrawable(R.drawable.ic_cat_food_off)
+//            radioButtonHotel?.setButtonDrawable(R.drawable.ic_cat_hotel_on)
+//            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_cat_transportation_off)
+//            radioButtonOther?.setButtonDrawable(R.drawable.ic_cat_other_off)
+//
+//            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_off)
+//            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_on)
+//            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_off)
+//            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_off)
+//
+//        } else if (radioButtonId == radioButtonTransportation?.id) {
+//            radioButtonFood?.setButtonDrawable(R.drawable.ic_cat_food_off)
+//            radioButtonHotel?.setButtonDrawable(R.drawable.ic_cat_hotel_off)
+//            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_cat_transportation_on)
+//            radioButtonOther?.setButtonDrawable(R.drawable.ic_cat_other_off)
+//
+//            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_off)
+//            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_off)
+//            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_on)
+//            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_off)
+//
+//        } else if (radioButtonId == radioButtonOther?.id) {
+//            radioButtonFood?.setButtonDrawable(R.drawable.ic_cat_food_off)
+//            radioButtonHotel?.setButtonDrawable(R.drawable.ic_cat_hotel_off)
+//            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_cat_transportation_off)
+//            radioButtonOther?.setButtonDrawable(R.drawable.ic_cat_other_on)
+//
+//            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_off)
+//            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_off)
+//            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_off)
+//            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_on)
+//        }
     }
 
     private fun openDateRangePicker(){ //Metodo para abrir el calendario

@@ -45,6 +45,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        Log.i(LOGIN_ACTIVITY_KEY, "In method onCreate")
+
         // Validar si el usuario ha logeado anteriormente
 
         dbAuth = FirebaseAuth.getInstance()
@@ -56,11 +58,24 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Log.i(LOGIN_ACTIVITY_KEY, "In method onStart")
 
         emailText = this.findViewById(R.id.et_email)
         passwordText = this.findViewById(R.id.et_password)
         signInButton = this.findViewById(R.id.button_sign_in)
         signInDialog = this.findViewById(R.id.txt_signin_problem)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.i(LOGIN_ACTIVITY_KEY, "In method onResume")
 
         signInButton?.setOnClickListener {
             validateUserSession()
@@ -68,9 +83,33 @@ class LoginActivity : AppCompatActivity() {
         signInDialog?.setOnClickListener {
             showDialog()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Log.i(LOGIN_ACTIVITY_KEY, "In method onPause")
 
     }
 
+    override fun onStop() {
+        super.onStop()
+
+        Log.i(LOGIN_ACTIVITY_KEY, "In method onStop")
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        Log.i(LOGIN_ACTIVITY_KEY, "In method onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        Log.i(LOGIN_ACTIVITY_KEY, "In method onDestroy")
+    }
 
     fun hideSplash(){
         splash = findViewById(R.id.splashlogin)
@@ -94,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                         // Si authentication funciona aqui se maneja
 
                         Log.i(LOGIN_ACTIVITY_KEY, "signIn:success")
-                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with user ${it.result?.user?.email} and UID ${it.result?.user?.uid}")
+
 
                         val userLoggedIn = dbAuth?.currentUser
 
@@ -102,10 +141,15 @@ class LoginActivity : AppCompatActivity() {
 
                         val sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-                        editor.putString(FIREBASE_CURRENT_USER_KEY, userLoggedIn.toString())
                         editor.putString(FIREBASE_USER_EMAIL_LOGGED_IN_KEY, userLoggedIn!!.email)
-                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn.uid)
+                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn!!.uid)
                         editor.apply()
+
+                        var userUID: String? = sharedPreferences?.getString(FIREBASE_USER_UID_KEY, "")
+
+                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with user ${it.result?.user?.email} and UID ${it.result?.user?.uid}")
+                        Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with UID $userUID")
+
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
@@ -122,6 +166,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
+
 
     // TODO REVISAR ESTO
 

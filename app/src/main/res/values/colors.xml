@@ -10,6 +10,10 @@
     <color name="colorSecondary04Gray">#C0BFBF</color>
     <color name="colorSecondary05LightGray">#F5F5F5</color>
     <color name="hint">#8EA4CA</color>
+    
+    <color name="colorRadioButtonFoodOn"></color>
+    <color name="colorRadioButtonFoodOff"></color>
+
 
     <!--CATEGORY COLORS-->
     <color name="color_category_food">#FEC180</color>

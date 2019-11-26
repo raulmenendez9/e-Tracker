@@ -9,7 +9,6 @@
         <item name="android:fontFamily">@font/helvetica_neue_medium</item>
     </style>
 
-
     <style name="FontStyle_BodyText" parent="Theme.AppCompat.Light">
         <item name="android:textSize">@dimen/Font_Size_Body_Text</item>
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
@@ -43,6 +42,11 @@
     <style name="FontStyle_ErrorText" parent="Theme.AppCompat.Light">
         <item name="android:textSize">@dimen/Font_Size_Error_Form</item>
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <style name="FontStyle_DialogTitleText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_List_Title</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
     </style>
 
 

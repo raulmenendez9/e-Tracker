@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -16,8 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.classes.CallFragment
+import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.models.Record
 
 
@@ -50,6 +52,17 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     //para la imagen de fondo
     var backgroundImage: View? = null
 
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -65,12 +78,6 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
                 * despues de que la peticion se complete*/
             }
         adapterHt = AdapterHomeTravel(adapterInit(), this) //Se inicializa por primera y unica vez al adapter como uno vacio
-
-        floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
-        floatingActionButton?.setOnClickListener {
-            listener?.openAddRecordFragment()
-        }
-
 
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
@@ -89,6 +96,16 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
+
+        floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
+        floatingActionButton?.setOnClickListener {
+
+            fragmentManager?.let {
+                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
+            }
+
+        }
+
     }
 
     override fun SendaDetailItemInterface(
@@ -169,10 +186,10 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
                                     totalOtherC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
                             }
                         }
-                        totalFood!!.text = "$$totalFoodC"
-                        totalCar!!.text = "$$totalCarC"
-                        totalHotel!!.text = "$$totalhotelC"
-                        totalOther!!.text = "$$totalOtherC"
+                        totalFood!!.text = "$totalFoodC"
+                        totalCar!!.text = "$totalCarC"
+                        totalHotel!!.text = "$totalhotelC"
+                        totalOther!!.text = "$totalOtherC"
                         //muestro el total de gastos disminuidos
                         val balanceReg = data[0].balance!!.toDouble() - totalFoodC - totalCarC -totalhotelC -totalOtherC
                         balance!!.text = balanceReg.toString()
@@ -199,22 +216,13 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     }
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
     override fun onDetach() {
         super.onDetach()
         listener = null
     }
 
     private fun floatingActionButtonHomeTravel(goToHomeTravelFragment: HomeTravelFragment){
-
+        //TODO Needs to call AddRecordFragment
     }
 
 

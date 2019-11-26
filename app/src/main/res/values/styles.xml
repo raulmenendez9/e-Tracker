@@ -25,11 +25,12 @@
     </style>
 
     <style name="EditText_Regular" parent="Theme.AppCompat.Light">
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">0dp</item>
+        <item name="android:paddingStart">10dp</item>
         <item name="android:textAppearance">@style/FontStyle_InputFormText</item>
         <item name="android:textColor">@color/colorSecondary01DarkBlue</item>
-        <item name="android:textColorHint">@color/colorSecondary01DarkBlue</item>
+        <item name="android:textColorHint">@color/colorPrimary02Gray</item>
     </style>
 
     <!--    Login Button Medium Size Theme-->
@@ -72,7 +73,7 @@
     </style>
 
     <style name="TextView_Small_Login" parent="Theme.AppCompat.Light">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/FontStyle_SecondaryText</item>
         <item name="android:textColor">@color/colorSecondary05LightGray</item>
@@ -89,6 +90,15 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textAppearance">@style/FontStyle_BodyText</item>
+    </style>
+
+    <!--    Dialog-->
+
+    <style name="Dialog_Title" parent="Theme.AppCompat.Light">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">@style/FontStyle_ListTitleText</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
     </style>
 
 

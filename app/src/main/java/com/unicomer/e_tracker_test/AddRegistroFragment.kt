@@ -4,14 +4,14 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,11 +32,15 @@ import java.util.*
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.ContextCompat.getExternalFilesDirs
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.models.Record
+import java.io.File
+import java.io.IOException
+import java.util.jar.Manifest
 
 
 class AddRegistroFragment : Fragment() {
@@ -65,16 +69,19 @@ class AddRegistroFragment : Fragment() {
     private var radioButtonOther: RadioButton? = null
 
     // Variables para ID de cada RadioButton
-    private val buttonFoodId: Int? = 0
-    private val buttonHotelId: Int? = 2
-    private val buttonTransportationId: Int? = 1
-    private val buttonOtherId: Int? = 3
+    private val buttonFoodId: Int? = 0 //0
+    private val buttonHotelId: Int? = 2 //1
+    private val buttonTransportationId: Int? = 1 //2
+    private val buttonOtherId: Int? = 3 //3
 
     // Boton Tomar Foto
 
     private var buttonTakePhoto: Button? = null
     private val SELECT_IMAGE : Int =23748
-    private val TAKE_PICTURE : Int =55535
+    private val TAKE_PICTURE : Int =5000
+    private var mCurrentPhotoPath: String? = null
+    private var photoUri: Uri? = null
+    private var imageDir: String? = null
     // Boton Agregar Registro
 
     private var buttonAddRecord: Button? = null
@@ -96,8 +103,25 @@ class AddRegistroFragment : Fragment() {
 
 
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onAttach")
+
+
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method OnCreate")
 
         // Ocultar el Toolbar al inicio
         listener?.hideToolBarOnFragmentViewDissapears()
@@ -108,7 +132,9 @@ class AddRegistroFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_registro, container, false)
 
-        pathImage = view?.findViewById(R.id.pathImage)
+        Log.i(ADD_RECORD_FRAGMENT, "In method onCreateView")
+
+        //pathImage = view?.findViewById(R.id.pathImage)
 
         // RadioGroup contenedor de RadioButton
         radioGroup = view?.findViewById(R.id.radioGroup_Category)
@@ -133,7 +159,6 @@ class AddRegistroFragment : Fragment() {
             var radioButtonSelectedId: Int = radioGroup!!.checkedRadioButtonId
             radioButtonSelection(radioButtonSelectedId)
             Log.i(ADD_RECORD_FRAGMENT, "radioButtonSelectionID es ${radioButtonSelectedId}")
-
         }
 
         // Listener de los Botones
@@ -155,7 +180,6 @@ class AddRegistroFragment : Fragment() {
         }
 
 
-
         //Manipular el FloatinActionButton
         floatingActionButton = view?.findViewById(R.id.floating_action_button_add_record)
         floatingActionButton?.setOnClickListener {
@@ -167,6 +191,8 @@ class AddRegistroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onViewCreated")
 
         listener?.hideToolBarOnFragmentViewDissapears()
 
@@ -180,8 +206,29 @@ class AddRegistroFragment : Fragment() {
             openDateRangePicker()
         }
 
-
     }
+
+
+    override fun onDestroy() {
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onDestroy")
+
+
+        super.onDestroy()
+        unbinder!!.unbind()
+    }
+
+
+    override fun onDetach() {
+
+        Log.i(ADD_RECORD_FRAGMENT, "In method onDetach")
+
+        super.onDetach()
+        listener = null
+    }
+
+
+
 
     //Permisos de camara, lectura y escritura
     private fun permissionValidation(): Boolean {
@@ -233,25 +280,6 @@ class AddRegistroFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unbinder!!.unbind()
-    }
-
 
     private fun createRecordInFirestore(){
 
@@ -260,19 +288,24 @@ class AddRegistroFragment : Fragment() {
         editTextName = view?.findViewById(R.id.et_titulo_de_registro)
         fecha = view?.findViewById(R.id.textview_record_date_selection)
         monto = view?.findViewById(R.id.et_Monto)
-
-
-
         editTextDescripcion = view?.findViewById(R.id.editText_record_description)
+        var radioId = radioGroup?.checkedRadioButtonId.toString()
+
+
 
 
         // Validar campos en formulario
 
-        if (editTextName?.text!!.isEmpty() or fecha?.text!!.isEmpty() or monto?.text!!.isEmpty() or editTextDescripcion?.text!!.isEmpty()) {
+        if (editTextName?.text!!.isBlank()
+            or fecha?.text!!.isBlank()
+            or monto?.text!!.isBlank()
+            or editTextDescripcion?.text!!.isBlank()
+            or radioId.equals("-1")) {
             Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-            val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_CURRENT_USER_KEY)
-            Log.i(ADD_RECORD_FRAGMENT, "CurrentUser is ${currentFirebaseUser.toString()}")
+            val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_USER_UID_KEY)
+
+            Log.i(ADD_RECORD_FRAGMENT, "Radio category is ${radioGroup?.checkedRadioButtonId.toString()}")
 
 
         } else {
@@ -280,23 +313,23 @@ class AddRegistroFragment : Fragment() {
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
-            var image = Uri.parse(pathImage?.text.toString())
+            var image = Uri.parse(imageDir)
             imageRef.putFile(image).addOnSuccessListener {
                 imageRef.downloadUrl.addOnCompleteListener{taskSnapshot ->
 
                 // SHAREDPREFERENCES
             val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
             var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
-            val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_CURRENT_USER_KEY)
+            val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_UID_KEY)
             val currentFirebaseEmailUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
 
             // Elementos de UI
 
             val recordName: String? = editTextName?.text.toString()
             val recordDate: String? = fecha?.text.toString()
-            val recordAmmount: String? = monto?.text.toString()
+            val recordAmount: String? = monto?.text.toString()
             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-            val recordPhoto =taskSnapshot.result
+            val recordPhoto =  taskSnapshot.result
             val recordDescription: String = editTextDescripcion?.text.toString()
             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
@@ -306,7 +339,7 @@ class AddRegistroFragment : Fragment() {
             val addNewRecord = Record(
             recordName!!,
             recordDate!!,
-            recordAmmount!!,
+            recordAmount!!,
             recordCategory!!,
             "$recordPhoto",
             recordDescription,
@@ -334,48 +367,32 @@ class AddRegistroFragment : Fragment() {
     private fun radioButtonSelection(radioButtonId: Int){
 
         if (radioButtonId == radioButtonFood?.id){
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
 
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_selected_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
+            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_on)
+            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_off)
+            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_off)
+            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_off)
 
         } else if (radioButtonId == radioButtonHotel?.id) {
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
 
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_selected_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
+            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_off)
+            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_on)
+            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_off)
+            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_off)
 
         } else if (radioButtonId == radioButtonTransportation?.id) {
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other_gray)
 
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_selected_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_background_gradient)
+            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_off)
+            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_off)
+            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_on)
+            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_off)
 
         } else if (radioButtonId == radioButtonOther?.id) {
-            radioButtonFood?.setButtonDrawable(R.drawable.ic_category_food_gray)
-            radioButtonHotel?.setButtonDrawable(R.drawable.ic_category_hotel_gray)
-            radioButtonTransportation?.setButtonDrawable(R.drawable.ic_category_transportation_gray)
-            radioButtonOther?.setButtonDrawable(R.drawable.ic_category_other)
 
-            radioButtonFood?.setBackgroundResource(R.drawable.ic_category_food_background_gradient)
-            radioButtonHotel?.setBackgroundResource(R.drawable.ic_category_hotel_background_gradient)
-            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_category_transportation_background_gradient)
-            radioButtonOther?.setBackgroundResource(R.drawable.ic_category_other_selected_background_gradient)
+            radioButtonFood?.setBackgroundResource(R.drawable.ic_cat_food_gradient_off)
+            radioButtonHotel?.setBackgroundResource(R.drawable.ic_cat_hotel_gradient_off)
+            radioButtonTransportation?.setBackgroundResource(R.drawable.ic_cat_transportation_gradient_off)
+            radioButtonOther?.setBackgroundResource(R.drawable.ic_cat_other_gradient_on)
         }
     }
 
@@ -431,22 +448,39 @@ class AddRegistroFragment : Fragment() {
 
     private fun dialogPhoto(){
         try {
-            val items = arrayOf<CharSequence>("Seleccionar de la galería", "Hacer una foto")
+            var photoFile: File? = null
+            val items = arrayOf<CharSequence>(getString(R.string.gallery), getString(R.string.camera))
           val builder :AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("Seleccionar una foto")
-            builder.setItems(items, DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
-                    when(i){
-                        0-> {
+            builder.setTitle(getString(R.string.select_image))
+            builder.setItems(items) { _: DialogInterface, i: Int ->
+                when(i){
+                    0-> {
                         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-                            intent.type = "image/*"
-                            startActivityForResult(intent,SELECT_IMAGE)
+                        intent.type = "image/*"
+                        startActivityForResult(intent,SELECT_IMAGE)
+                    }
+                    1->{
+                        val camaraIntent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        if (camaraIntent.resolveActivity(activity!!.packageManager) != null){
+                            try {
+                                photoFile=createImageFile()
+
+                            }catch (ex:IOException){ }
                         }
-                        1->{
-                            startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PICTURE)
+                        if (photoFile != null){
+                            val values = ContentValues()
+                            values.put(MediaStore.Images.Media.TITLE,"Ticket")
+                            values.put(MediaStore.Images.Media.DESCRIPTION,"Photo taken on ${System.currentTimeMillis()}")
+                            photoUri = activity!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
+                            camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
+                            startActivityForResult(camaraIntent, TAKE_PICTURE)
+                            imageDir = photoUri.toString()
+                            Log.i("photo", "uri image = $photoUri")
+                            // startActivityForResult(camaraIntent, TAKE_PICTURE)
                         }
                     }
-
-            })
+                }
+            }
             val alertDialog:AlertDialog = builder.create()
             alertDialog.show()
         }
@@ -456,38 +490,33 @@ class AddRegistroFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun createImageFile():File{
+        val timestamp =SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName ="JPEG_$timestamp _"
+        val storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(imageFileName,".jpg",storageDir)
+        mCurrentPhotoPath=image.absolutePath
+        return image
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode==SELECT_IMAGE) {
-                if (resultCode == Activity.RESULT_OK) {
-                    var selectedImage: Uri = data?.data!!
-                    pathImage!!.text = selectedImage.toString()
-                    Log.d("ERRORPHOTO", "$pathImage")
-                }
-            }
-            if (requestCode ==TAKE_PICTURE) {
 
-                Log.d("ERRORPHOTO", "algo")
-                if (resultCode == Activity.RESULT_OK) {
-                    var selectedImage: Uri = data?.data!!
+            if (requestCode==SELECT_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+                    val selectedImage: Uri = data.data!!
+                    imageDir = selectedImage.toString()
+
+            }
+            if (requestCode ==TAKE_PICTURE && resultCode == Activity.RESULT_OK ) {
+                    val selectedImage: Uri = data?.data!!
                     pathImage!!.text = selectedImage.toString()
-                    Log.d("ERRORPHOTO", "$pathImage")
-                }
             }
         } catch (e:java.lang.Exception){
-            Log.e("ERRORPHOTO", "$e")
-        }
+            Log.i("ERROR", "message: ${e.message}")
+       }
     }
-
-    fun getPath(uri: Uri):String{
-        val projection= arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor = context!!.contentResolver.query(uri,projection,null,null,null)!!
-        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor.moveToFirst()
-        return  cursor.getString(column_index)
-    }
-
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)

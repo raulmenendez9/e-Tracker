@@ -2,11 +2,12 @@ package com.unicomer.e_tracker_test.constants
 
 
 
-
+/**
+ * Constant values used throughout the app
+ */
 
 // FIREBASE TAGS
 
-const val FIREBASE_CURRENT_USER_KEY = ""
 const val FIREBASE_USER_EMAIL_LOGGED_IN_KEY = ""
 const val FIREBASE_USER_UID_KEY = ""
 const val FIREBASE_TRAVEL_ID = ""

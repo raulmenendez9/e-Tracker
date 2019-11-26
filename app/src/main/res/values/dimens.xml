@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="Font_Size_Title">20sp</dimen>
+    <dimen name="Font_Size_Title">16sp</dimen>
     <dimen name="Font_Size_Dialog_Modal">16sp</dimen>
-    <dimen name="Font_Size_List_Title">16sp</dimen>
-    <dimen name="Font_Size_Text_Input_Form">16sp</dimen>
+    <dimen name="Font_Size_List_Title">14sp</dimen>
+    <dimen name="Font_Size_Text_Input_Form">14sp</dimen>
     <dimen name="Font_Size_Body_Text">14sp</dimen>
     <dimen name="Font_Size_Secondary_Text">14sp</dimen>
     <dimen name="Font_Size_Button_Tab_Text">14sp</dimen>
-    <dimen name="Font_Size_Error_Form">12sp</dimen>
-
+    <dimen name="Font_Size_Error_Form">14sp</dimen>
 
 </resources>

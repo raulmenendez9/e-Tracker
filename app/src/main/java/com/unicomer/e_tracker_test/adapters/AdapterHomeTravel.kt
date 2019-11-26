@@ -37,6 +37,7 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
                 "3" ->{imageCat.setImageResource(R.drawable.ic_cat_other)}
             }
             totalItem = itemCount
+            Log.i("posiciones en home","$position")
         }
     }
 

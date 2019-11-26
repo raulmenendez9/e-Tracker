@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
-import com.unicomer.e_tracker_test.travel_registration.HistoryTravelFragment
 
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -86,7 +84,9 @@ class MainActivity : AppCompatActivity(),
                         loadHomeFragment(HomeFragment()) //por tanto si devuelve vacio cargará homeFragment
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
                     }else{
-                        loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                       // loadHomeTravelFragment(HomeTravelFragment()) //y si el viaje ya fue registrado cargara homeTravel
+                        loadHomeTravel(HomeTravelFragment())
+                        //loadHistoryTravel(HistoryTravelFragment())
                         splashScreen.visibility = View.GONE
                     }
                 }
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(),
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
-    private fun loadHistoryTravel(ht:HistoryTravelFragment){
+    private fun loadHistoryTravel(ht: HistoryTravelFragment){
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         val formmu = supportFragmentManager.beginTransaction()

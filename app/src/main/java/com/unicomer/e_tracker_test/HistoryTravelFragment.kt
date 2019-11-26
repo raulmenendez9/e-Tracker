@@ -1,6 +1,6 @@
-package com.unicomer.e_tracker_test.travel_registration
+package com.unicomer.e_tracker_test
 
-import android.content.Context
+
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,12 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 import com.unicomer.e_tracker_test.Models.HistoryTravel
-import com.unicomer.e_tracker_test.R
+
 import com.unicomer.e_tracker_test.adapters.AdapterHistoryTravel
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,11 +35,6 @@ class HistoryTravelFragment : Fragment() {
     var travelRef: CollectionReference = db.collection("e-Tracker")
     var adapterHt: AdapterHistoryTravel? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        adapterHt= AdapterHistoryTravel(adapterInit())
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,8 +50,16 @@ class HistoryTravelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerView()
-        adapterHt!!.startListening()
+        travelRef
+            .whereEqualTo("emailUser", FirebaseUser!!.email) //verifica que el document sea del usuario
+            .get()
+            .addOnSuccessListener { doc ->
+                Log.i("consulta exitosa","listo para llenar recycler")
+                setUpRecyclerView()
+
+                adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
+            }
+
     }
     override fun onStart() {
         super.onStart()
@@ -80,7 +82,9 @@ class HistoryTravelFragment : Fragment() {
 
 
     private fun setUpRecyclerView(){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
-        val query: Query = travelRef.orderBy("initialDate",Query.Direction.DESCENDING)
+        val query: Query = travelRef
+            .whereEqualTo("emailUser", FirebaseUser!!.email) //verifica que el document sea del usuario
+            //.orderBy("initialDate",Query.Direction.DESCENDING)
             //.whereEqualTo("emailUser",FirebaseUser!!.email)
 
             //.whereEqualTo("recordName",consulta)
@@ -91,8 +95,8 @@ class HistoryTravelFragment : Fragment() {
             .build()
         adapterHt = AdapterHistoryTravel(options) //datos reales del adapter
         //Log.i("consulta","${adapterHt!!.itemCount}")
-        var recycler = view?.findViewById<RecyclerView>(R.id.recyclerHistory)
-        recycler!!.setHasFixedSize(true)
+        val recycler = view?.findViewById<RecyclerView>(R.id.recyclerHistory)
+        recycler?.setHasFixedSize(true)
         recycler!!.layoutManager = LinearLayoutManager(this.context)
         recycler!!.adapter = adapterHt
     }

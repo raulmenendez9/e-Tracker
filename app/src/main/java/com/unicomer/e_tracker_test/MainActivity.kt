@@ -275,7 +275,7 @@ class MainActivity : AppCompatActivity(),
         val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
-        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
         val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this)

@@ -3,6 +3,7 @@ package com.unicomer.e_tracker_test
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.models.Record
 
 
-class HomeTravelFragment : Fragment(){
+class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
     private var listener: OnFragmentInteractionListener? = null
     //accediendo a los datos de firebase
@@ -62,7 +63,7 @@ class HomeTravelFragment : Fragment(){
                 /*Desde aca se carga el id en la variable idTravel pero se cargará unos milisegundos
                 * despues de que la peticion se complete*/
             }
-        adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
+        adapterHt = AdapterHomeTravel(adapterInit(), this) //Se inicializa por primera y unica vez al adapter como uno vacio
 
         floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
@@ -87,6 +88,17 @@ class HomeTravelFragment : Fragment(){
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
+    }
+
+    override fun SendaDetailItemInterface(
+        position: Int,
+        name: String,
+        cat: String,
+        price: String,
+        description: String,
+        date: String
+    ) {
+        Log.i("DETALLE", "el nombre es: $name,  el precio es: $price")
     }
 
     override fun onStart() {
@@ -173,7 +185,7 @@ class HomeTravelFragment : Fragment(){
                 backgroundImage!!.visibility = View.GONE
             }
         }
-        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        adapterHt = AdapterHomeTravel(options, this) //datos reales del adapter
         val recycler = view?.findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this.context)

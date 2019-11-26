@@ -65,9 +65,9 @@ class AddRegistroFragment : Fragment() {
     private var radioButtonOther: RadioButton? = null
 
     // Variables para ID de cada RadioButton
-    private val buttonFoodId: Int? = 0
-    private val buttonHotelId: Int? = 1 //2
-    private val buttonTransportationId: Int? = 2 //1
+    private val buttonFoodId: Int? = 0 //0
+    private val buttonHotelId: Int? = 2 //1
+    private val buttonTransportationId: Int? = 1 //2
     private val buttonOtherId: Int? = 3 //3
 
     // Boton Tomar Foto

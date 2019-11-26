@@ -8,159 +8,153 @@
     android:layout_height="match_parent"
     tools:context=".AddRegistroFragment">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/textview_white_background"
+        android:elevation="@dimen/button_inset_vertical_material"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/textview_white_background"
-            android:elevation="@dimen/button_inset_vertical_material"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
+        <TextView
+            android:id="@+id/tv_Titulo"
+            style="@style/TextView_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_titulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_Titulo"
-                style="@style/TextView_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/tv_titulo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/et_titulo_de_registro"
+            style="@style/EditText_Regular"
+            android:hint="@string/nombre_de_registro"
+            android:inputType="textCapSentences"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Titulo" />
 
-            <EditText
-                android:id="@+id/et_titulo_de_registro"
-                style="@style/EditText_Regular"
-                android:hint="@string/nombre_de_registro"
-                android:inputType="textCapSentences"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Titulo" />
+        <TextView
+            android:id="@+id/tv_Pick_Date"
+            style="@style/TextView_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tv_fecha"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
 
-            <TextView
-                android:id="@+id/tv_Pick_Date"
-                style="@style/TextView_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/tv_fecha"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
+        <TextView
+            android:id="@+id/textview_record_date_selection"
+            style="@style/TextView_Date_Picker_White"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
 
-            <TextView
-                android:id="@+id/textview_record_date_selection"
-                style="@style/TextView_Date_Picker_White"
-                android:layout_height="30dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
+        <TextView
+            android:id="@+id/tv_Monto"
+            style="@style/TextView_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/tv_monto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Pick_Date" />
 
-            <TextView
-                android:id="@+id/tv_Monto"
-                style="@style/TextView_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/tv_monto"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Pick_Date" />
+        <EditText
+            android:id="@+id/et_Monto"
+            style="@style/EditText_Regular"
+            android:layout_width="200dp"
+            android:layout_marginTop="8dp"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_record_date_selection" />
 
-            <EditText
-                android:id="@+id/et_Monto"
-                style="@style/EditText_Regular"
-                android:layout_width="200dp"
-                android:layout_marginTop="8dp"
-                android:inputType="number"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textview_record_date_selection" />
+        <TextView
+            android:id="@+id/tv_Categoria"
+            style="@style/TextView_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/tv_categoria"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Monto" />
 
-            <TextView
-                android:id="@+id/tv_Categoria"
-                style="@style/TextView_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/tv_categoria"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Monto" />
+        <RadioGroup
+            android:id="@+id/radioGroup_Category"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:elevation="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Categoria">
 
-            <RadioGroup
-                android:id="@+id/radioGroup_Category"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp"
-                android:elevation="6dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Categoria">
+            <RadioButton
+                android:id="@+id/radioButton_food"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_cat_food_gradient_off"
+                android:button="@null" />
 
-                <RadioButton
-                    android:id="@+id/radioButton_food"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_cat_food_gradient_off"
-                    android:button="@null"/>
-                <RadioButton
-                    android:id="@+id/radioButton_hotel"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_cat_hotel_gradient_off"
-                    android:button="@null" />
+            <RadioButton
+                android:id="@+id/radioButton_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_cat_hotel_gradient_off"
+                android:button="@null" />
 
-                <RadioButton
-                    android:id="@+id/radioButton_transportation"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_cat_transportation_gradient_off"
-                    android:button="@null" />
+            <RadioButton
+                android:id="@+id/radioButton_transportation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_cat_transportation_gradient_off"
+                android:button="@null" />
 
-                <RadioButton
-                    android:id="@+id/radioButton_other"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_cat_other_gradient_off"
-                    android:button="@null" />
-            </RadioGroup>
+            <RadioButton
+                android:id="@+id/radioButton_other"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_cat_other_gradient_off"
+                android:button="@null" />
+        </RadioGroup>
 
-            <TextView
-                android:id="@+id/tv_Descripcion"
-                style="@style/TextView_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/tv_descripcion"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_Category" />
+        <TextView
+            android:id="@+id/tv_Descripcion"
+            style="@style/TextView_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_descripcion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup_Category" />
 
-            <EditText
-                android:id="@+id/editText_record_description"
-                style="@style/EditText_Regular"
-                android:layout_marginTop="16dp"
-                android:hint="@string/et_description_hint"
-                android:inputType="textCapSentences"
-                android:maxLength="140"
-                android:maxLines="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion" />
+        <EditText
+            android:id="@+id/editText_record_description"
+            style="@style/EditText_Regular"
+            android:layout_marginTop="8dp"
+            android:hint="@string/et_description_hint"
+            android:inputType="textCapSentences"
+            android:maxLength="140"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal"

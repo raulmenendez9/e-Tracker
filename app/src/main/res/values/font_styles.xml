@@ -44,5 +44,10 @@
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
     </style>
 
+    <style name="FontStyle_DialogTitleText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_List_Title</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+    </style>
+
 
 </resources>

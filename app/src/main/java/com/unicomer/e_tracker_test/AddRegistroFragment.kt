@@ -302,6 +302,8 @@ class AddRegistroFragment : Fragment() {
 
         } else {
 
+            //TODO AUN NECESITA OBTENER EL URI DE LA FOTO
+
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
@@ -319,9 +321,9 @@ class AddRegistroFragment : Fragment() {
 
             val recordName: String? = editTextName?.text.toString()
             val recordDate: String? = fecha?.text.toString()
-            val recordAmmount: String? = monto?.text.toString()
+            val recordAmount: String? = monto?.text.toString()
             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-            val recordPhoto =taskSnapshot.result
+            val recordPhoto = "Aqui deberia ir el image URI" // taskSnapshot.result
             val recordDescription: String = editTextDescripcion?.text.toString()
             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
@@ -331,9 +333,9 @@ class AddRegistroFragment : Fragment() {
             val addNewRecord = Record(
             recordName!!,
             recordDate!!,
-            recordAmmount!!,
+            recordAmount!!,
             recordCategory!!,
-            "$recordPhoto",
+            recordPhoto,
             recordDescription,
             recordDateRegistered!!,
             recordDateLastUpdate!!

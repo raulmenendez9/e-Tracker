@@ -8,7 +8,7 @@
     tools:context=".dialogs.LoginDialogFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
@@ -54,9 +54,9 @@
 
         <TextView
             android:id="@+id/textView3"
-            style="@style/TextView_Title"
+            style="@style/Dialog_Title"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/helvetica_neue_medium"
+            android:textAlignment="center"
             android:text="@string/txt_dialog_login_header"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDialogRight"
@@ -69,7 +69,7 @@
             style="@style/TextView_Body_Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:text="@string/txt_dialog_login"
             android:textAlignment="center"

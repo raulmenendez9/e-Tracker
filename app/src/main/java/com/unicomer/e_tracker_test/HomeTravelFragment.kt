@@ -77,20 +77,6 @@ class HomeTravelFragment : Fragment(){
             }
         adapterHt = AdapterHomeTravel(adapterInit()) //Se inicializa por primera y unica vez al adapter como uno vacio
 
-
-        floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
-
-        floatingActionButton?.setOnClickListener {
-
-            Toast.makeText(this.context, "Hola", Toast.LENGTH_SHORT).show()
-
-            fragmentManager?.let {
-                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
-            }
-
-        }
-
-
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
 
@@ -109,7 +95,14 @@ class HomeTravelFragment : Fragment(){
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
 
+        floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
+        floatingActionButton?.setOnClickListener {
 
+            fragmentManager?.let {
+                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
+            }
+
+        }
 
     }
 

@@ -127,7 +127,7 @@ class AddRegistroFragment : Fragment() {
 
         Log.i(ADD_RECORD_FRAGMENT, "In method onCreateView")
 
-        pathImage = view?.findViewById(R.id.pathImage)
+        //pathImage = view?.findViewById(R.id.pathImage)
 
         // RadioGroup contenedor de RadioButton
         radioGroup = view?.findViewById(R.id.radioGroup_Category)
@@ -152,7 +152,6 @@ class AddRegistroFragment : Fragment() {
             var radioButtonSelectedId: Int = radioGroup!!.checkedRadioButtonId
             radioButtonSelection(radioButtonSelectedId)
             Log.i(ADD_RECORD_FRAGMENT, "radioButtonSelectionID es ${radioButtonSelectedId}")
-
         }
 
         // Listener de los Botones
@@ -172,7 +171,6 @@ class AddRegistroFragment : Fragment() {
         buttonAddRecord?.setOnClickListener {
             createRecordInFirestore()
         }
-
 
 
         //Manipular el FloatinActionButton
@@ -201,7 +199,6 @@ class AddRegistroFragment : Fragment() {
             openDateRangePicker()
         }
 
-
     }
 
 
@@ -222,7 +219,6 @@ class AddRegistroFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-
 
 
 
@@ -285,19 +281,24 @@ class AddRegistroFragment : Fragment() {
         editTextName = view?.findViewById(R.id.et_titulo_de_registro)
         fecha = view?.findViewById(R.id.textview_record_date_selection)
         monto = view?.findViewById(R.id.et_Monto)
-
-
-
         editTextDescripcion = view?.findViewById(R.id.editText_record_description)
+        var radioId = radioGroup?.checkedRadioButtonId.toString()
+
+
 
 
         // Validar campos en formulario
 
-        if (editTextName?.text!!.isEmpty() or fecha?.text!!.isEmpty() or monto?.text!!.isEmpty() or editTextDescripcion?.text!!.isEmpty()) {
+        if (editTextName?.text!!.isBlank()
+            or fecha?.text!!.isBlank()
+            or monto?.text!!.isBlank()
+            or editTextDescripcion?.text!!.isBlank()
+            or radioId.equals("-1")) {
             Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
             val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_USER_UID_KEY)
-            Log.i(ADD_RECORD_FRAGMENT, "CurrentUser is ${currentFirebaseUser.toString()}")
+
+            Log.i(ADD_RECORD_FRAGMENT, "Radio category is ${radioGroup?.checkedRadioButtonId.toString()}")
 
 
         } else {

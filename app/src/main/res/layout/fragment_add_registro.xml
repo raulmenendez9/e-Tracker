@@ -71,9 +71,10 @@
         <EditText
             android:id="@+id/et_Monto"
             style="@style/EditText_Regular"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_marginTop="8dp"
-            android:inputType="number"
+            android:drawableLeft="@drawable/ic_money"
+            android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_record_date_selection" />
 
@@ -144,14 +145,37 @@
         <EditText
             android:id="@+id/editText_record_description"
             style="@style/EditText_Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:gravity="top|start"
             android:hint="@string/et_description_hint"
-            android:inputType="textCapSentences"
+            android:inputType="textShortMessage|text"
+            android:lines="2"
             android:maxLength="140"
-            android:maxLines="2"
+            android:maxLines="4"
+            android:minLines="3"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion" />
+
+
+        <!-- TODO  Esto es una prueba-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_record_description"
+            tools:layout_editor_absoluteX="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Esto es una prueba de Material Design" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -169,7 +193,7 @@
         android:id="@+id/btn_tomar_foto"
         style="@style/ButtonWhite_Big_Size"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/add_photo"
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
         app:layout_constraintEnd_toEndOf="parent"
@@ -180,6 +204,7 @@
     <Button
         android:id="@+id/btn_agregar_registro"
         style="@style/ButtonBlue_Big_Size"
+        android:layout_marginBottom="4dp"
         android:text="@string/agregar_registro"
         app:layout_constraintBottom_toTopOf="@+id/floating_action_button_add_record"
         app:layout_constraintEnd_toEndOf="parent"
@@ -190,21 +215,13 @@
         android:id="@+id/floating_action_button_add_record"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
         android:src="@drawable/cancel_medium_ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_agregar_registro" />
-
-    <TextView
-        android:id="@+id/pathImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

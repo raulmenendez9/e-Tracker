@@ -304,6 +304,18 @@ class MainActivity : AppCompatActivity(),
     }
 
 
+    private fun loadAddDetailRecordragment(detailRecordFragment: DetailRecordFragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.main_fragment_container, detailRecordFragment)
+        fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
+        fragmentTransaction.commit()
+    }
+    override fun sendDetailItemHT(obj: Record) {
+        //Log.i("DETALLE", "estoy en el main: ${obj.recordName}")
+        loadAddDetailRecordragment(DetailRecordFragment.newInstance(obj))
+    }
+
+
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

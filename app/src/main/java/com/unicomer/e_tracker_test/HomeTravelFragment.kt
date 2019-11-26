@@ -23,6 +23,7 @@ import com.unicomer.e_tracker_test.models.Record
 
 class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
+
     private var listener: OnFragmentInteractionListener? = null
     //accediendo a los datos de firebase
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
@@ -99,7 +100,11 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         date: String
     ) {
         Log.i("DETALLE", "el nombre es: $name,  el precio es: $price")
-        listener!!.sendDetailItem()
+        //listener!!.sendDetailItem()
+    }
+    override fun sendDetailItem(Obj: Record) {
+        Log.i("DETALLE", "el mensaje es: ${Obj.recordName}")
+        listener!!.sendDetailItemHT(Obj)
     }
 
     override fun onStart() {
@@ -218,7 +223,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
-        fun sendDetailItem()
+        fun sendDetailItemHT(obj:Record)
     }
 
     companion object {

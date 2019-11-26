@@ -39,8 +39,11 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, var listener: 
                 }
             }
             holder.containerView.setOnClickListener {
+
+
                 listener.SendaDetailItemInterface(position, model.recordName, model.recordCategory,
                     model.recordMount, model.recordDescription, model.recordDate)
+                listener.sendDetailItem(model)
             }
         }
     }
@@ -55,5 +58,6 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, var listener: 
         fun SendaDetailItemInterface(position:Int=0, name: String="",
                                      cat:String="", price:String="",
                                      description:String="", date:String="")
+        fun sendDetailItem(Obj:Record)
     }
 }

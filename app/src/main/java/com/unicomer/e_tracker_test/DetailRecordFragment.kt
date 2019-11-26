@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel.ShowDataInterface
+import com.unicomer.e_tracker_test.models.Record
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,8 +25,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DetailRecordFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DetailRecordFragment : Fragment(), ShowDataInterface {
-
+class DetailRecordFragment : Fragment() {
+    lateinit var obj:Record
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -38,6 +39,7 @@ class DetailRecordFragment : Fragment(), ShowDataInterface {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        Log.i("DETALLE", "estoy en DetailFragment, el nombre es: ${obj.recordName}")
     }
 
     override fun onCreateView(
@@ -53,16 +55,6 @@ class DetailRecordFragment : Fragment(), ShowDataInterface {
         listener?.onFragmentInteraction(uri)
     }
 
-    override fun SendaDetailItemInterface(
-        position: Int,
-        name: String,
-        cat: String,
-        price: String,
-        description: String,
-        date: String
-    ) {
-        Log.i("DETALLE", "Saludos desde el detalle de record $name, tambien $price")
-    }
 /*
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -95,12 +87,11 @@ class DetailRecordFragment : Fragment(), ShowDataInterface {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailRecordFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(obj:Record) : DetailRecordFragment{
+            val fragment = DetailRecordFragment()
+            fragment.obj = obj
+            return  fragment
+        }
+
     }
 }

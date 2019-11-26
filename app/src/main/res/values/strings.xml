@@ -280,9 +280,9 @@
         <item>Zambia</item>
         <item>Zimbabue</item>
     </string-array>
-
-
-
+    <string name="gallery">Seleccionar de la galería</string>
+    <string name="camera">Hacer una foto</string>
+    <string name="select_image">Seleccionar una foto</string>
 
 
 </resources>

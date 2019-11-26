@@ -81,8 +81,9 @@ class AddRegistroFragment : Fragment() {
     private var buttonTakePhoto: Button? = null
     private val SELECT_IMAGE : Int =23748
     private val TAKE_PICTURE : Int =5000
-    private var mCurrentPhotoPath:String?=null
-    private var photoUri:Uri? = null
+    private var mCurrentPhotoPath: String? = null
+    private var photoUri: Uri? = null
+    private var imageDir: String? = null
     // Boton Agregar Registro
 
     private var buttonAddRecord: Button? = null
@@ -289,7 +290,7 @@ class AddRegistroFragment : Fragment() {
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
-            var image = Uri.parse(pathImage?.text.toString())
+            var image = Uri.parse(imageDir)
             imageRef.putFile(image).addOnSuccessListener {
                 imageRef.downloadUrl.addOnCompleteListener{taskSnapshot ->
 
@@ -441,43 +442,38 @@ class AddRegistroFragment : Fragment() {
     private fun dialogPhoto(){
         try {
             var photoFile: File? = null
-            val items = arrayOf<CharSequence>("Seleccionar de la galería", "Hacer una foto")
+            val items = arrayOf<CharSequence>(getString(R.string.gallery), getString(R.string.camera))
           val builder :AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("Seleccionar una foto")
-            builder.setItems(items, DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
-                    when(i){
-                        0-> {
+            builder.setTitle(getString(R.string.select_image))
+            builder.setItems(items) { _: DialogInterface, i: Int ->
+                when(i){
+                    0-> {
                         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-                            intent.type = "image/*"
-                            startActivityForResult(intent,SELECT_IMAGE)
+                        intent.type = "image/*"
+                        startActivityForResult(intent,SELECT_IMAGE)
+                    }
+                    1->{
+                        val camaraIntent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        if (camaraIntent.resolveActivity(activity!!.packageManager) != null){
+                            try {
+                                photoFile=createImageFile()
+
+                            }catch (ex:IOException){ }
                         }
-                        1->{
-                            val camaraIntent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                            if (camaraIntent.resolveActivity(activity!!.packageManager) != null){
-                                try {
-                                    photoFile=createImageFile()
-
-                                }catch (ex:IOException){
-
-                                }
-                            }
-                            //if (photoFile != null){
-                                var values:ContentValues = ContentValues()
-                                values!!.put(MediaStore.Images.Media.TITLE,"Ticket")
-                                values.put(MediaStore.Images.Media.DESCRIPTION,"Photo taken on ${System.currentTimeMillis()}")
-                                photoUri = activity!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
-                                camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
-                                startActivityForResult(camaraIntent, TAKE_PICTURE)
-                            pathImage!!.text = photoUri.toString()
-                                Log.i("photo", "uri image = $photoUri")
-                            Log.i("camaraIntent", "image = $camaraIntent")
-                           // }
-//hola
-                           // startActivityForResult(camaraIntent, TAKE_PICTURE)
+                        if (photoFile != null){
+                            val values = ContentValues()
+                            values.put(MediaStore.Images.Media.TITLE,"Ticket")
+                            values.put(MediaStore.Images.Media.DESCRIPTION,"Photo taken on ${System.currentTimeMillis()}")
+                            photoUri = activity!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
+                            camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
+                            startActivityForResult(camaraIntent, TAKE_PICTURE)
+                            imageDir = photoUri.toString()
+                            Log.i("photo", "uri image = $photoUri")
+                            // startActivityForResult(camaraIntent, TAKE_PICTURE)
                         }
                     }
-
-            })
+                }
+            }
             val alertDialog:AlertDialog = builder.create()
             alertDialog.show()
         }
@@ -487,10 +483,10 @@ class AddRegistroFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun createImageFile():File{
         val timestamp =SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName ="JPEG_$timestamp _"
-        //val storageDir :File = getExternalFilesDirs(Environment.DIRECTORY_PICTURES)
         val storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(imageFileName,".jpg",storageDir)
         mCurrentPhotoPath=image.absolutePath
@@ -501,33 +497,19 @@ class AddRegistroFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         try {
 
-            Log.i("photo", "uri image = ${data?.data}")
-
             if (requestCode==SELECT_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
-                    var selectedImage: Uri = data?.data!!
-                    pathImage!!.text = selectedImage.toString()
+                    val selectedImage: Uri = data.data!!
+                    imageDir = selectedImage.toString()
 
             }
             if (requestCode ==TAKE_PICTURE && resultCode == Activity.RESULT_OK ) {
-
-                var photo: Bitmap= data!!.extras!!.get("data") as Bitmap
-                    //var selectedImage: Uri = data?.data!!
-                    pathImage!!.text = photo.toString()
-
+                    val selectedImage: Uri = data?.data!!
+                    pathImage!!.text = selectedImage.toString()
             }
         } catch (e:java.lang.Exception){
             Log.i("ERROR", "message: ${e.message}")
        }
     }
-
-    fun getPath(uri: Uri):String{
-        val projection= arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor = context!!.contentResolver.query(uri,projection,null,null,null)!!
-        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor.moveToFirst()
-        return  cursor.getString(column_index)
-    }
-
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)

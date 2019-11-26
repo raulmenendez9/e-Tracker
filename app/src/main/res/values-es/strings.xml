@@ -50,4 +50,5 @@
     <string name="register_update">Registro actualizado</string>
     <string name="register_complete">Registro completado</string>
     <string name="update_travel">Actualizar</string>
+    <string name="camera">Hacer una foto</string>
 </resources>

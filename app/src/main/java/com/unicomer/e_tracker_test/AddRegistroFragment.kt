@@ -4,14 +4,14 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,11 +32,15 @@ import java.util.*
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.ContextCompat.getExternalFilesDirs
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.models.Record
+import java.io.File
+import java.io.IOException
+import java.util.jar.Manifest
 
 
 class AddRegistroFragment : Fragment() {
@@ -74,7 +78,10 @@ class AddRegistroFragment : Fragment() {
 
     private var buttonTakePhoto: Button? = null
     private val SELECT_IMAGE : Int =23748
-    private val TAKE_PICTURE : Int =55535
+    private val TAKE_PICTURE : Int =5000
+    private var mCurrentPhotoPath: String? = null
+    private var photoUri: Uri? = null
+    private var imageDir: String? = null
     // Boton Agregar Registro
 
     private var buttonAddRecord: Button? = null
@@ -303,12 +310,10 @@ class AddRegistroFragment : Fragment() {
 
         } else {
 
-            //TODO AUN NECESITA OBTENER EL URI DE LA FOTO
-
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
-            var image = Uri.parse(pathImage?.text.toString())
+            var image = Uri.parse(imageDir)
             imageRef.putFile(image).addOnSuccessListener {
                 imageRef.downloadUrl.addOnCompleteListener{taskSnapshot ->
 
@@ -336,7 +341,7 @@ class AddRegistroFragment : Fragment() {
             recordDate!!,
             recordAmount!!,
             recordCategory!!,
-            recordPhoto,
+            "$recordPhoto",
             recordDescription,
             recordDateRegistered!!,
             recordDateLastUpdate!!
@@ -443,22 +448,39 @@ class AddRegistroFragment : Fragment() {
 
     private fun dialogPhoto(){
         try {
-            val items = arrayOf<CharSequence>("Seleccionar de la galería", "Hacer una foto")
+            var photoFile: File? = null
+            val items = arrayOf<CharSequence>(getString(R.string.gallery), getString(R.string.camera))
           val builder :AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("Seleccionar una foto")
-            builder.setItems(items, DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
-                    when(i){
-                        0-> {
+            builder.setTitle(getString(R.string.select_image))
+            builder.setItems(items) { _: DialogInterface, i: Int ->
+                when(i){
+                    0-> {
                         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-                            intent.type = "image/*"
-                            startActivityForResult(intent,SELECT_IMAGE)
+                        intent.type = "image/*"
+                        startActivityForResult(intent,SELECT_IMAGE)
+                    }
+                    1->{
+                        val camaraIntent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        if (camaraIntent.resolveActivity(activity!!.packageManager) != null){
+                            try {
+                                photoFile=createImageFile()
+
+                            }catch (ex:IOException){ }
                         }
-                        1->{
-                            startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PICTURE)
+                        if (photoFile != null){
+                            val values = ContentValues()
+                            values.put(MediaStore.Images.Media.TITLE,"Ticket")
+                            values.put(MediaStore.Images.Media.DESCRIPTION,"Photo taken on ${System.currentTimeMillis()}")
+                            photoUri = activity!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
+                            camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
+                            startActivityForResult(camaraIntent, TAKE_PICTURE)
+                            imageDir = photoUri.toString()
+                            Log.i("photo", "uri image = $photoUri")
+                            // startActivityForResult(camaraIntent, TAKE_PICTURE)
                         }
                     }
-
-            })
+                }
+            }
             val alertDialog:AlertDialog = builder.create()
             alertDialog.show()
         }
@@ -468,38 +490,33 @@ class AddRegistroFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun createImageFile():File{
+        val timestamp =SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName ="JPEG_$timestamp _"
+        val storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(imageFileName,".jpg",storageDir)
+        mCurrentPhotoPath=image.absolutePath
+        return image
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode==SELECT_IMAGE) {
-                if (resultCode == Activity.RESULT_OK) {
-                    var selectedImage: Uri = data?.data!!
-                    pathImage!!.text = selectedImage.toString()
-                    Log.d("ERRORPHOTO", "$pathImage")
-                }
-            }
-            if (requestCode ==TAKE_PICTURE) {
 
-                Log.d("ERRORPHOTO", "algo")
-                if (resultCode == Activity.RESULT_OK) {
-                    var selectedImage: Uri = data?.data!!
+            if (requestCode==SELECT_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+                    val selectedImage: Uri = data.data!!
+                    imageDir = selectedImage.toString()
+
+            }
+            if (requestCode ==TAKE_PICTURE && resultCode == Activity.RESULT_OK ) {
+                    val selectedImage: Uri = data?.data!!
                     pathImage!!.text = selectedImage.toString()
-                    Log.d("ERRORPHOTO", "$pathImage")
-                }
             }
         } catch (e:java.lang.Exception){
-            Log.e("ERRORPHOTO", "$e")
-        }
+            Log.i("ERROR", "message: ${e.message}")
+       }
     }
-
-    fun getPath(uri: Uri):String{
-        val projection= arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor = context!!.contentResolver.query(uri,projection,null,null,null)!!
-        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor.moveToFirst()
-        return  cursor.getString(column_index)
-    }
-
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)

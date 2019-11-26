@@ -219,7 +219,6 @@ class MainActivity : AppCompatActivity(),
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
 
-                CallFragment().addFragment(this.supportFragmentManager, AddRegistroFragment(), true, true, true)
                 true
             }
 

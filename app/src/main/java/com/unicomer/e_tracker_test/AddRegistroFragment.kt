@@ -4,15 +4,14 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentResolver
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,12 +33,15 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.ContextCompat.getExternalFilesDirs
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.Constants.*
 import com.unicomer.e_tracker_test.Models.Record
 import com.unicomer.e_tracker_test.Models.Travel
+import java.io.File
+import java.io.IOException
 import java.util.jar.Manifest
 
 
@@ -78,7 +80,9 @@ class AddRegistroFragment : Fragment() {
 
     private var buttonTakePhoto: Button? = null
     private val SELECT_IMAGE : Int =23748
-    private val TAKE_PICTURE : Int =55535
+    private val TAKE_PICTURE : Int =5000
+    private var mCurrentPhotoPath:String?=null
+    private var photoUri:Uri? = null
     // Boton Agregar Registro
 
     private var buttonAddRecord: Button? = null
@@ -436,6 +440,7 @@ class AddRegistroFragment : Fragment() {
 
     private fun dialogPhoto(){
         try {
+            var photoFile: File? = null
             val items = arrayOf<CharSequence>("Seleccionar de la galería", "Hacer una foto")
           val builder :AlertDialog.Builder = AlertDialog.Builder(context)
             builder.setTitle("Seleccionar una foto")
@@ -447,7 +452,28 @@ class AddRegistroFragment : Fragment() {
                             startActivityForResult(intent,SELECT_IMAGE)
                         }
                         1->{
-                            startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), TAKE_PICTURE)
+                            val camaraIntent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            if (camaraIntent.resolveActivity(activity!!.packageManager) != null){
+                                try {
+                                    photoFile=createImageFile()
+
+                                }catch (ex:IOException){
+
+                                }
+                            }
+                            //if (photoFile != null){
+                                var values:ContentValues = ContentValues()
+                                values!!.put(MediaStore.Images.Media.TITLE,"Ticket")
+                                values.put(MediaStore.Images.Media.DESCRIPTION,"Photo taken on ${System.currentTimeMillis()}")
+                                photoUri = activity!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
+                                camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
+                                startActivityForResult(camaraIntent, TAKE_PICTURE)
+                            pathImage!!.text = photoUri.toString()
+                                Log.i("photo", "uri image = $photoUri")
+                            Log.i("camaraIntent", "image = $camaraIntent")
+                           // }
+
+                           // startActivityForResult(camaraIntent, TAKE_PICTURE)
                         }
                     }
 
@@ -461,20 +487,37 @@ class AddRegistroFragment : Fragment() {
         }
     }
 
+    fun createImageFile():File{
+        val timestamp =SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName ="JPEG_$timestamp _"
+        //val storageDir :File = getExternalFilesDirs(Environment.DIRECTORY_PICTURES)
+        val storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(imageFileName,".jpg",storageDir)
+        mCurrentPhotoPath=image.absolutePath
+        return image
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode==SELECT_IMAGE)
-                if (resultCode==Activity.RESULT_OK){
-                    var selectedImage:Uri = data?.data!!
+
+            Log.i("photo", "uri image = ${data?.data}")
+
+            if (requestCode==SELECT_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+                    var selectedImage: Uri = data?.data!!
                     pathImage!!.text = selectedImage.toString()
-                }
-            if (requestCode ==TAKE_PICTURE)
-                if (resultCode==Activity.RESULT_OK){
-                    var selectedImage:Uri = data?.data!!
-                    pathImage!!.text = selectedImage.toString()
-                }
-        } catch (e:java.lang.Exception){}
+
+            }
+            if (requestCode ==TAKE_PICTURE && resultCode == Activity.RESULT_OK ) {
+
+                var photo: Bitmap= data!!.extras!!.get("data") as Bitmap
+                    //var selectedImage: Uri = data?.data!!
+                    pathImage!!.text = photo.toString()
+
+            }
+        } catch (e:java.lang.Exception){
+            Log.i("ERROR", "message: ${e.message}")
+       }
     }
 
     fun getPath(uri: Uri):String{

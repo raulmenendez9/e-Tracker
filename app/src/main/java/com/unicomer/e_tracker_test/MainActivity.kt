@@ -311,7 +311,7 @@ class MainActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
     override fun sendDetailItemHT(obj: Record) {
-        //Log.i("DETALLE", "estoy en el main: ${obj.recordName}")
+        //Log.i("DETALLE", "estoy en el main: ${objDetailData.recordName}")
         loadAddDetailRecordragment(DetailRecordFragment.newInstance(obj))
     }
 

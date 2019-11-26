@@ -1,47 +1,35 @@
 package com.unicomer.e_tracker_test
 
-import android.content.Context
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
-import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel.ShowDataInterface
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.unicomer.e_tracker_test.models.Record
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [DetailRecordFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [DetailRecordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailRecordFragment : Fragment() {
-    lateinit var obj:Record
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    //objeto que contiene los datos del detalle
+    lateinit var objDetailData:Record
     private var listener: OnFragmentInteractionListener? = null
+    //variables del layout
+    var titleCatDetail: TextView?=null
+    var nameDetail: TextView?=null
+    var dateDetail: TextView?=null
+    var categoryDetail: TextView?=null
+    var imageCatDetail:ImageView?=null
+    var descriptionDetail: TextView?=null
+    var priceDetail: TextView?=null
+    var photoDetail: ImageView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-        Log.i("DETALLE", "estoy en DetailFragment, el nombre es: ${obj.recordName}")
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +37,49 @@ class DetailRecordFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail_record, container, false)
     }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        nameDetail = view.findViewById(R.id.recordNameDetail)
+        dateDetail = view.findViewById(R.id.recordDateDetail)
+        descriptionDetail = view.findViewById(R.id.recordDescriptionDetail)
+        priceDetail = view.findViewById(R.id.recordPriceDetail)
+        titleCatDetail = view.findViewById(R.id.categoyTittleDetail)
+        imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
+        photoDetail = view.findViewById(R.id.photoRecordDetail)
+        fillDetail()
+    }
+    private fun fillDetail(){
+        //Seteo de datos
+        nameDetail!!.text = objDetailData.recordName
+        dateDetail!!.text = objDetailData.recordDate
+        descriptionDetail!!.text= objDetailData.recordDescription
+        priceDetail!!.text="$"+objDetailData.recordMount
+        //Se asigna la imagen
+        Glide.with(this).load(objDetailData.recordPhoto).into(photoDetail!!)
+        //se toma la categoria y dependiendo de la que se obtiene se setea
+        when(objDetailData.recordCategory){
+            "0"->{
+                imageCatDetail!!.setImageResource(R.drawable.ic_cat_food)
+                titleCatDetail!!.text = "Comida"
+                titleCatDetail!!.setTextColor(Color.parseColor("#FEC180"))
+            }
+            "1"->{
+                imageCatDetail!!.setImageResource(R.drawable.ic_cat_car)
+                titleCatDetail!!.text = "Transporte"
+                titleCatDetail!!.setTextColor(Color.parseColor("#FBE339"))
+            }
+            "2"->{
+                imageCatDetail!!.setImageResource(R.drawable.ic_cat_hotel)
+                titleCatDetail!!.text = "Hospedaje"
+                titleCatDetail!!.setTextColor(Color.parseColor("#BAFC8B"))
+            }
+            "3"->{
+                imageCatDetail!!.setImageResource(R.drawable.ic_cat_other)
+                titleCatDetail!!.text = "Otro"
+                titleCatDetail!!.setTextColor(Color.parseColor("#E39BFC"))
+            }
+        }
+    }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -70,26 +100,17 @@ class DetailRecordFragment : Fragment() {
         listener = null
     }
 */
-
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailRecordFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(obj:Record) : DetailRecordFragment{
+            //se instancia el fragment con el objeto de tipo Record que viene del adapter
             val fragment = DetailRecordFragment()
-            fragment.obj = obj
+            fragment.objDetailData = obj
             return  fragment
         }
 

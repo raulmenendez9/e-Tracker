@@ -3,10 +3,13 @@ package com.unicomer.e_tracker_test
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
+import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel.ShowDataInterface
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +24,9 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DetailRecordFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DetailRecordFragment : Fragment() {
+class DetailRecordFragment : Fragment(), ShowDataInterface {
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -46,6 +51,17 @@ class DetailRecordFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun SendaDetailItemInterface(
+        position: Int,
+        name: String,
+        cat: String,
+        price: String,
+        description: String,
+        date: String
+    ) {
+        Log.i("DETALLE", "Saludos desde el detalle de record $name, tambien $price")
     }
 /*
     override fun onAttach(context: Context) {

@@ -99,6 +99,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         date: String
     ) {
         Log.i("DETALLE", "el nombre es: $name,  el precio es: $price")
+        listener!!.sendDetailItem()
     }
 
     override fun onStart() {
@@ -217,6 +218,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
+        fun sendDetailItem()
     }
 
     companion object {

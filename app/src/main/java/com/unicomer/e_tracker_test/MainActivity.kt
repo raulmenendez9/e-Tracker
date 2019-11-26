@@ -201,13 +201,10 @@ class MainActivity : AppCompatActivity(),
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
                 }
-
             })
         }else{
             Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
         }
-
-
         return super.onCreateOptionsMenu(menu)
     }
 

@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <gradient
-        android:type="linear"
-        android:startColor="#FEBE80"
-        android:endColor="#FE8D90"
-        android:angle="270" />
 
-    <corners
-        android:topLeftRadius="25dp"
-        android:bottomLeftRadius="25dp"
-        />
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
 
-</shape>
+            <gradient
+                android:type="linear"
+                android:startColor="#FEBE80"
+                android:endColor="#FE8D90"
+                android:angle="270" />
+
+            <corners
+                android:topLeftRadius="25dp"
+                android:bottomLeftRadius="25dp"
+                />
+
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_cat_food_on"
+        android:top="12dp"
+        android:right="24dp"
+        android:left="24dp"
+        android:bottom="12dp">
+    </item>
+</layer-list>
+
+

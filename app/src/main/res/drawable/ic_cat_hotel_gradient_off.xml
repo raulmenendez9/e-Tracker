@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle" >
+            <solid android:color="#F5F5F5"/>
+        </shape>
+    </item>
 
-<solid android:color="#F5F5F5"/>
-
-</shape>
+    <item
+        android:drawable="@drawable/ic_cat_hotel_off"
+        android:top="12dp"
+        android:right="21dp"
+        android:left="21dp"
+        android:bottom="12dp">
+    </item>
+</layer-list>

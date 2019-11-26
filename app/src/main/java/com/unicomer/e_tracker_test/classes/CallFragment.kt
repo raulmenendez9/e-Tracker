@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test.Classes
+package com.unicomer.e_tracker_test.classes
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,7 +14,7 @@ class CallFragment{
      *
      *  @param1 FragmentManager from Activity (this@Activity.supportFragmentManager)
      *  @param2 Fragment needs to be opened
-     *  @param3 If the fragment needs to be replaced or added
+     *  @param3 If the fragment nedeeds to be replaced or added
      *  @param4 If the fragment needs to be added to backStack
      *  @param5 If animations are needed
      */

@@ -94,10 +94,9 @@
             <RadioGroup
                 android:id="@+id/radioGroup_Category"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
-                android:elevation="12dp"
+                android:elevation="6dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,31 +104,34 @@
 
                 <RadioButton
                     android:id="@+id/radioButton_food"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:background="@null"
-                    android:button="@drawable/rb_background_food_selector" />
-
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_cat_food_gradient_off"
+                    android:button="@null"/>
                 <RadioButton
                     android:id="@+id/radioButton_hotel"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:background="@null"
-                    android:button="@drawable/rb_background_hotel_selector" />
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_cat_hotel_gradient_off"
+                    android:button="@null" />
 
                 <RadioButton
                     android:id="@+id/radioButton_transportation"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:background="@null"
-                    android:button="@drawable/rb_background_transportation_selector" />
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_cat_transportation_gradient_off"
+                    android:button="@null" />
 
                 <RadioButton
                     android:id="@+id/radioButton_other"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:background="@null"
-                    android:button="@drawable/rb_background_other_selector" />
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_cat_other_gradient_off"
+                    android:button="@null" />
             </RadioGroup>
 
             <TextView

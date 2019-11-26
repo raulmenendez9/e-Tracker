@@ -472,7 +472,7 @@ class AddRegistroFragment : Fragment() {
                                 Log.i("photo", "uri image = $photoUri")
                             Log.i("camaraIntent", "image = $camaraIntent")
                            // }
-
+//hola
                            // startActivityForResult(camaraIntent, TAKE_PICTURE)
                         }
                     }

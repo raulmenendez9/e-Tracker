@@ -15,4 +15,10 @@
     <color name="colorRadioButtonFoodOff"></color>
 
 
+    <!--CATEGORY COLORS-->
+    <color name="color_category_food">#FEC180</color>
+    <color name="color_category_car">#FBE339</color>
+    <color name="color_category_hotel">#BAFC8B</color>
+    <color name="color_category_other">#E39BFC</color>
+
 </resources>

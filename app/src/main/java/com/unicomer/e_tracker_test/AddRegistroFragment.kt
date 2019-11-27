@@ -329,7 +329,7 @@ class AddRegistroFragment : Fragment() {
             val recordDate: String? = fecha?.text.toString()
             val recordAmount: String? = monto?.text.toString()
             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-            val recordPhoto = "Aqui deberia ir el image URI" // taskSnapshot.result
+            val recordPhoto =  taskSnapshot.result
             val recordDescription: String = editTextDescripcion?.text.toString()
             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion

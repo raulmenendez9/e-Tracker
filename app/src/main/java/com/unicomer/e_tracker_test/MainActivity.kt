@@ -34,8 +34,7 @@ class MainActivity : AppCompatActivity(),
 {
 
 
-    // Declaring FirebaseAuthLocalClass components
-
+    // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
@@ -65,16 +64,12 @@ class MainActivity : AppCompatActivity(),
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
 
-
         //inicializar la toolbar
-
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         //instancia de firebase
-
         dbFirestore = FirebaseFirestore.getInstance()
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
         val splashScreen: View = findViewById(R.id.MainSplash)
@@ -195,15 +190,12 @@ class MainActivity : AppCompatActivity(),
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
                 }
-
             })
 
         }   else    {
 
             Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
         }
-
-
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -270,7 +262,8 @@ class MainActivity : AppCompatActivity(),
             .setQuery(query, Record::class.java)
             .build()
 
-        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
         val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -301,6 +294,18 @@ class MainActivity : AppCompatActivity(),
     override fun hideToolBarOnFragmentViewDissapears() {
         val toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.GONE
+    }
+
+
+    private fun loadAddDetailRecordragment(detailRecordFragment: DetailRecordFragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.main_fragment_container, detailRecordFragment)
+        fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
+        fragmentTransaction.commit()
+    }
+    override fun sendDetailItemHT(obj: Record) {
+        //Log.i("DETALLE", "estoy en el main: ${objDetailData.recordName}")
+        loadAddDetailRecordragment(DetailRecordFragment.newInstance(obj))
     }
 
 

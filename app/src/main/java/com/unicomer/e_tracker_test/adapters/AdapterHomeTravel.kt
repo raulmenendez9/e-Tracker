@@ -12,7 +12,7 @@ import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Record
 import kotlinx.android.extensions.LayoutContainer
 
-class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
+class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, var listener: ShowDataInterface):
     FirestoreRecyclerAdapter<Record, AdapterHomeTravel.HomeTravelHolder>(options){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTravelHolder {
@@ -24,7 +24,6 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
             recordName.text = model.recordName.take(17) //corta el string mostrando los primeros 17 caracteres
             recordPrice.text = model.recordMount
             recordDate.text = model.recordDate
-
             when(model.recordCategory){
                 "0" ->{
                     imageCat.setImageResource(R.drawable.ic_cat_food)
@@ -39,6 +38,13 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
                     imageCat.setImageResource(R.drawable.ic_cat_other)
                 }
             }
+            holder.containerView.setOnClickListener {
+
+
+                listener.SendaDetailItemInterface(position, model.recordName, model.recordCategory,
+                    model.recordMount, model.recordDescription, model.recordDate)
+                listener.sendDetailItem(model)
+            }
         }
     }
 
@@ -48,6 +54,10 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>):
         var recordDate: TextView = containerView.findViewById(R.id.txt_record_date)
         var imageCat: ImageView = containerView.findViewById(R.id.image_record_cat)
     }
-    //interface ShowDataInterface{
-    //}
+    interface ShowDataInterface{
+        fun SendaDetailItemInterface(position:Int=0, name: String="",
+                                     cat:String="", price:String="",
+                                     description:String="", date:String="")
+        fun sendDetailItem(Obj:Record)
+    }
 }

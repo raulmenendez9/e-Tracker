@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(),
         formmu.replace(R.id.main_fragment_container, tr).addToBackStack(null)
         formmu.commit()
     }
-    private fun loadHistoryTravel(ht: HistoryTravelFragment){
+    private fun loadHistoryTravel(ht: HistorialFragment){
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         val formmu = supportFragmentManager.beginTransaction()
@@ -228,7 +228,7 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
-                loadHistoryTravel(HistoryTravelFragment())
+                loadHistoryTravel(HistorialFragment())
                // thisIsATestFragment(AddRegistroFragment())
                 true
             }

@@ -33,7 +33,6 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.ContextCompat.getExternalFilesDirs
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -328,7 +327,7 @@ class AddRegistroFragment : Fragment() {
             val recordDate: String? = fecha?.text.toString()
             val recordAmount: String? = monto?.text.toString()
             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-            val recordPhoto = taskSnapshot.result
+            val recordPhoto =  taskSnapshot.result
             val recordDescription: String = editTextDescripcion?.text.toString()
             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion

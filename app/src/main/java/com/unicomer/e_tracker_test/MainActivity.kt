@@ -35,8 +35,7 @@ class MainActivity : AppCompatActivity(),
 {
 
 
-    // Declaring FirebaseAuthLocalClass components
-
+    // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
@@ -73,16 +72,12 @@ class MainActivity : AppCompatActivity(),
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         var idDeViajeQueVieneDeFirestore: String? = null
 
-
         //inicializar la toolbar
-
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         //instancia de firebase
-
         dbFirestore = FirebaseFirestore.getInstance()
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
         val splashScreen: View = findViewById(R.id.MainSplash)
@@ -203,15 +198,12 @@ class MainActivity : AppCompatActivity(),
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
                 }
-
             })
 
         }   else    {
 
             Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
         }
-
-
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -226,14 +218,20 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
-
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                supportActionBar?.setDisplayShowHomeEnabled(true)
+                CallFragment().addFragment(
+                    this.supportFragmentManager, HistorialFragment(),
+                    true, true, true)
                 true
             }
 
             R.id.item_terminos -> {
                 // Manejar el evento en item "Terminos y Condiciones"
 
-                CallFragment().addFragment(this.supportFragmentManager, TerminosFragment(), true, true, true)
+                CallFragment().addFragment(
+                    this.supportFragmentManager, TerminosFragment(),
+                    true, true, true)
                 true
             }
 
@@ -278,7 +276,8 @@ class MainActivity : AppCompatActivity(),
             .setQuery(query, Record::class.java)
             .build()
 
-        adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
         val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -287,17 +286,20 @@ class MainActivity : AppCompatActivity(),
 
     override fun openRegistrationTravelFragment() {
         hideToolBarOnFragmentViewDissapears()
-        CallFragment().addFragment(this.supportFragmentManager, TravelRegistrationFragment(), true, true, true)
+        CallFragment().addFragment(this.supportFragmentManager,
+            TravelRegistrationFragment(), true, true, true)
 
     }
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
-        CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, true, true)
+        CallFragment().addFragment(this.supportFragmentManager,
+            HomeTravelFragment(), true, true, true)
     }
 
     override fun openAddRecordFragment(){
-        CallFragment().addFragment(this.supportFragmentManager, AddRegistroFragment(), true, true, true)
+        CallFragment().addFragment(this.supportFragmentManager,
+            AddRegistroFragment(), true, true, true)
 
     }
 
@@ -309,6 +311,14 @@ class MainActivity : AppCompatActivity(),
     override fun hideToolBarOnFragmentViewDissapears() {
         val toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.GONE
+    }
+
+
+    override fun sendDetailItemHT(obj: Record) {
+        //detalles de items de registros, el objeto contiene todo lo que viene del adapter
+        CallFragment().addFragment(this.supportFragmentManager,
+            DetailRecordFragment.newInstance(obj), true, true, true)
+
     }
 
 

@@ -48,7 +48,8 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, var listener: 
         }
     }
 
-    inner class HomeTravelHolder(override val containerView: View):RecyclerView.ViewHolder(containerView), LayoutContainer{
+    inner class HomeTravelHolder(override val containerView: View):RecyclerView.ViewHolder(containerView),
+        LayoutContainer{
         var recordName: TextView = containerView.findViewById(R.id.txt_record_name)
         var recordPrice: TextView = containerView.findViewById(R.id.txt_record_price)
         var recordDate: TextView = containerView.findViewById(R.id.txt_record_date)

@@ -30,8 +30,14 @@ class MainActivity : AppCompatActivity(),
     HomeFragment.OnFragmentInteractionListener,
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
-    HomeTravelFragment.OnFragmentInteractionListener
+    HomeTravelFragment.OnFragmentInteractionListener,
+        HistorialFragment.OnFragmentInteractionListener
 {
+    override fun sendDetailItemHistory(id: String) {
+        CallFragment().addFragment(
+            this.supportFragmentManager, HomeTravelFragment(),
+            true, true, true)
+    }
 
 
     // Declaring FirebaseAuth components

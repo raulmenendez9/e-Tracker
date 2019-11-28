@@ -22,6 +22,7 @@ class DetailRecordFragment : Fragment() {
     lateinit var objDetailData:Record
     //obtnego el id del viaje
     lateinit var idRecord: String
+    lateinit var idTravel: String
     private var listener: OnFragmentInteractionListener? = null
     //variables del layout
     var titleCatDetail: TextView?=null
@@ -60,8 +61,9 @@ class DetailRecordFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         btnDelete!!.setOnClickListener {
-            showDialog(idRecord)
-            Log.i("ELMEROID","el id record es: $idRecord")
+            showDialog(idRecord, idTravel)
+            Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel")
+
         }
     }
     private fun fillDetail(){
@@ -100,9 +102,9 @@ class DetailRecordFragment : Fragment() {
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-    fun showDialog(id: String){
+    fun showDialog(id: String, idTravel: String){
         val fm = this.fragmentManager
-        val dialog = DeleteRecordDialog.newInstance(id)
+        val dialog = DeleteRecordDialog.newInstance(id, idTravel)
         dialog.show(fm!!, DELETE_DIALOG)
 
     }
@@ -128,11 +130,12 @@ class DetailRecordFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(obj:Record, id:String) : DetailRecordFragment{
+        fun newInstance(obj:Record, id:String, idTravel:String) : DetailRecordFragment{
             //se instancia el fragment con el objeto de tipo Record que viene del adapter
             val fragment = DetailRecordFragment()
             fragment.objDetailData = obj
             fragment.idRecord = id
+            fragment.idTravel = idTravel
             return  fragment
         }
 

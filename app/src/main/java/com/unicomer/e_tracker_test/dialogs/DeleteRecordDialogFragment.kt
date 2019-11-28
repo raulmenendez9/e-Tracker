@@ -2,12 +2,16 @@ package com.unicomer.e_tracker_test.dialogs
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.unicomer.e_tracker_test.HomeTravelFragment
 
 import com.unicomer.e_tracker_test.R
 
@@ -26,9 +30,15 @@ private const val ARG_PARAM2 = "param2"
  */
 class DeleteRecordDialog : DialogFragment() {
     lateinit var idRecord:String
+    lateinit var idTravel: String
     private var listener: OnFragmentInteractionListener? = null
+    //FIREBASE
+    val db = FirebaseFirestore.getInstance()
+    var travelRef: CollectionReference = db.collection("e-Tracker")
+    //UI
     var btnDelete: Button? =null
     var btnCancel: Button?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -53,6 +63,19 @@ class DeleteRecordDialog : DialogFragment() {
             dialog!!.cancel()
         }
         btnDelete!!.setOnClickListener {
+            travelRef.document(idTravel)
+                .collection("record").document(idRecord)
+                .delete()
+                .addOnSuccessListener {
+                    //FRAGMENT MANAGER
+                    val fragmentHT = HomeTravelFragment()
+                    val transaction = fragmentManager!!.beginTransaction()
+                    transaction.replace(R.id.main_fragment_container, fragmentHT)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                    dialog!!.cancel()
+                }
+                .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
             //Aqui va el eliminar de firebase y el llamar al homeTravelFragment
         }
     }
@@ -84,10 +107,11 @@ class DeleteRecordDialog : DialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(id: String): DeleteRecordDialog{
+        fun newInstance(id: String, idTravel:String): DeleteRecordDialog{
             //recibe el id del registro a borrar
             val fragment = DeleteRecordDialog()
             fragment.idRecord = id
+            fragment.idTravel = idTravel
             return fragment
         }
     }

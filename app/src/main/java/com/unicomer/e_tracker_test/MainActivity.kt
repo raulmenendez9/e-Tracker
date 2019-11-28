@@ -306,10 +306,10 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    override fun sendDetailItemHT(obj: Record) {
+    override fun sendDetailItemHT(obj: Record, id: String) {
         //detalles de items de registros, el objeto contiene todo lo que viene del adapter
         CallFragment().addFragment(this.supportFragmentManager,
-            DetailRecordFragment.newInstance(obj), true, true, true)
+            DetailRecordFragment.newInstance(obj, id), true, true, true)
 
     }
 

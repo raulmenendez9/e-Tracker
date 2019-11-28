@@ -108,20 +108,9 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
     }
 
-    override fun SendaDetailItemInterface(
-        position: Int,
-        name: String,
-        cat: String,
-        price: String,
-        description: String,
-        date: String
-    ) {
-        Log.i("DETALLE", "el nombre es: $name,  el precio es: $price")
-        //listener!!.sendDetailItem()
-    }
-    override fun sendDetailItem(Obj: Record) {
+    override fun sendDetailItem(Obj: Record, id:String) {
         Log.i("DETALLE", "el mensaje es: ${Obj.recordName}")
-        listener!!.sendDetailItemHT(Obj)
+        listener!!.sendDetailItemHT(Obj, id)
     }
 
     override fun onStart() {
@@ -231,7 +220,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
-        fun sendDetailItemHT(obj:Record)
+        fun sendDetailItemHT(obj:Record, id: String)
     }
 
     companion object {

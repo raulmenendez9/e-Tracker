@@ -3,7 +3,7 @@
     <color name="colorPrimary01Blue">#055EA9</color>
     <color name="colorPrimary02Gray">#7B868C</color>
 
-
+    <color name="colorAlertRed">#A90505</color>
     <color name="colorSecondary01DarkBlue">#21315d</color>
     <color name="colorSecondary02Blue">#104899</color>
     <color name="colorSecondary03LightBlue">#0A5FA9</color>

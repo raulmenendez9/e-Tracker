@@ -46,6 +46,11 @@ import java.util.jar.Manifest
 class AddRegistroFragment : Fragment() {
 
 
+
+    // Objeto que contiene los datos de un detalle anteriomente guardado
+    lateinit var objectRecordDetail: Record
+
+    // Fragment Listener
     private var listener: OnFragmentInteractionListener? = null
 
     //FireStorage
@@ -525,7 +530,12 @@ class AddRegistroFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = AddRegistroFragment()
+        fun newInstance(recordDetailObject: Record): AddRegistroFragment{
+            // Instanciar este fragment y recibir un objeto que contenga los datos de un registro anterior
+            val fragment = AddRegistroFragment()
+            fragment.objectRecordDetail = recordDetailObject
+            return fragment
+        }
     }
 }
 

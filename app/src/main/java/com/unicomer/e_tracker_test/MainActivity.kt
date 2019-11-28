@@ -17,6 +17,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity(),
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
 
+    // Crashlytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
+
     // Mandar a llamar al SharedPreferences
     var sharedPreferences: SharedPreferences? = null
 
@@ -53,6 +58,9 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         Log.i(MAIN_ACTIVITY_KEY, "In method onCreate")
 

@@ -33,6 +33,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.ContextCompat.getExternalFilesDirs
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -100,7 +101,6 @@ class AddRegistroFragment : Fragment() {
 
     // Variable del contexto
     private var mycontext : FragmentActivity? = null
-
 
 
 
@@ -290,7 +290,6 @@ class AddRegistroFragment : Fragment() {
         monto = view?.findViewById(R.id.et_Monto)
         editTextDescripcion = view?.findViewById(R.id.editText_record_description)
         var radioId = radioGroup?.checkedRadioButtonId.toString()
-
 
 
 

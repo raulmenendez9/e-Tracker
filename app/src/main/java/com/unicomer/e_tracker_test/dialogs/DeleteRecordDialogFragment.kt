@@ -64,7 +64,7 @@ class DeleteRecordDialog : DialogFragment() {
                 .delete()
                 .addOnSuccessListener {
                     //FRAGMENT MANAGER
-                    val fragmentHT = HomeTravelFragment()
+                    val fragmentHT = HomeTravelFragment.newInstance(idTravel)
                     val transaction = fragmentManager!!.beginTransaction()
                     transaction.replace(R.id.main_fragment_container, fragmentHT)
                     transaction.addToBackStack(null)

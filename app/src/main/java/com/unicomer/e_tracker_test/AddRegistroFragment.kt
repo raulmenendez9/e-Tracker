@@ -38,6 +38,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.models.Record
+import kotlinx.android.synthetic.main.fragment_home_travel.*
 import java.io.File
 import java.io.IOException
 import java.util.jar.Manifest
@@ -46,6 +47,15 @@ import java.util.jar.Manifest
 class AddRegistroFragment : Fragment() {
 
 
+
+    // Objeto que contiene los datos de un detalle anteriomente guardado
+    lateinit var objectRecordDetail: Record
+
+    // IDs del viaje y record que se quiere modificar
+    lateinit var travelId: String
+    lateinit var recordId: String
+
+    // Fragment Listener
     private var listener: OnFragmentInteractionListener? = null
 
     //FireStorage
@@ -100,7 +110,6 @@ class AddRegistroFragment : Fragment() {
 
     // Variable del contexto
     private var mycontext : FragmentActivity? = null
-
 
 
 
@@ -176,7 +185,7 @@ class AddRegistroFragment : Fragment() {
 
         buttonAddRecord = view?.findViewById(R.id.btn_agregar_registro)
         buttonAddRecord?.setOnClickListener {
-            createRecordInFirestore()
+            createOrUpdateRecordInFirestore(true)
         }
 
 
@@ -194,6 +203,7 @@ class AddRegistroFragment : Fragment() {
 
         Log.i(ADD_RECORD_FRAGMENT, "In method onViewCreated")
 
+        // TODO CAMBIAR ESTO EN EL MAINACTIVITY A UN SOLO METODO
         listener?.hideToolBarOnFragmentViewDissapears()
 
         datePicker = view.findViewById(R.id.textview_record_date_selection)
@@ -281,7 +291,10 @@ class AddRegistroFragment : Fragment() {
     }
 
 
-    private fun createRecordInFirestore(){
+    private fun createOrUpdateRecordInFirestore(createNewRecord: Boolean) {
+
+        // Este metodo espera un Boolean para saber si el record ya existe o si debe crearlo
+        var createRecord: Boolean? = null
 
         // Init UI
 
@@ -291,78 +304,148 @@ class AddRegistroFragment : Fragment() {
         editTextDescripcion = view?.findViewById(R.id.editText_record_description)
         var radioId = radioGroup?.checkedRadioButtonId.toString()
 
+        if (createRecord!!) {
+            // Si se quiere crear un nuevo Record
 
+            // Proceso de validacion de los campos
 
+            if (editTextName?.text!!.isBlank()
+                or fecha?.text!!.isBlank()
+                or monto?.text!!.isBlank()
+                or editTextDescripcion?.text!!.isBlank()
+                or radioId.equals("-1")) {
 
-        // Validar campos en formulario
+                Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+                val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
+                val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_USER_UID_KEY)
 
-        if (editTextName?.text!!.isBlank()
-            or fecha?.text!!.isBlank()
-            or monto?.text!!.isBlank()
-            or editTextDescripcion?.text!!.isBlank()
-            or radioId.equals("-1")) {
-            Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
-            val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-            val currentFirebaseUser = sharedPreferences?.getString(APP_NAME, FIREBASE_USER_UID_KEY)
+                Log.i(ADD_RECORD_FRAGMENT, "Radio category is ${radioGroup?.checkedRadioButtonId.toString()}")
 
-            Log.i(ADD_RECORD_FRAGMENT, "Radio category is ${radioGroup?.checkedRadioButtonId.toString()}")
+            } else {
 
+                // Crear el registro
+                // INICIALIZANDO INSTANCIA DE FIREBASE
+
+                val firebaseDB = FirebaseFirestore.getInstance()
+                var image = Uri.parse(imageDir)
+                imageRef.putFile(image).addOnSuccessListener {
+                    imageRef.downloadUrl.addOnCompleteListener { taskSnapshot ->
+
+                        // SHAREDPREFERENCES
+                        val sharedPreferences =
+                            this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
+                        var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
+                        val currentFirebaseUser =
+                            sharedPreferences.getString(APP_NAME, FIREBASE_USER_UID_KEY)
+                        val currentFirebaseEmailUser =
+                            sharedPreferences.getString(APP_NAME, FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
+
+                        // Elementos de UI
+
+                        val recordName: String? = editTextName?.text.toString()
+                        val recordDate: String? = fecha?.text.toString()
+                        val recordAmount: String? = monto?.text.toString()
+                        val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
+                        val recordPhoto = taskSnapshot.result
+                        val recordDescription: String = editTextDescripcion?.text.toString()
+                        val recordDateRegistered: String? =
+                            "" // Falta obtener fecha actual al momento de crear el record
+                        val recordDateLastUpdate: String? =
+                            "" // Falta obtener fecha de modificacion
+
+                        // Envio de Datos usando el Modelo de Datos
+
+                        val addNewRecord = Record(
+                            recordName!!,
+                            recordDate!!,
+                            recordAmount!!,
+                            recordCategory!!,
+                            "$recordPhoto",
+                            recordDescription,
+                            recordDateRegistered!!,
+                            recordDateLastUpdate!!
+                        )
+
+                        firebaseDB.collection("e-Tracker").document(viajeID!!).collection("record")
+                            .add(addNewRecord)
+                            .addOnFailureListener {
+                                Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
+                                Log.i(ADD_RECORD_FRAGMENT, "Error $it")
+                            }
+                            .addOnSuccessListener {
+                                Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
+                                Log.i(
+                                    ADD_RECORD_FRAGMENT,
+                                    "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID"
+                                )
+                            }
+                    }
+                }
+            }
 
         } else {
 
+            // Si el record YA FUE creado y unicamente necesita ser actualizado
+            // Se ejecuta este codigo
             // INICIALIZANDO INSTANCIA DE FIREBASE
 
             val firebaseDB = FirebaseFirestore.getInstance()
             var image = Uri.parse(imageDir)
             imageRef.putFile(image).addOnSuccessListener {
-                imageRef.downloadUrl.addOnCompleteListener{taskSnapshot ->
+                imageRef.downloadUrl.addOnCompleteListener { taskSnapshot ->
 
-                // SHAREDPREFERENCES
-            val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-            var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
-            val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_UID_KEY)
-            val currentFirebaseEmailUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
+                    // SHAREDPREFERENCES
+                    val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
+                    var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
+                    val currentFirebaseUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_UID_KEY)
+                    val currentFirebaseEmailUser = sharedPreferences.getString(APP_NAME, FIREBASE_USER_EMAIL_LOGGED_IN_KEY)
 
-            // Elementos de UI
+                    // Elementos de UI
 
-            val recordName: String? = editTextName?.text.toString()
-            val recordDate: String? = fecha?.text.toString()
-            val recordAmount: String? = monto?.text.toString()
-            val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-            val recordPhoto =  taskSnapshot.result
-            val recordDescription: String = editTextDescripcion?.text.toString()
-            val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
-            val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
+                    val recordName: String? = editTextName?.text.toString()
+                    val recordDate: String? = fecha?.text.toString()
+                    val recordAmount: String? = monto?.text.toString()
+                    val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
+                    val recordPhoto = taskSnapshot.result
+                    val recordDescription: String = editTextDescripcion?.text.toString()
+                    val recordDateRegistered: String? =
+                        "" // Falta obtener fecha actual al momento de crear el record
+                    val recordDateLastUpdate: String? =
+                        "" // Falta obtener fecha de modificacion
 
-            // Envio de Datos usando el Modelo de Datos
+                    // Envio de Datos usando el Modelo de Datos
 
-            val addNewRecord = Record(
-            recordName!!,
-            recordDate!!,
-            recordAmount!!,
-            recordCategory!!,
-            "$recordPhoto",
-            recordDescription,
-            recordDateRegistered!!,
-            recordDateLastUpdate!!
-            )
+                    val addNewRecord = Record(
+                        recordName!!,
+                        recordDate!!,
+                        recordAmount!!,
+                        recordCategory!!,
+                        "$recordPhoto",
+                        recordDescription,
+                        recordDateRegistered!!,
+                        recordDateLastUpdate!!
+                    )
 
-            firebaseDB.collection("e-Tracker").document(viajeID!!).collection("record")
-                .add(addNewRecord)
-                .addOnFailureListener {
-                    Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
-                    Log.i(ADD_RECORD_FRAGMENT, "Error $it")
-                }
-                .addOnSuccessListener {
-                    Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
-                    Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID")
-                }
+                    firebaseDB.collection("e-Tracker").document(viajeID!!).collection("record")
+                        .add(addNewRecord)
+                        .addOnFailureListener {
+                            Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
+                            Log.i(ADD_RECORD_FRAGMENT, "Error $it")
+                        }
+                        .addOnSuccessListener {
+                            Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
+                            Log.i(
+                                ADD_RECORD_FRAGMENT,
+                                "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID"
+                            )
+                        }
                 }
             }
 
+
         }
 
-    }
+        }
 
     private fun radioButtonSelection(radioButtonId: Int){
 
@@ -527,7 +610,13 @@ class AddRegistroFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = AddRegistroFragment()
+        fun newInstance(recordDetailObject: Record, recordId: String): AddRegistroFragment{
+            // Instanciar este fragment y recibir un objeto que contenga los datos de un registro anterior
+            val fragment = AddRegistroFragment()
+            fragment.objectRecordDetail = recordDetailObject
+
+            return fragment
+        }
     }
 }
 

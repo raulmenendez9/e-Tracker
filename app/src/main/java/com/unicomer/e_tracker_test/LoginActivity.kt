@@ -14,12 +14,18 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.dialogs.LoginDialogFragment
+import com.google.firebase.analytics.FirebaseAnalytics
+
+
 
 class LoginActivity : AppCompatActivity() {
 
     // Declaration of FirebaseAuthLocalClass components
     private var dbAuth: FirebaseAuth? = null
     // End of declaration FirebaseAuthLocalClass components
+
+    // Crashlytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
 
     // Declaration of variables
@@ -44,6 +50,9 @@ class LoginActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         Log.i(LOGIN_ACTIVITY_KEY, "In method onCreate")
 

@@ -17,6 +17,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -39,6 +40,10 @@ class MainActivity : AppCompatActivity(),
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
 
+    // Crashlytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
+
     // Mandar a llamar al SharedPreferences
     var sharedPreferences: SharedPreferences? = null
 
@@ -52,6 +57,9 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         Log.i(MAIN_ACTIVITY_KEY, "In method onCreate")
 
@@ -210,14 +218,20 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
-
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                supportActionBar?.setDisplayShowHomeEnabled(true)
+                CallFragment().addFragment(
+                    this.supportFragmentManager, HistorialFragment(),
+                    true, true, true)
                 true
             }
 
             R.id.item_terminos -> {
                 // Manejar el evento en item "Terminos y Condiciones"
 
-                CallFragment().addFragment(this.supportFragmentManager, TerminosFragment(), true, true, true)
+                CallFragment().addFragment(
+                    this.supportFragmentManager, TerminosFragment(),
+                    true, true, true)
                 true
             }
 
@@ -272,17 +286,20 @@ class MainActivity : AppCompatActivity(),
 
     override fun openRegistrationTravelFragment() {
         hideToolBarOnFragmentViewDissapears()
-        CallFragment().addFragment(this.supportFragmentManager, TravelRegistrationFragment(), true, true, true)
+        CallFragment().addFragment(this.supportFragmentManager,
+            TravelRegistrationFragment(), true, true, true)
 
     }
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
-        CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, true, true)
+        CallFragment().addFragment(this.supportFragmentManager,
+            HomeTravelFragment(), true, true, true)
     }
 
     override fun openAddRecordFragment(){
-        CallFragment().addFragment(this.supportFragmentManager, AddRegistroFragment(), true, true, true)
+        CallFragment().addFragment(this.supportFragmentManager,
+            AddRegistroFragment(), true, true, true)
 
     }
 
@@ -297,15 +314,11 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    private fun loadAddDetailRecordragment(detailRecordFragment: DetailRecordFragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main_fragment_container, detailRecordFragment)
-        fragmentTransaction.addToBackStack(MAIN_ACTIVITY_KEY)
-        fragmentTransaction.commit()
-    }
     override fun sendDetailItemHT(obj: Record) {
-        //Log.i("DETALLE", "estoy en el main: ${objDetailData.recordName}")
-        loadAddDetailRecordragment(DetailRecordFragment.newInstance(obj))
+        //detalles de items de registros, el objeto contiene todo lo que viene del adapter
+        CallFragment().addFragment(this.supportFragmentManager,
+            DetailRecordFragment.newInstance(obj), true, true, true)
+
     }
 
 

@@ -39,6 +39,7 @@ class DetailRecordFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         nameDetail = view.findViewById(R.id.recordNameDetail)
         dateDetail = view.findViewById(R.id.recordDateDetail)
         descriptionDetail = view.findViewById(R.id.recordDescriptionDetail)

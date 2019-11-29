@@ -45,9 +45,9 @@ class FinishtTravelDialogFragment : DialogFragment() {
             dialog!!.cancel()
         }
         btnFinish!!.setOnClickListener {
-            val fm = fragmentManager!!.beginTransaction()
-            val dialog = CreateReportDialogFragment.newInstance()
-            dialog.show(fm, LOGIN_DIALOG)
+            //val fm = fragmentManager!!.beginTransaction()
+            //val dialog = CreateReportDialogFragment.newInstance()
+            //dialog.show(fm, LOGIN_DIALOG)
             //metodo para generar reporte
         }
     }

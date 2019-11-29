@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(),
         val user = dbAuth!!.currentUser
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-        var idDeViajeQueVieneDeFirestore: String? = null
+        var idDeViajeQueVieneDeFirestore: String?
         //inicializar la toolbar
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity(),
             R.id.item_generar -> {
                 // Manejar el evento en item "Generar Reporte"
                 val fm = this.supportFragmentManager
-                val dialog = CreateReportDialogFragment.newInstance("eU4tRDVMD41ypsOU8Pzz")
+                val dialog = CreateReportDialogFragment.newInstance(idTravel)
                 dialog.show(fm, LOGIN_DIALOG)
 
                 true

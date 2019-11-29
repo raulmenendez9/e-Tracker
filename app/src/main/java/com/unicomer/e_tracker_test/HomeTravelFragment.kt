@@ -73,7 +73,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface {
         travelRef //no mover de aqui
             .whereEqualTo("emailUser", FirebaseUser!!.email)
             .whereEqualTo("active", true).addSnapshotListener { querySnapshot, _ ->
-                // idTravel = querySnapshot!!.documents[0].id
+                 idTravel = querySnapshot!!.documents[0].id
                 /*Desde aca se carga el id en la variable idTravel pero se cargará unos milisegundos
                 * despues de que la peticion se complete*/
             }
@@ -178,10 +178,10 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface {
                 finishDate!!.text =
                     data[0].finishDate!!.substring(0, data[0].initialDate!!.length - 5)
                 //balance!!.text = data[0].balance
-                setUpRecyclerView(idViaje!!) //le mando el id del viaje a este punto la peticion ya a sido existosa
+                setUpRecyclerView(idTravel!!) //le mando el id del viaje a este punto la peticion ya a sido existosa
                 adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
                 //llenar los totales
-                travelRef.document(idViaje!!)
+                travelRef.document(idTravel!!)
                     .collection("record")
                     .get()
                     .addOnSuccessListener { querySnapShot ->

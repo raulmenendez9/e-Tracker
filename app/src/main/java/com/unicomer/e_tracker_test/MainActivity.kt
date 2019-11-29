@@ -31,8 +31,25 @@ class MainActivity : AppCompatActivity(),
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener,
-        HistorialFragment.OnFragmentInteractionListener
+        HistorialFragment.OnFragmentInteractionListener,
+    AdapterHomeTravel.ShowDataInterface
+
 {
+    override fun sendDetailItem(Obj: Record) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun SendaDetailItemInterface(
+        position: Int,
+        name: String,
+        cat: String,
+        price: String,
+        description: String,
+        date: String
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun sendDetailItemHistory(id: String) {
         CallFragment().addFragment(
             this.supportFragmentManager, HomeTravelFragment(),
@@ -130,6 +147,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onStart() {
         super.onStart()
+
         Log.i(MAIN_ACTIVITY_KEY, "In method onStart")
 
     }
@@ -218,6 +236,8 @@ class MainActivity : AppCompatActivity(),
                 // Manejar el evento en item "Historial"
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 supportActionBar?.setDisplayShowHomeEnabled(true)
+                
+
                 CallFragment().addFragment(
                     this.supportFragmentManager, HistorialFragment(),
                     true, true, true)
@@ -264,18 +284,21 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun setUpRecyclerView(id:String,consulta:String?){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
+    private fun setUpRecyclerView(id:String,consultas:String?){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
+            var consulta=consultas.toString()
         val query: Query = dbCollectionReference!!.document(id)
             .collection("record")
             //.whereEqualTo("recordName",consulta)
             .orderBy("recordName")
-            .startAt(consulta).endAt(consulta+"\uf8ff")
+
+            .startAt(consulta)
+            .endAt(consulta+"\uf8ff")
         val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
 
         //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
-        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
+        adapterHt = AdapterHomeTravel(options,this) //datos reales del adapter
         val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this)

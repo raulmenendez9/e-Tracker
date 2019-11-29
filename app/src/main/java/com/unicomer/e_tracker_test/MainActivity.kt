@@ -23,6 +23,7 @@ import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.*
+import com.unicomer.e_tracker_test.dialogs.CreateReportDialogFragment
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -232,6 +233,10 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_generar -> {
                 // Manejar el evento en item "Generar Reporte"
+                val fm = this.supportFragmentManager
+                val dialog = CreateReportDialogFragment.newInstance()
+                dialog.show(fm, LOGIN_DIALOG)
+
                 true
             }
 

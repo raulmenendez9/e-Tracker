@@ -44,7 +44,7 @@ class DeleteRecordDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnDelete = view.findViewById(R.id.button__delete)
+        btnDelete = view.findViewById(R.id.button_send)
         btnCancel = view.findViewById(R.id.button_cancel)
     }
 

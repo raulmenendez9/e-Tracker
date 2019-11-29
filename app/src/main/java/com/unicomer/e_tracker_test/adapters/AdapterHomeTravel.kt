@@ -55,5 +55,6 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, var listener: 
     }
     interface ShowDataInterface{
         fun sendDetailItem(Obj:Record, id:String)
+        fun openAddRecordFragment(Obj: Record, id: String)
     }
 }

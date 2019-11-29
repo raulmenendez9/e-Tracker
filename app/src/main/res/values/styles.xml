@@ -82,7 +82,7 @@
     <style name="TextView_Title" parent="Theme.AppCompat.Light">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textAppearance">@style/FontStyle_ListTitleText</item>
+        <item name="android:textAppearance">@style/FontStyle_Title</item>
         <item name="android:textColor">@color/colorPrimary01Blue</item>
     </style>
 

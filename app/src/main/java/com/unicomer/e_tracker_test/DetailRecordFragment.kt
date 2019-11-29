@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
 import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
@@ -34,6 +35,7 @@ class DetailRecordFragment : Fragment() {
     var priceDetail: TextView?=null
     var photoDetail: ImageView?=null
     var btnDelete: Button?=null
+    var btnEditRecord: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,7 @@ class DetailRecordFragment : Fragment() {
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
         photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
+        btnEditRecord = view.findViewById(R.id.editButtonDetail)
         fillDetail()
     }
 
@@ -65,8 +68,12 @@ class DetailRecordFragment : Fragment() {
             Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel y el ${objDetailData}")
             showDialog(idRecord, idTravel, objDetailData)
 
-
         }
+
+        btnEditRecord!!.setOnClickListener {
+            CallFragment().addFragment(this.fragmentManager!!, AddRegistroFragment.newInstance(objDetailData, idRecord, idTravel, true), true, true, true)
+        }
+
     }
     private fun fillDetail(){
         //Seteo de datos
@@ -128,6 +135,7 @@ class DetailRecordFragment : Fragment() {
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
+        fun openAddRecordFragment(obj: Record, id: String, idTravel: String)
     }
 
     companion object {

@@ -25,13 +25,19 @@ import com.unicomer.e_tracker_test.models.Record
 
 class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
+    lateinit var objectRecordDetail: Record
+    lateinit var idRecord: String
+    var idTravel: String="" //debe estar inicializado para poder usarse mas adelante
 
     private var listener: OnFragmentInteractionListener? = null
+
+
     //accediendo a los datos de firebase
+
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
     var travelRef: CollectionReference = db.collection("e-Tracker")
-    var idTravel: String="" //debe estar inicializado para poder usarse mas adelante
+
     //Instancia del Adapter para el RecyclerView
     var adapterHt: AdapterHomeTravel? = null
 
@@ -101,7 +107,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         floatingActionButton?.setOnClickListener {
 
             fragmentManager?.let {
-                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
+                CallFragment().addFragment(it, AddRegistroFragment.newInstance(objectRecordDetail, idRecord, idTravel, false), true, true, true)
             }
 
         }
@@ -113,6 +119,9 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         listener!!.sendDetailItemHT(Obj, id, idTravel)
     }
 
+    override fun openAddRecordFragment(Obj: Record, id:String) {
+        listener!!.openAddRecordFragment(Obj, id, idTravel, false)
+    }
     override fun onStart() {
         super.onStart()
         adapterHt!!.startListening()
@@ -216,7 +225,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
 
     interface OnFragmentInteractionListener {
-        fun openAddRecordFragment()
+        fun openAddRecordFragment(obj: Record, id: String, idTravel: String, recordExists: Boolean)
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
@@ -226,6 +235,12 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     companion object {
 
         @JvmStatic
-        fun newInstance() = HomeTravelFragment()
-            }
+        fun newInstance(obj: Record, idRecord: String, idTravel: String) : HomeTravelFragment {
+            val fragment = HomeTravelFragment()
+            fragment.objectRecordDetail = obj
+            fragment.idRecord = idRecord
+            fragment.idTravel = idTravel
+            return fragment
+        }
+    }
 }

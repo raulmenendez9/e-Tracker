@@ -34,10 +34,6 @@ class MainActivity : AppCompatActivity(),
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener
 {
-    init{
-        Log.i(MAIN_ACTIVITY_KEY,"estoy en el init")
-        //AQui poria ir la peticion para el viaje
-    }
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
@@ -305,9 +301,8 @@ class MainActivity : AppCompatActivity(),
             HomeTravelFragment(), true, true, true)
     }
 
-    override fun openAddRecordFragment(){
-        CallFragment().addFragment(this.supportFragmentManager,
-            AddRegistroFragment(), true, true, true)
+    override fun openAddRecordFragment(obj: Record, id: String, idTravel: String, recordExists: Boolean){
+        CallFragment().addFragment(this.supportFragmentManager, AddRegistroFragment.newInstance(obj, id, idTravel, false), true, true, true)
 
     }
 
@@ -324,8 +319,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun sendDetailItemHT(obj: Record, id: String, idTravel:String) {
         //detalles de items de registros, el objeto contiene todo lo que viene del adapter
-        CallFragment().addFragment(this.supportFragmentManager,
-            DetailRecordFragment.newInstance(obj, id, idTravel), true, true, true)
+        CallFragment().addFragment(this.supportFragmentManager, DetailRecordFragment.newInstance(obj, id, idTravel), true, true, true)
 
     }
 

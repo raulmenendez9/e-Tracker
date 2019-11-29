@@ -445,7 +445,7 @@ class AddRegistroFragment : Fragment() {
         mycontext= activity as FragmentActivity
         super.onAttach(activity)
     }
-
+//funcion para realizar foto
     private fun dialogPhoto(){
         try {
             var photoFile: File? = null

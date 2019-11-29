@@ -30,6 +30,7 @@ import java.util.*
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.net.toUri
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -180,10 +181,12 @@ class AddRegistroFragment : Fragment() {
             }
         }
 
+        getInitialData(recordExists!!)
+
         buttonAddRecord = view?.findViewById(R.id.btn_agregar_registro)
-        buttonAddRecord?.setOnClickListener {
-            createRecordInFirestore()
-        }
+//        buttonAddRecord?.setOnClickListener {
+//            createRecordInFirestore()
+//        }
 
 
         //Manipular el FloatinActionButton
@@ -202,8 +205,6 @@ class AddRegistroFragment : Fragment() {
 
         listener?.hideToolBarOnFragmentViewDissapears()
 
-        getInitialData(recordExists!!)
-        
         datePicker = view.findViewById(R.id.textview_record_date_selection)
 
         // DatePicker
@@ -250,14 +251,13 @@ class AddRegistroFragment : Fragment() {
             // Si el record SI EXISTE y es TRUE entonces se ejecuta este codigo
 
             editTextName?.setText(objectRecordDetail.recordName)
-
             fecha?.setText(objectRecordDetail.recordDate)
-
             monto?.setText(objectRecordDetail.recordMount)
-
             radioGroup!!.check(objectRecordDetail.recordCategory.toInt())
-
             editTextDescripcion?.setText(objectRecordDetail.recordDescription)
+
+            // Photo
+            var imageUri = imageDir.toUri()
 
             buttonTakePhoto!!.setText("MODIFICAR FOTO")
             buttonAddRecord!!.setText("ACTUALIZAR")
@@ -297,8 +297,7 @@ class AddRegistroFragment : Fragment() {
                         imageRef.downloadUrl.addOnCompleteListener{taskSnapshot ->
 
                             // SHAREDPREFERENCES
-                            val sharedPreferences = this.context?.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
-                            var viajeID = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, null)
+                            var viajeID = travelId
 
                             // Elementos de UI
 
@@ -306,7 +305,7 @@ class AddRegistroFragment : Fragment() {
                             val recordDate: String? = fecha?.text.toString()
                             val recordAmount: String? = monto?.text.toString()
                             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-                            val recordPhoto =  taskSnapshot.result
+                            val recordPhoto =   taskSnapshot.result
                             val recordDescription: String = editTextDescripcion?.text.toString()
                             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
                             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
@@ -324,8 +323,17 @@ class AddRegistroFragment : Fragment() {
                                 recordDateLastUpdate!!
                             )
 
-                            firebaseDB.collection("e-Tracker").document(viajeID!!).collection("record")
-                                .add(addNewRecord)
+                            firebaseDB.collection("e-Tracker").document(viajeID).collection("record").document(travelId)
+                                .update(
+                                    "recordName", recordName,
+                                    "recordDate", recordDate,
+                                    "recordMount", recordAmount,
+                                    "recordCategory", recordCategory,
+                                    "recordPhoto", "$recordPhoto",
+                                    "recordDescription", recordDescription,
+                                    "recordDateRegister", recordDateRegistered,
+                                    "recordDateLastUpdate", recordDateLastUpdate
+                                )
                                 .addOnFailureListener {
                                     Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
                                     Log.i(ADD_RECORD_FRAGMENT, "Error $it")

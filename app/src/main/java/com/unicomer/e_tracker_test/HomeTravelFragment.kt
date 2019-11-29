@@ -25,6 +25,8 @@ import com.unicomer.e_tracker_test.models.Record
 
 class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
+    private var testObject: Record? = null
+
     lateinit var objectRecordDetail: Record
     lateinit var idRecord: String
     var idTravel: String="" //debe estar inicializado para poder usarse mas adelante
@@ -106,9 +108,11 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
-            fragmentManager?.let {
-                CallFragment().addFragment(it, AddRegistroFragment.newInstance(objectRecordDetail, idRecord, idTravel, false), true, true, true)
-            }
+            CallFragment().addFragment(this.fragmentManager!!, AddRegistroFragment.newInstance(
+                testObject!!,
+                "",
+                "eU4tRDVMD41ypsOU8Pzz",
+                false), true, true, true)
 
         }
 

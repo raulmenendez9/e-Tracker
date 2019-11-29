@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test.dialogs
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.Button
 import androidx.fragment.app.DialogFragment
 
 import com.unicomer.e_tracker_test.R
+import com.unicomer.e_tracker_test.classes.CreateEmail
 
 
 class CreateReportDialogFragment : DialogFragment() {
@@ -42,7 +44,9 @@ class CreateReportDialogFragment : DialogFragment() {
             dialog!!.cancel()
         }
         btnSend!!.setOnClickListener {
-            //Aqui va el metodo para generar el csv
+            //var emailIntent=
+                CreateEmail("eU4tRDVMD41ypsOU8Pzz").email()
+            //startActivity(Intent.createChooser(emailIntent,"Escoger aplicacion:"))
         }
     }
 

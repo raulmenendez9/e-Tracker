@@ -24,6 +24,7 @@ import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.*
+import com.unicomer.e_tracker_test.dialogs.CreateReportDialogFragment
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -33,7 +34,10 @@ class MainActivity : AppCompatActivity(),
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener
 {
-
+    init{
+        Log.i(MAIN_ACTIVITY_KEY,"estoy en el init")
+        //AQui poria ir la peticion para el viaje
+    }
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
@@ -237,6 +241,10 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_generar -> {
                 // Manejar el evento en item "Generar Reporte"
+                val fm = this.supportFragmentManager
+                val dialog = CreateReportDialogFragment.newInstance()
+                dialog.show(fm, LOGIN_DIALOG)
+
                 true
             }
 
@@ -314,10 +322,10 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    override fun sendDetailItemHT(obj: Record) {
+    override fun sendDetailItemHT(obj: Record, id: String, idTravel:String) {
         //detalles de items de registros, el objeto contiene todo lo que viene del adapter
         CallFragment().addFragment(this.supportFragmentManager,
-            DetailRecordFragment.newInstance(obj), true, true, true)
+            DetailRecordFragment.newInstance(obj, id, idTravel), true, true, true)
 
     }
 

@@ -1,16 +1,27 @@
 package com.unicomer.e_tracker_test.dialogs
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import com.opencsv.CSVWriter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.unicomer.e_tracker_test.R
-import com.unicomer.e_tracker_test.classes.CreateEmail
+import com.unicomer.e_tracker_test.models.Record
+import java.io.File
+import java.io.FileWriter
 
 
 class CreateReportDialogFragment : DialogFragment() {
@@ -18,6 +29,25 @@ class CreateReportDialogFragment : DialogFragment() {
     var btnCancel: Button? = null
     var btnSend:Button?=null
     private var listener: OnFragmentInteractionListener? = null
+    var originCountry: String?=null
+    var destinyCountry: String?=null
+    var centerCost: String?=null
+    var cash: String?=null
+    var emailUser: String?=null
+    var refund: String?=null
+    var initialDate: String?=null
+    var finishDate: String?=null
+    var aproved: String?=null
+    var description: String?=null
+    var balance: String?=null
+    var totalFoodC = 0.0
+    var totalCarC = 0.0
+    var totalhotelC = 0.0
+    var totalOtherC = 0.0
+    private lateinit var  idtravel :String
+    private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    val db = FirebaseFirestore.getInstance()
+    var travelRef: CollectionReference = db.collection("e-Tracker")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +73,101 @@ class CreateReportDialogFragment : DialogFragment() {
         btnCancel!!.setOnClickListener {
             dialog!!.cancel()
         }
+
         btnSend!!.setOnClickListener {
-            //var emailIntent=
-                CreateEmail("eU4tRDVMD41ypsOU8Pzz").email()
-            //startActivity(Intent.createChooser(emailIntent,"Escoger aplicacion:"))
+            email(idtravel)
         }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
+    fun email(idTravel: String){
+        travelRef.document(idTravel).get().addOnSuccessListener {
+
+            originCountry = it.data?.get("originCountry")?.toString()
+            destinyCountry = it.data?.get("destinyCountry")?.toString()
+            centerCost = it.data?.get("centerCost")?.toString()
+            cash = it.data?.get("cash")?.toString()
+            emailUser = it.data?.get("emailUser")?.toString()
+            refund = it.data?.get("refund")?.toString()
+            initialDate = it.data?.get("initialDate")?.toString()
+            finishDate = it.data?.get("finishDate")?.toString()
+            aproved = it.data?.get("aproved")?.toString()
+            description = it.data?.get("description")?.toString()
+            //balance = it.data?.get("balance")?.toString()
+            travelRef.document(idTravel).collection("record").get()
+                .addOnSuccessListener { querySnapShot ->
+                    val csv =(Environment.getExternalStorageDirectory().absolutePath + "/Travel_${FirebaseUser!!.email}.csv")//Nombre del archivo.csv
+                    var write:CSVWriter?=null
+                    write = CSVWriter(FileWriter(csv))
+                    val dataHeader = arrayOf<String>("VIAJE", "Realizado por","${FirebaseUser.email}")
+                    val dataHeaderTravelcsv = arrayOf("Pais origen", "Pais destino","Centro de costo",
+                        "Efectivo asignado","Reintegro","Fecha inicio","Fecha fin","Aprovado por","Descripción")
+                    val dataTravel= arrayOf(originCountry,destinyCountry,centerCost,cash,
+                        refund,initialDate,finishDate,aproved,description)
+                    val dataHeaderRecord = arrayOf("REGISTROS")
+                    val dataHeaderRecords = arrayOf("Nombre","Fecha","Costo","Categoria","Enlace de imagen","Descripcion")
+
+                    write!!.writeNext(dataHeader)
+                    write!!.writeNext(dataHeaderTravelcsv)
+                    write!!.writeNext(dataTravel)
+                    write!!.writeNext(dataHeaderRecord)
+                    write!!.writeNext(dataHeaderRecords)
+                    val records = querySnapShot.toObjects(Record::class.java)
+                    var dataRecords = arrayOf(String())
+                    //obtengo todos los registros de gastos del viaje
+                    for (i in 0 until querySnapShot.count()) { //count me da el total de registros
+                        when (querySnapShot.documents[i].data!!["recordCategory"].toString()) { //verifco la categoria a la que pertecene cada gasto
+                            "0" -> //si es comida acumula su cantidad en una variable
+                                totalFoodC += querySnapShot.documents[i].data!!["recordMount"].toString()
+                                    .toDouble()
+                            "1" -> // transporte
+                                totalCarC += querySnapShot.documents[i].data!!["recordMount"].toString()
+                                    .toDouble()
+                            "2" -> //hospedaje
+                                totalhotelC += querySnapShot.documents[i].data!!["recordMount"].toString()
+                                    .toDouble()
+                            "3" -> //Otros
+                                totalOtherC += querySnapShot.documents[i].data!!["recordMount"].toString()
+                                    .toDouble()
+                        }
+                        dataRecords = arrayOf(
+                            records[i].recordName,
+                            records[i].recordDate,
+                            records[i].recordMount,
+                            records[i].recordCategory,
+                            records[i].recordPhoto,
+                            records[i].recordDescription)
+                        write!!.writeNext(dataRecords)
+                    }
+                    balance = (cash!!.toDouble() - totalFoodC - totalCarC - totalhotelC - totalOtherC).toString()
+                    val dataTotal = arrayOf("TOTAL DE GASTOS","","$balance")
+                    write!!.writeNext(dataTotal)
+                    write!!.close()
+
+                    //envio por correo
+                    val emailIntent = Intent(Intent.ACTION_SEND)
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(""))
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT,"Asunto")
+                    emailIntent.putExtra(Intent.EXTRA_TEXT,"Escriba aqui")
+                    emailIntent.type = "message/rfc822"
+                    var file = File(csv)
+                    var uri = FileProvider.getUriForFile(context!!,context!!.applicationContext.packageName+".fileprovider",file)
+                    emailIntent.putExtra(Intent.EXTRA_STREAM,uri)
+                    emailIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    Log.d("EMAIL", "$uri")
+                    val activities:List<ResolveInfo> = context!!.packageManager.queryIntentActivities(
+                        emailIntent,
+                        PackageManager.MATCH_DEFAULT_ONLY
+                    )
+                    val isIntentSafe:Boolean = activities.isNotEmpty()
+                    if (isIntentSafe) {
+                        startActivity(Intent.createChooser(emailIntent, "Escoger una aplicacion:"))
+                    }
+                }
+        }
+
+    }
+
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -80,9 +197,11 @@ class CreateReportDialogFragment : DialogFragment() {
 
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-            CreateReportDialogFragment().apply {
+        fun newInstance(idTavel:String):CreateReportDialogFragment{
+            val fragment=CreateReportDialogFragment()
+            fragment.idtravel=idTavel
+            return fragment
+        }
 
-            }
     }
 }

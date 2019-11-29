@@ -1,10 +1,19 @@
 package com.unicomer.e_tracker_test.classes
 
+import android.os.Environment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.opencsv.CSVWriter
+import java.io.FileWriter
+import android.R.attr.data
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
+import java.io.File
+
 
 class CreateEmail(idtravel: String) {
     var originCountry: String?=null
@@ -29,10 +38,15 @@ class CreateEmail(idtravel: String) {
     var totalhotelC = 0.0
     var totalOtherC = 0.0
     val idTravel =idtravel
+    private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
     var travelRef: CollectionReference = db.collection("e-Tracker")
 
-    fun email() {
+    fun email() :Intent{
+        val csv =(Environment.getExternalStorageDirectory().absolutePath + "/Travel_${FirebaseUser!!.email}.csv")//Nombre del archivo.csv
+        var write:CSVWriter?=null
+        write = CSVWriter(FileWriter(csv))
+        val data = arrayListOf<String>()
         travelRef.document(idTravel).get().addOnSuccessListener {
             originCountry = it.data?.get("originContry")?.toString()
             destinyCountry = it.data?.get("destinyCountry")?.toString()
@@ -45,6 +59,13 @@ class CreateEmail(idtravel: String) {
             aproved = it.data?.get("aproved")?.toString()
             description = it.data?.get("description")?.toString()
             //balance = it.data?.get("balance")?.toString()
+            data.add(arrayOf("VIAJE", "Realizado por",emailUser).toString())
+            data.add(arrayOf("Pais origen", "Pais destino","Centro de costo",
+                "Efectivo asignado","Efectivo usado","Reintegro","Fecha inicio","Fecha fin","Aprovado por","Descripción").toString())
+            data.add(arrayOf(originCountry,destinyCountry,centerCost,cash,
+                balance,refund,initialDate,finishDate,aproved,description).toString())
+            data.add(arrayOf("REGISTROS").toString())
+            data.add(arrayOf("Nombre","Fecha","Costo","Categoria","Enlace de imagen","Descripcion").toString())
 
             travelRef.document(idTravel).collection("record").get()
                 .addOnSuccessListener { querySnapShot ->
@@ -70,9 +91,28 @@ class CreateEmail(idtravel: String) {
                         recordCategory=querySnapShot.documents[i].data!!["recordCategory"].toString()
                         recordPhoto=querySnapShot.documents[i].data!!["recordPhoto"].toString()
                         recordDescription=querySnapShot.documents[i].data!!["recordDescription"].toString()
+                        data.add(arrayOf(recordName,recordDate,recordMount,recordCategory,recordPhoto,
+                            recordDescription).toString())
                     }
-                    balance = (cash!!.toDouble() - totalFoodC - totalCarC - totalhotelC - totalOtherC).toString()
+
                 }
+            balance = (cash!!.toDouble() - totalFoodC - totalCarC - totalhotelC - totalOtherC).toString()
+            data.add(arrayOf("TOTAL",balance).toString())
+
         }
+        write.writeAll(data as List<Array<String>>)
+        write.close()
+
+        //envio por correo
+        var emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.type
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(""))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT,"Asunto")
+        emailIntent.putExtra(Intent.EXTRA_TEXT,"")
+        var file = File(csv)
+        var uri = Uri.fromFile(file)
+        emailIntent.putExtra(Intent.EXTRA_STREAM,uri)
+        return emailIntent
+        //startActivity(Intent.createChooser(emailIntent,"Escoje una aplicacion de email"))
     }
 }

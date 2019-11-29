@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity(),
             R.id.item_generar -> {
                 // Manejar el evento en item "Generar Reporte"
                 val fm = this.supportFragmentManager
-                val dialog = CreateReportDialogFragment.newInstance()
+                val dialog = CreateReportDialogFragment.newInstance("eU4tRDVMD41ypsOU8Pzz")
                 dialog.show(fm, LOGIN_DIALOG)
 
                 true

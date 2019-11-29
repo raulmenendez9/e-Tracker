@@ -61,8 +61,9 @@ class DetailRecordFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         btnDelete!!.setOnClickListener {
-            showDialog(idRecord, idTravel)
-            Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel")
+            Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel y el ${objDetailData}")
+            showDialog(idRecord, idTravel, objDetailData)
+
 
         }
     }
@@ -102,9 +103,9 @@ class DetailRecordFragment : Fragment() {
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-    fun showDialog(id: String, idTravel: String){
+    fun showDialog(id: String, idTravel: String, obj:Record){
         val fm = this.fragmentManager
-        val dialog = DeleteRecordDialog.newInstance(id, idTravel)
+        val dialog = DeleteRecordDialog.newInstance(id, idTravel, obj)
         dialog.show(fm!!, DELETE_DIALOG)
 
     }

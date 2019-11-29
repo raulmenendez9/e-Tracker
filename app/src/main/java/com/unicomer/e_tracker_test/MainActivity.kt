@@ -32,7 +32,10 @@ class MainActivity : AppCompatActivity(),
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener
 {
-
+    init{
+        Log.i(MAIN_ACTIVITY_KEY,"estoy en el init")
+        //AQui poria ir la peticion para el viaje
+    }
 
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null

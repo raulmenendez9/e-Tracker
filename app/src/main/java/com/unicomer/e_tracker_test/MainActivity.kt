@@ -154,11 +154,10 @@ class MainActivity : AppCompatActivity(),
         onBackPressed()
         return true
     }
-
+    lateinit var globalmenu: Menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
-
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
         // val manager=getSystemService() as SearchManager
@@ -186,6 +185,7 @@ class MainActivity : AppCompatActivity(),
 
             Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
         }
+        globalmenu = menu
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -193,13 +193,13 @@ class MainActivity : AppCompatActivity(),
         dbAuth = FirebaseAuth.getInstance()
 
         // Manejar seleccion de Item en Menu (Toolbar)
-
         return when (item.itemId) {
-
             // TODO Cambiar los textos del Toast por Strings
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
+                globalmenu.findItem(R.id.item_generar).setVisible(true)
+                globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(
@@ -210,7 +210,8 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_terminos -> {
                 // Manejar el evento en item "Terminos y Condiciones"
-
+                globalmenu.findItem(R.id.item_generar).setVisible(true)
+                globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
                 CallFragment().addFragment(
                     this.supportFragmentManager, TerminosFragment(),
                     true, true, true)
@@ -281,6 +282,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
+        globalmenu.findItem(R.id.item_generar).setVisible(true) //visibilidad para items del menu
+        globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(idTravel), true, true, true)
     }
@@ -292,6 +295,8 @@ class MainActivity : AppCompatActivity(),
     }
     override fun sendToHomeTravel(id: String) {
         showToolBarOnFragmentViewCreate()
+        globalmenu.findItem(R.id.item_generar).setVisible(true)
+        globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
         Log.i("BUSCANDOID","el id en el activity es: $id")
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id), true, true, true)

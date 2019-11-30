@@ -51,21 +51,12 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     //para la imagen de fondo
     var backgroundImage: View? = null
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         // Mostrar el toolbar
         listener?.showToolBarOnFragmentViewCreate()
-        Log.i("IDHOMETF", "el id del viaje que viene del main: $idTravelMain")
         //Se inicializa por primera y unica vez al adapter como uno vacio
         adapterHt = AdapterHomeTravel(adapterInit(), this)
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
@@ -85,7 +76,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
-
+        setUpRecyclerView(idTravelMain)
         floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
@@ -98,7 +89,6 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     }
 
     override fun sendDetailItem(Obj: Record, id:String) {
-        Log.i("DETALLE", "el mensaje es: ${Obj.recordName}")
         listener!!.sendDetailItemHT(Obj, id, idTravelMain)
     }
 
@@ -109,19 +99,15 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
     override fun onStop() {
         super.onStop()
-        adapterHt!!.stopListening()
+        adapterHt!!.startListening()
     }
 
-    override fun onPause() {
-        super.onPause()
-        adapterHt!!.stopListening()
-    }
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
     private fun adapterInit():FirestoreRecyclerOptions<Record>{ //inicializador para el adapter del recyclerview
-        val query: Query = travelRef.document("dummyData") //Se le pone "dummyData" por que no nos interesa que jale datos desde firebase ya que para eso necesitamos el id
+        val query: Query = travelRef.document(idTravelMain)
             .collection("record").orderBy("recordDate", Query.Direction.DESCENDING)
         return FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
@@ -144,11 +130,6 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
                 destinyCountry!!.text = data[0].destinyCountry
                 initDate!!.text = data[0].initialDate!!.substring(0, data[0].initialDate!!.length-5)
                 finishDate!!.text = data[0].finishDate!!.substring(0, data[0].initialDate!!.length-5)
-                //balance!!.text = data[0].balance
-                Log.i("BACKGR", "que hayy en doc: ${doc.count()}")
-
-                setUpRecyclerView(idTravelMain) //le mando el id del viaje a este punto la peticion ya a sido existosa
-                adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
                 //llenar los totales
                 travelRef.document(idTravelMain)
                     .collection("record")
@@ -175,7 +156,8 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
                         totalOther!!.text = "$$totalOtherC"
                         //muestro el total de gastos disminuidos
                         val balanceReg = data[0].balance!!.toDouble() - totalFoodC - totalCarC -totalhotelC -totalOtherC
-                        balance!!.text = balanceReg.toString()
+                        var roundedBalance = Math.round(balanceReg*100.0)/100.0
+                        balance!!.text = roundedBalance.toString()
                     }
             }
 
@@ -193,14 +175,17 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         recycler.adapter = adapterHt
     }
 
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
-
-    private fun floatingActionButtonHomeTravel(goToHomeTravelFragment: HomeTravelFragment){
-        //TODO Needs to call AddRecordFragment
     }
 
 

@@ -71,7 +71,7 @@ class DeleteRecordDialog : DialogFragment() {
                     transaction.commit()
                     dialog!!.cancel()
                 }
-                .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
+                .addOnFailureListener { e -> Log.w("ERROR_DOC_DELETE", "Error deleting document", e) }
         }
     }
 

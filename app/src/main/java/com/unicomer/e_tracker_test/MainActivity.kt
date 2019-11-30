@@ -33,14 +33,14 @@ class MainActivity : AppCompatActivity(),
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener,
-    AdapterHomeTravel.ShowDataInterface,
+    //AdapterHomeTravel.ShowDataInterface,
     TravelRegistrationFragment.OnFragmentInteractionListener
 {
 
 
-    override fun sendDetailItem(Obj: Record, id: String) {
+    //override fun sendDetailItem(Obj: Record, id: String) {
         //Se llama para usar el adapter en el recycler de busqueda, no tiene otra finalidad
-    }
+    //}
 
     var listener: onMainActivityInterface? = null
     // Declaring FirebaseAuth components
@@ -114,30 +114,35 @@ class MainActivity : AppCompatActivity(),
 
     override fun onStart() {
         super.onStart()
+        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onStart")
 
     }
 
     override fun onResume() {
         super.onResume()
+        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onResume")
 
     }
 
     override fun onPause() {
         super.onPause()
+        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onPause")
 
     }
 
     override fun onStop() {
         super.onStop()
+        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onStop")
 
     }
 
     override fun onRestart() {
         super.onRestart()
+        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onRestart")
 
     }
@@ -147,8 +152,6 @@ class MainActivity : AppCompatActivity(),
         Log.i(MAIN_ACTIVITY_KEY, "In method onDestroy")
 
     }
-
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -174,8 +177,8 @@ class MainActivity : AppCompatActivity(),
                 override fun onQueryTextChange(newText: String?): Boolean {
                     // logica para filtrar con el recyclerView
                     //adaptador.getFilter().filter(newText)
-                    setUpRecyclerView(idTravel,newText)
-                    adapterHt!!.startListening()
+                    //setUpRecyclerView(idTravel,newText)
+                    //adapterHt!!.startListening()
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
                 }
@@ -186,7 +189,8 @@ class MainActivity : AppCompatActivity(),
             Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
         }
         globalmenu = menu
-        return super.onCreateOptionsMenu(menu)
+        return super.
+            onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -264,9 +268,8 @@ class MainActivity : AppCompatActivity(),
         val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
-
         //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
-        adapterHt = AdapterHomeTravel(options, this) //datos reales del adapter
+        //adapterHt = AdapterHomeTravel(options, this) //datos reales del adapter
         val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(this)

@@ -3,11 +3,9 @@ package com.unicomer.e_tracker_test
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,15 +15,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.unicomer.e_tracker_test.MainActivity.onMainActivityInterface
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.models.Record
 
 
-class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
-
+class HomeTravelFragment : Fragment(),
+    AdapterHomeTravel.ShowDataInterface{
     private var listener: OnFragmentInteractionListener? = null
     //accediendo a los datos de firebase
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
@@ -42,7 +39,6 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     var balance: TextView?=null
 
     private var floatingActionButton: FloatingActionButton? = null
-
     //totales en cabecera
     var totalFood: TextView?=null
     var totalCar: TextView?=null
@@ -52,11 +48,11 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     var backgroundImage: View? = null
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Mostrar el toolbar
         listener?.showToolBarOnFragmentViewCreate()
+        setHasOptionsMenu(true) //menu
         //Se inicializa por primera y unica vez al adapter como uno vacio
         adapterHt = AdapterHomeTravel(adapterInit(), this)
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
@@ -75,8 +71,9 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         totalCar = view.findViewById(R.id.txt_header_cat_car_total)
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
-        fillForm()//metodo para llenar all de fragment (incluido el recycler)
-        setUpRecyclerView(idTravelMain)
+        fillForm()//metodo para llenar la cabecera de fragment
+        setUpRecyclerView(idTravelMain, "") //llena el fragment
+
         floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
@@ -162,9 +159,17 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
             }
 
     }
-    private fun setUpRecyclerView(id:String){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
-        val query: Query = travelRef.document(id)
-            .collection("record").orderBy("recordDate", Query.Direction.DESCENDING)
+    private fun setUpRecyclerView(id:String, newText:String){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
+        val query: Query = if (newText==""){
+                travelRef.document(id)
+                .collection("record")
+                .orderBy("recordDate", Query.Direction.DESCENDING)
+            }else{
+                travelRef.document(id)
+                .collection("record")
+                .orderBy("recordName")
+                .startAt(newText).endAt(newText+"\uf8ff")
+                }
         val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
@@ -175,6 +180,34 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         recycler.adapter = adapterHt
     }
 
+    //Busqueda de items en recyclerView
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menus, menu)
+        val searchItem= menu.findItem(R.id.action_search)
+        if(searchItem!=null){
+            val searchView = searchItem.actionView as SearchView
+            searchView.queryHint = "Buscar..."
+            searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+                override fun onQueryTextChange(newText: String): Boolean {
+                    setUpRecyclerView(idTravelMain, newText)
+                    adapterHt!!.startListening()
+                    //Toast.makeText(context,"desde el fragment: $newText", Toast.LENGTH_LONG).show()
+                    return true
+                }
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    return false
+                }
+            })
+        }
+         super.onCreateOptionsMenu(menu, inflater)
+    }
+    //INSTANCIA DEL MENU
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.item_generar).isVisible= true
+        menu.findItem(R.id.item_fin_viaje).isVisible= true
+    }
+    //FIN INSTANCIA DEL MENU
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {

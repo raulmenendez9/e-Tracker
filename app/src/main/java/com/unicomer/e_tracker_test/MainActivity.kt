@@ -27,20 +27,19 @@ import com.unicomer.e_tracker_test.dialogs.CreateReportDialogFragment
 import com.unicomer.e_tracker_test.dialogs.FinishtTravelDialogFragment
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MainActivity : AppCompatActivity(),
     HomeFragment.OnFragmentInteractionListener,
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener,
-    //AdapterHomeTravel.ShowDataInterface,
     TravelRegistrationFragment.OnFragmentInteractionListener
 {
-
-
-    //override fun sendDetailItem(Obj: Record, id: String) {
-        //Se llama para usar el adapter en el recycler de busqueda, no tiene otra finalidad
-    //}
 
     var listener: onMainActivityInterface? = null
     // Declaring FirebaseAuth components
@@ -86,18 +85,15 @@ class MainActivity : AppCompatActivity(),
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
-
                         idDeViajeQueVieneDeFirestore = querySnapshot!!.documents[0].id
                         editor.putString(FIREBASE_TRAVEL_ID, idDeViajeQueVieneDeFirestore)
                         editor.apply()
-
                         val nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
-                        idTravel = nuevoIdCreadoLocal.toString()
+                        //idTravel = nuevoIdCreadoLocal.toString()
+                        idTravel = querySnapshot.documents[0].id
                         Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
-
                         //y si el viaje ya fue registrado cargara homeTravel
-
                         CallFragment().addFragment(this.supportFragmentManager,
                             HomeTravelFragment.newInstance(querySnapshot.documents[0].id),
                             true, false, false)
@@ -114,28 +110,24 @@ class MainActivity : AppCompatActivity(),
 
     override fun onStart() {
         super.onStart()
-        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onStart")
 
     }
 
     override fun onResume() {
         super.onResume()
-        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onResume")
 
     }
 
     override fun onPause() {
         super.onPause()
-        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onPause")
 
     }
 
     override fun onStop() {
         super.onStop()
-        //adapterHt!!.startListening()
         Log.i(MAIN_ACTIVITY_KEY, "In method onStop")
 
     }
@@ -157,41 +149,11 @@ class MainActivity : AppCompatActivity(),
         onBackPressed()
         return true
     }
-    lateinit var globalmenu: Menu
+    //INSTANCIA PARA VER LAS OPCIONES DEL MENU
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
-        // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.home_menus, menu)
-        // val manager=getSystemService() as SearchManager
-        val searchItem=menu.findItem(R.id.action_search)
-        if (searchItem!=null) {
-
-            val searchView = searchItem.actionView as SearchView
-            searchView.queryHint = "Search"
-            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    // logica para filtrar con el recyclerView
-                    //adaptador.getFilter().filter(newText)
-                    //setUpRecyclerView(idTravel,newText)
-                    //adapterHt!!.startListening()
-                    Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
-                    return true
-                }
-            })
-
-        }   else    {
-
-            Toast.makeText(this,"no reconoce el searchview",Toast.LENGTH_LONG).show()
-        }
-        globalmenu = menu
-        return super.
-            onCreateOptionsMenu(menu)
+        return true
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         dbAuth = FirebaseAuth.getInstance()
@@ -202,8 +164,6 @@ class MainActivity : AppCompatActivity(),
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
-                globalmenu.findItem(R.id.item_generar).setVisible(true)
-                globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(
@@ -213,9 +173,8 @@ class MainActivity : AppCompatActivity(),
             }
 
             R.id.item_terminos -> {
-                // Manejar el evento en item "Terminos y Condiciones"
-                globalmenu.findItem(R.id.item_generar).setVisible(true)
-                globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(
                     this.supportFragmentManager, TerminosFragment(),
                     true, true, true)
@@ -236,16 +195,13 @@ class MainActivity : AppCompatActivity(),
                 val fm = this.supportFragmentManager
                 val dialog = FinishtTravelDialogFragment.newInstance()
                 dialog.show(fm, LOGIN_DIALOG)
-                Toast.makeText(this@MainActivity, "item fin viaje", Toast.LENGTH_SHORT).show()
                 true
             }
 
             R.id.item_cerrarapp -> {
                 // Manejar el evento en item "Cerrar sesion"
-
                 Toast.makeText(this@MainActivity, "La sesion ha finalizado", Toast.LENGTH_SHORT).show()
                 dbAuth?.signOut()
-
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -253,27 +209,9 @@ class MainActivity : AppCompatActivity(),
             }
 
             else -> {
-                Toast.makeText(this@MainActivity, "ningun item", Toast.LENGTH_SHORT).show()
                 super.onOptionsItemSelected(item)
             }
         }
-    }
-
-    private fun setUpRecyclerView(id:String,consulta:String?){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
-        val query: Query = dbCollectionReference!!.document(id)
-            .collection("record")
-            //.whereEqualTo("recordName",consulta)
-            .orderBy("recordName")
-            .startAt(consulta).endAt(consulta+"\uf8ff")
-        val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
-            .setQuery(query, Record::class.java)
-            .build()
-        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
-        //adapterHt = AdapterHomeTravel(options, this) //datos reales del adapter
-        val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
-        recycler!!.setHasFixedSize(true)
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = adapterHt
     }
 
     override fun openRegistrationTravelFragment() {
@@ -285,8 +223,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
-        globalmenu.findItem(R.id.item_generar).setVisible(true) //visibilidad para items del menu
-        globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
+        //globalmenu.findItem(R.id.item_generar).setVisible(true) //visibilidad para items del menu
+        //globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(idTravel), true, true, true)
     }
@@ -298,8 +236,6 @@ class MainActivity : AppCompatActivity(),
     }
     override fun sendToHomeTravel(id: String) {
         showToolBarOnFragmentViewCreate()
-        globalmenu.findItem(R.id.item_generar).setVisible(true)
-        globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
         Log.i("BUSCANDOID","el id en el activity es: $id")
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id), true, true, true)

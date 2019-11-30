@@ -2,10 +2,8 @@ package com.unicomer.e_tracker_test
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -33,8 +31,6 @@ private const val ARG_PARAM2 = "param2"
 class HistorialFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-    private var param1: String? = null
-    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     val db= FirebaseFirestore.getInstance()
     var collecRef: CollectionReference = db.collection("e-Tracker")
@@ -42,10 +38,7 @@ class HistorialFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -58,8 +51,6 @@ class HistorialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         setUpRecyclerView()
     }
 
@@ -93,6 +84,20 @@ class HistorialFragment : Fragment() {
         super.onStop()
         adapter!!.startListening()
     }
+
+   //ADMIN DEL MENU DE LA TOOLBAR
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menus, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.item_generar).isVisible= false
+        menu.findItem(R.id.item_fin_viaje).isVisible= false
+        menu.findItem(R.id.action_search).isVisible=false
+        menu.findItem(R.id.item_historial).isVisible=false
+    }
+    //FIN DEL ADMIN DEL MENU DE LA TOOLBAR
 
 //
 //    override fun onAttach(context: Context) {

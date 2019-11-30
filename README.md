@@ -6,11 +6,13 @@
 
 ### PRIORIDAD
 
-1. **`[CRASH]`** @ AddRecordFragment
+* **`[CRASH]`** @ AddRecordFragment
 
 ### BUGs
 
-1. Aplicacion crashea al abrir AddRecord
+- **`[OTRO]`** 
+- **`[OTRO]`** 
+- **`[OTRO]`** 
 
 ### OTROS CAMBIOS
 

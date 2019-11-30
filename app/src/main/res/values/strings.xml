@@ -89,6 +89,7 @@
         <item>Argelia</item>
         <item>Argentina</item>
         <item>Armenia</item>
+        <item>Aruba</item>
         <item>Australia</item>
         <item>Austria</item>
         <item>Azerbaiyan</item>
@@ -103,9 +104,11 @@
         <item>Bielorrusia</item>
         <item>Birmania Myanmar</item>
         <item>Bolivia</item>
+        <item>Bonaire</item>
         <item>Bosnia y Herzegovina</item>
         <item>Botswana</item>
         <item>Brasil</item>
+        <item>British Virgin Islands</item>
         <item>Brunei</item>
         <item>Bulgaria</item>
         <item>Burkina Faso</item>
@@ -128,6 +131,7 @@
         <item>Costa Rica</item>
         <item>Croacia</item>
         <item>Cuba</item>
+        <item>Curacao</item>
         <item>Dinamarca</item>
         <item>Dominica</item>
         <item>Ecuador</item>
@@ -158,8 +162,11 @@
         <item>Guinea</item>
         <item>Guinea Ecuatorial</item>
         <item>Guinea Bissau</item>
-        <item>Guyana</item>
+        <item>Guyana Francesa</item>
+        <item>Guyana Holandesa</item>
+        <item>Guyana Inglesa</item>
         <item>Haiti</item>
+        <item>Holanda</item>
         <item>Honduras</item>
         <item>Hungria</item>
         <item>India</item>
@@ -169,6 +176,7 @@
         <item>Iraq</item>
         <item>Irlanda</item>
         <item>Islandia</item>
+        <item>Islas Fiyi</item>
         <item>Israel</item>
         <item>Italia</item>
         <item>Jamaica</item>
@@ -255,6 +263,10 @@
         <item>Suecia</item>
         <item>Suiza</item>
         <item>Surinam</item>
+        <item>St Lucia</item>
+        <item>St Vincent and The Grenadines</item>
+        <item>St Kitts and Nevis</item>
+        <item>St. Maarten</item>
         <item>Tailandia</item>
         <item>Taiwan</item>
         <item>Tanzania</item>

@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.unicomer.e_tracker_test.MainActivity.onMainActivityInterface
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.models.Travel
@@ -25,24 +26,14 @@ import com.unicomer.e_tracker_test.models.Record
 
 class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
-    private var testObject: Record? = null
-
-    lateinit var objectRecordDetail: Record
-    lateinit var idRecord: String
-    var idTravel: String="" //debe estar inicializado para poder usarse mas adelante
-
     private var listener: OnFragmentInteractionListener? = null
-
-
     //accediendo a los datos de firebase
-
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
     var travelRef: CollectionReference = db.collection("e-Tracker")
-
+    private lateinit var idTravelMain:String //variable que recibe el id
     //Instancia del Adapter para el RecyclerView
     var adapterHt: AdapterHomeTravel? = null
-
     //Obteniendo referencias del layout
     var originCountry: TextView?=null
     var destinyCountry: TextView?=null
@@ -62,31 +53,12 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         // Mostrar el toolbar
         listener?.showToolBarOnFragmentViewCreate()
-
-
-        travelRef //no mover de aqui
-            .whereEqualTo("emailUser", FirebaseUser!!.email)
-            .whereEqualTo("active", true).addSnapshotListener{ querySnapshot, _ ->
-                idTravel = querySnapshot!!.documents[0].id
-                /*Desde aca se carga el id en la variable idTravel pero se cargará unos milisegundos
-                * despues de que la peticion se complete*/
-            }
-        adapterHt = AdapterHomeTravel(adapterInit(), this) //Se inicializa por primera y unica vez al adapter como uno vacio
-
+        //Se inicializa por primera y unica vez al adapter como uno vacio
+        adapterHt = AdapterHomeTravel(adapterInit(), this)
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
 
@@ -104,28 +76,22 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
         fillForm()//metodo para llenar all de fragment (incluido el recycler)
-
-        floatingActionButton = view?.findViewById(R.id.floatingActionButtonHomeTravel)
+        setUpRecyclerView(idTravelMain)
+        floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
-            CallFragment().addFragment(this.fragmentManager!!, AddRegistroFragment.newInstance(
-                testObject!!,
-                "",
-                "eU4tRDVMD41ypsOU8Pzz",
-                false), true, true, true)
+            fragmentManager?.let {
+                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
+            }
 
         }
 
     }
 
     override fun sendDetailItem(Obj: Record, id:String) {
-        Log.i("DETALLE", "el mensaje es: ${Obj.recordName}")
-        listener!!.sendDetailItemHT(Obj, id, idTravel)
+        listener!!.sendDetailItemHT(Obj, id, idTravelMain)
     }
 
-    override fun openAddRecordFragment(Obj: Record, id:String) {
-        listener!!.openAddRecordFragment(Obj, id, idTravel, false)
-    }
     override fun onStart() {
         super.onStart()
         adapterHt!!.startListening()
@@ -133,19 +99,15 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
     override fun onStop() {
         super.onStop()
-        adapterHt!!.stopListening()
+        adapterHt!!.startListening()
     }
 
-    override fun onPause() {
-        super.onPause()
-        adapterHt!!.stopListening()
-    }
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
     private fun adapterInit():FirestoreRecyclerOptions<Record>{ //inicializador para el adapter del recyclerview
-        val query: Query = travelRef.document("dummyData") //Se le pone "dummyData" por que no nos interesa que jale datos desde firebase ya que para eso necesitamos el id
+        val query: Query = travelRef.document(idTravelMain)
             .collection("record").orderBy("recordDate", Query.Direction.DESCENDING)
         return FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
@@ -168,14 +130,14 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
                 destinyCountry!!.text = data[0].destinyCountry
                 initDate!!.text = data[0].initialDate!!.substring(0, data[0].initialDate!!.length-5)
                 finishDate!!.text = data[0].finishDate!!.substring(0, data[0].initialDate!!.length-5)
-                //balance!!.text = data[0].balance
-                setUpRecyclerView(idTravel) //le mando el id del viaje a este punto la peticion ya a sido existosa
-                adapterHt!!.startListening() //reinicio el listening para poder poblar el recycler
                 //llenar los totales
-                travelRef.document(idTravel)
+                travelRef.document(idTravelMain)
                     .collection("record")
                     .get()
                     .addOnSuccessListener {querySnapShot -> //obtengo todos los registros de gastos del viaje
+                        if (querySnapShot.count()==0){ //obtengo el tamaño de los datos del recycler si es distinto a cero quita la imagen de fondo
+                            backgroundImage!!.visibility = View.VISIBLE
+                        }
                         for (i in 0 until querySnapShot.count()){ //count me da el total de registros
                             when (querySnapShot.documents[i].data!!["recordCategory"].toString()) { //verifco la categoria a la que pertecene cada gasto
                                 "0" -> //si es comida acumula su cantidad en una variable
@@ -188,13 +150,14 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
                                     totalOtherC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
                             }
                         }
-                        totalFood!!.text = "$totalFoodC"
-                        totalCar!!.text = "$totalCarC"
-                        totalHotel!!.text = "$totalhotelC"
-                        totalOther!!.text = "$totalOtherC"
+                        totalFood!!.text = "$$totalFoodC"
+                        totalCar!!.text = "$$totalCarC"
+                        totalHotel!!.text = "$$totalhotelC"
+                        totalOther!!.text = "$$totalOtherC"
                         //muestro el total de gastos disminuidos
                         val balanceReg = data[0].balance!!.toDouble() - totalFoodC - totalCarC -totalhotelC -totalOtherC
-                        balance!!.text = balanceReg.toString()
+                        val roundedBalance = Math.round(balanceReg*100.0)/100.0
+                        balance!!.text = roundedBalance.toString()
                     }
             }
 
@@ -205,11 +168,6 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
             .setQuery(query, Record::class.java)
             .build()
-        query.get().addOnSuccessListener {doc->
-            if (doc.count()!=0){ //obtengo el tamaño de los datos del recycler si es distinto a cero quita la imagen de fondo
-                backgroundImage!!.visibility = View.GONE
-            }
-        }
         adapterHt = AdapterHomeTravel(options, this) //datos reales del adapter
         val recycler = view?.findViewById<RecyclerView>(R.id.recyclerRecord)
         recycler!!.setHasFixedSize(true)
@@ -217,19 +175,22 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         recycler.adapter = adapterHt
     }
 
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
     override fun onDetach() {
         super.onDetach()
         listener = null
     }
 
-    private fun floatingActionButtonHomeTravel(goToHomeTravelFragment: HomeTravelFragment){
-        //TODO Needs to call AddRecordFragment
-    }
-
 
     interface OnFragmentInteractionListener {
-        fun openAddRecordFragment(obj: Record, id: String, idTravel: String, recordExists: Boolean)
+        fun openAddRecordFragment()
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
@@ -237,14 +198,11 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
     }
 
     companion object {
-
         @JvmStatic
-        fun newInstance(obj: Record, idRecord: String, idTravel: String) : HomeTravelFragment {
+        fun newInstance(idTravel: String): HomeTravelFragment{
             val fragment = HomeTravelFragment()
-            fragment.objectRecordDetail = obj
-            fragment.idRecord = idRecord
-            fragment.idTravel = idTravel
+            fragment.idTravelMain = idTravel
             return fragment
         }
-    }
+            }
 }

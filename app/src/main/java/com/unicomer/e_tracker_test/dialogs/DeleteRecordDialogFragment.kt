@@ -64,14 +64,14 @@ class DeleteRecordDialog : DialogFragment() {
                 .delete()
                 .addOnSuccessListener {
                     //FRAGMENT MANAGER
-                    val fragmentHT = HomeTravelFragment()
+                    val fragmentHT = HomeTravelFragment.newInstance(idTravel)
                     val transaction = fragmentManager!!.beginTransaction()
                     transaction.replace(R.id.main_fragment_container, fragmentHT)
                     transaction.addToBackStack(null)
                     transaction.commit()
                     dialog!!.cancel()
                 }
-                .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
+                .addOnFailureListener { e -> Log.w("ERROR_DOC_DELETE", "Error deleting document", e) }
         }
     }
 

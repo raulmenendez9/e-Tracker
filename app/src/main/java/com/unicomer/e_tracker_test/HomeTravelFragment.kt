@@ -156,7 +156,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
                         totalOther!!.text = "$$totalOtherC"
                         //muestro el total de gastos disminuidos
                         val balanceReg = data[0].balance!!.toDouble() - totalFoodC - totalCarC -totalhotelC -totalOtherC
-                        var roundedBalance = Math.round(balanceReg*100.0)/100.0
+                        val roundedBalance = Math.round(balanceReg*100.0)/100.0
                         balance!!.text = roundedBalance.toString()
                     }
             }

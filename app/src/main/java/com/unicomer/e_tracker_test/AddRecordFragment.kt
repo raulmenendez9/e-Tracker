@@ -4,19 +4,26 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.*
+import android.content.ContentValues
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -24,23 +31,23 @@ import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.unicomer.e_tracker_test.travel_registration.DatePickerFragment
-import java.text.SimpleDateFormat
-import java.util.*
-import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.checkSelfPermission
-import androidx.core.net.toUri
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.unicomer.e_tracker_test.constants.*
+import com.unicomer.e_tracker_test.constants.ADD_RECORD_FRAGMENT
+import com.unicomer.e_tracker_test.constants.APP_NAME
+import com.unicomer.e_tracker_test.constants.FIREBASE_TRAVEL_ID
 import com.unicomer.e_tracker_test.models.Record
+import com.unicomer.e_tracker_test.travel_registration.DatePickerFragment
+import kotlinx.android.synthetic.main.fragment_home_travel.*
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.log
 
 
-class AddRegistroFragment : Fragment() {
+class AddRecordFragment : Fragment() {
 
 
 
@@ -87,6 +94,7 @@ class AddRegistroFragment : Fragment() {
     private var mCurrentPhotoPath: String? = null
     private var photoUri: Uri? = null
     private var imageDir: String? = null
+
     // Boton Agregar Registro
 
     private var buttonAddRecord: Button? = null
@@ -181,12 +189,12 @@ class AddRegistroFragment : Fragment() {
             }
         }
 
-        getInitialData(recordExists!!)
-
         buttonAddRecord = view?.findViewById(R.id.btn_agregar_registro)
-//        buttonAddRecord?.setOnClickListener {
-//            createRecordInFirestore()
-//        }
+        buttonAddRecord?.setOnClickListener {
+
+        }
+
+
 
 
         //Manipular el FloatinActionButton
@@ -205,6 +213,12 @@ class AddRegistroFragment : Fragment() {
 
         listener?.hideToolBarOnFragmentViewDissapears()
 
+
+        // Aqui se inicializa este Fragment
+        // Aqui se comprueba si el record ya existe y debe ser inicializado
+        // Si no existe entonces se puede crear desde cero
+        getInitialData(recordExists!!)
+
         datePicker = view.findViewById(R.id.textview_record_date_selection)
 
         // DatePicker
@@ -214,6 +228,7 @@ class AddRegistroFragment : Fragment() {
         datePicker!!.setOnClickListener{
             openDateRangePicker()
         }
+
 
     }
 
@@ -239,7 +254,9 @@ class AddRegistroFragment : Fragment() {
 
     private fun getInitialData(recordExists: Boolean){
 
+        // Variable de Estado que viene desde el fragment anterior
         var recordExists = recordExists
+
 
         // Init UI
         editTextName = view?.findViewById(R.id.et_titulo_de_registro)
@@ -250,30 +267,52 @@ class AddRegistroFragment : Fragment() {
         if (recordExists) {
             // Si el record SI EXISTE y es TRUE entonces se ejecuta este codigo
 
+
+            // Inicializar el UI con la informacion que trae el objeto
+
             editTextName?.setText(objectRecordDetail.recordName)
             fecha?.setText(objectRecordDetail.recordDate)
             monto?.setText(objectRecordDetail.recordMount)
             radioGroup!!.check(objectRecordDetail.recordCategory.toInt())
             editTextDescripcion?.setText(objectRecordDetail.recordDescription)
 
-            // Photo
-            var imageUri = imageDir.toUri()
 
+            // Aqui se inicializa la variable global imageDir para que pueda ser comparada
+
+            var initialImageDirFromFirebase = objectRecordDetail.recordPhoto
+            imageDir = objectRecordDetail.recordPhoto
+
+            Log.i(ADD_RECORD_FRAGMENT, "este es el imageDir $imageDir despues de inicializar")
+
+            // Cambiar texto a los botones
             buttonTakePhoto!!.setText("MODIFICAR FOTO")
             buttonAddRecord!!.setText("ACTUALIZAR")
 
-            // Ahora setear datos nuevamente con la nueva informacion ingresada.
+
+            // Hora de actualizar los datos
+            // Si el usuario cambia la informacion entonces se comprueba y se reemplaza
+            // la nueva informacion en una peticion a Firebase
 
             buttonTakePhoto!!.setOnClickListener {
 
+                // Pedir los permisos para abrir la camara
+
+                if (permissionValidation()) {
+
+                    buttonTakePhoto!!.isEnabled
+                    dialogPhoto()
+
+                } else {
+                    buttonTakePhoto!!.isEnabled
+                }
             }
+
+            // A partir de aqui el URI de la foto podria haber cambiado y es necesario comprobar
 
             buttonAddRecord!!.setOnClickListener {
 
-                editTextName = view?.findViewById(R.id.et_titulo_de_registro)
-                fecha = view?.findViewById(R.id.textview_record_date_selection)
-                monto = view?.findViewById(R.id.et_Monto)
-                editTextDescripcion = view?.findViewById(R.id.editText_record_description)
+                Log.i(ADD_RECORD_FRAGMENT, "imageDir es $imageDir y initialImageDir es $initialImageDirFromFirebase")
+
                 var radioId = radioGroup?.checkedRadioButtonId.toString()
 
                 // Comprobar nuevamente que los campos no esten vacios o solamente sean espacios
@@ -285,6 +324,44 @@ class AddRegistroFragment : Fragment() {
                     or radioId.equals("-1")) {
                     Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
 
+                } else if (imageDir.equals(initialImageDirFromFirebase)) {
+
+                    val firebaseDB = FirebaseFirestore.getInstance()
+
+                    // Elementos de UI
+
+                    val recordName: String? = editTextName?.text.toString()
+                    val recordDate: String? = fecha?.text.toString()
+                    val recordAmount: String? = monto?.text.toString()
+                    val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
+                    //val recordPhoto =   taskSnapshot.result
+                    val recordDescription: String = editTextDescripcion?.text.toString()
+                    val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
+                    val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
+
+                    firebaseDB.collection("e-Tracker").document(travelId).collection("record").document(recordId)
+                        .update(
+                            "recordName", recordName,
+                            "recordDate", recordDate,
+                            "recordMount", recordAmount,
+                            "recordCategory", recordCategory,
+                            //"recordPhoto", "$recordPhoto",
+                            "recordDescription", recordDescription,
+                            "recordDateRegister", recordDateRegistered,
+                            "recordDateLastUpdate", recordDateLastUpdate
+                        )
+                        .addOnFailureListener {
+                            Toast.makeText(this.context, "El record no pudo ser actualizado.", Toast.LENGTH_SHORT).show()
+
+                        }
+                        .addOnSuccessListener {
+                            Toast.makeText(this.context, "El record ha sido actualizado.", Toast.LENGTH_SHORT).show()
+
+                            Handler().postDelayed({
+                                activity!!.supportFragmentManager.popBackStack()
+                            }, 3000)
+                        }
+
                 } else {
 
                     // Si todos los campos estan correctos, actualizar la informacion en Firebase
@@ -292,12 +369,11 @@ class AddRegistroFragment : Fragment() {
                     // INICIALIZANDO INSTANCIA DE FIREBASE
 
                     val firebaseDB = FirebaseFirestore.getInstance()
-                    var image = Uri.parse(imageDir)
+                    val image = Uri.parse(imageDir)
                     imageRef.putFile(image).addOnSuccessListener {
                         imageRef.downloadUrl.addOnCompleteListener{taskSnapshot ->
 
-                            // SHAREDPREFERENCES
-                            var viajeID = travelId
+                            Log.i(ADD_RECORD_FRAGMENT, "SI LLEGO HASTA AQUI")
 
                             // Elementos de UI
 
@@ -310,20 +386,10 @@ class AddRegistroFragment : Fragment() {
                             val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
                             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
 
-                            // Envio de Datos usando el Modelo de Datos
+                            // Envio de Datos
 
-                            val addNewRecord = Record(
-                                recordName!!,
-                                recordDate!!,
-                                recordAmount!!,
-                                recordCategory!!,
-                                "$recordPhoto",
-                                recordDescription,
-                                recordDateRegistered!!,
-                                recordDateLastUpdate!!
-                            )
 
-                            firebaseDB.collection("e-Tracker").document(viajeID).collection("record").document(travelId)
+                            firebaseDB.collection("e-Tracker").document(travelId).collection("record").document(recordId)
                                 .update(
                                     "recordName", recordName,
                                     "recordDate", recordDate,
@@ -585,10 +651,10 @@ class AddRegistroFragment : Fragment() {
                         startActivityForResult(intent,SELECT_IMAGE)
                     }
                     1->{
-                        val camaraIntent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        val camaraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                         if (camaraIntent.resolveActivity(activity!!.packageManager) != null){
                             try {
-                                photoFile=createImageFile()
+                                photoFile = createImageFile()
 
                             }catch (ex:IOException){ }
                         }
@@ -596,11 +662,12 @@ class AddRegistroFragment : Fragment() {
                             val values = ContentValues()
                             values.put(MediaStore.Images.Media.TITLE,"Ticket")
                             values.put(MediaStore.Images.Media.DESCRIPTION,"Photo taken on ${System.currentTimeMillis()}")
+
                             photoUri = activity!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
                             camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
                             startActivityForResult(camaraIntent, TAKE_PICTURE)
                             imageDir = photoUri.toString()
-                            Log.i("photo", "uri image = $photoUri")
+                            Log.i(ADD_RECORD_FRAGMENT, "uri image = $photoUri.")
                         }
                     }
                 }
@@ -651,9 +718,9 @@ class AddRegistroFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(objectRecordDetail: Record, recordId: String, travelId: String, recordExists: Boolean): AddRegistroFragment{
+        fun newInstance(objectRecordDetail: Record, recordId: String, travelId: String, recordExists: Boolean): AddRecordFragment{
             // Instanciar este fragment y recibir un objeto que contenga los datos de un registro anterior
-            val fragment = AddRegistroFragment()
+            val fragment = AddRecordFragment()
             fragment.objectRecordDetail = objectRecordDetail
             fragment.recordId = recordId
             fragment.travelId = travelId

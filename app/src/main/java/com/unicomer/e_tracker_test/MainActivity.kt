@@ -30,7 +30,7 @@ import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragmen
 
 class MainActivity : AppCompatActivity(),
     HomeFragment.OnFragmentInteractionListener,
-    AddRegistroFragment.OnFragmentInteractionListener,
+    AddRecordFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener,
     //AdapterHomeTravel.ShowDataInterface,
@@ -293,7 +293,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun openAddRecordFragment(){
         CallFragment().addFragment(this.supportFragmentManager,
-            AddRegistroFragment(), true, true, true)
+            AddRecordFragment(), true, true, true)
 
     }
     override fun sendToHomeTravel(id: String) {

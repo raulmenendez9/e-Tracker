@@ -6,7 +6,7 @@
     android:background="#F5F7FB"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRegistroFragment">
+    tools:context=".AddRecordFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

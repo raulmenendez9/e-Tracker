@@ -3,13 +3,11 @@ package com.unicomer.e_tracker_test
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -17,7 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.unicomer.e_tracker_test.MainActivity.onMainActivityInterface
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.models.Travel
@@ -81,7 +78,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         floatingActionButton?.setOnClickListener {
 
             fragmentManager?.let {
-                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
+                CallFragment().addFragment(it, AddRecordFragment(), true, true, true)
             }
 
         }
@@ -90,6 +87,10 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
     override fun sendDetailItem(Obj: Record, id:String) {
         listener!!.sendDetailItemHT(Obj, id, idTravelMain)
+    }
+
+    override fun openAddRecordFragment(Obj: Record, id: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onStart() {

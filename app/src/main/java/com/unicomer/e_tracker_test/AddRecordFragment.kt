@@ -326,6 +326,10 @@ class AddRecordFragment : Fragment() {
 
                 } else if (imageDir.equals(initialImageDirFromFirebase)) {
 
+
+                    // Si el URI de la foto no se cambia, es decir, el usuario no cambia la foto
+                    // se ejecuta este codigo
+
                     val firebaseDB = FirebaseFirestore.getInstance()
 
                     // Elementos de UI
@@ -359,12 +363,13 @@ class AddRecordFragment : Fragment() {
 
                             Handler().postDelayed({
                                 activity!!.supportFragmentManager.popBackStack()
-                            }, 3000)
+                            }, 1000)
                         }
 
                 } else {
 
                     // Si todos los campos estan correctos, actualizar la informacion en Firebase
+                    // Si el URI de la foto ha sido cambiada entonces se ejecuta este codigo
 
                     // INICIALIZANDO INSTANCIA DE FIREBASE
 
@@ -405,8 +410,11 @@ class AddRecordFragment : Fragment() {
                                     Log.i(ADD_RECORD_FRAGMENT, "Error $it")
                                 }
                                 .addOnSuccessListener {
-                                    Toast.makeText(this.context, "Exito", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this.context, "El registro ha sido actualizado", Toast.LENGTH_SHORT).show()
                                     Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID")
+                                    Handler().postDelayed({
+                                        activity!!.supportFragmentManager.popBackStack()
+                                    }, 1000)
                                 }
                         }
                     }
@@ -418,6 +426,76 @@ class AddRecordFragment : Fragment() {
 
         } else {
             // Si el record NO EXISTE y es FALSE entonces se ejecuta este codigo
+
+            // Inicializar UI
+            editTextName = view?.findViewById(R.id.et_titulo_de_registro)
+            fecha = view?.findViewById(R.id.textview_record_date_selection)
+            monto = view?.findViewById(R.id.et_Monto)
+            editTextDescripcion = view?.findViewById(R.id.editText_record_description)
+            var radioId = radioGroup?.checkedRadioButtonId.toString()
+
+
+            // Validar campos en formulario
+
+            if (editTextName?.text!!.isBlank()
+                or fecha?.text!!.isBlank()
+                or monto?.text!!.isBlank()
+                or editTextDescripcion?.text!!.isBlank()
+                or radioId.equals("-1")
+                or imageDir.equals(null)) {
+                Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+
+                Log.i(ADD_RECORD_FRAGMENT, "Radio category is ${radioGroup?.checkedRadioButtonId.toString()}")
+
+
+            } else {
+
+                val firestoreDB = FirebaseFirestore.getInstance()
+                var image = Uri.parse(imageDir)
+
+                imageRef.putFile(image).addOnSuccessListener {
+                    imageRef.downloadUrl.addOnCompleteListener {taskSnapshot ->
+
+                        // Elementos de UI
+
+                        val recordName: String? = editTextName?.text.toString()
+                        val recordDate: String? = fecha?.text.toString()
+                        val recordAmount: String? = monto?.text.toString()
+                        val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
+                        val recordPhoto =  taskSnapshot.result
+                        val recordDescription: String = editTextDescripcion?.text.toString()
+                        val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
+                        val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
+
+                        // Envio de datos usando el data class
+
+                        val addNewRecord = Record(
+                            recordName!!,
+                            recordDate!!,
+                            recordAmount!!,
+                            recordCategory!!,
+                            "$recordPhoto",
+                            recordDescription,
+                            recordDateRegistered!!,
+                            recordDateLastUpdate!!
+                        )
+
+                        firestoreDB.collection("e-Tracker").document(travelId).collection("record")
+                            .add(addNewRecord)
+                            .addOnFailureListener {
+                                Toast.makeText(this.context, "La creación del registro ha fallado", Toast.LENGTH_SHORT).show()
+                                Log.e(ADD_RECORD_FRAGMENT, "Error en $it")
+                            }
+                            .addOnSuccessListener {
+                                Toast.makeText(this.context, "Registro creado exitosamente.", Toast.LENGTH_SHORT).show()
+                            }
+
+                    }
+                }
+
+            }
+
+
         }
 
     }

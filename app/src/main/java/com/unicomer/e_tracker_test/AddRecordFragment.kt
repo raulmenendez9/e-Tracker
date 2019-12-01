@@ -31,20 +31,18 @@ import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.unicomer.e_tracker_test.constants.ADD_RECORD_FRAGMENT
-import com.unicomer.e_tracker_test.constants.APP_NAME
 import com.unicomer.e_tracker_test.constants.FIREBASE_TRAVEL_ID
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.DatePickerFragment
-import kotlinx.android.synthetic.main.fragment_home_travel.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
 
 
 class AddRecordFragment : Fragment() {
@@ -338,10 +336,8 @@ class AddRecordFragment : Fragment() {
                     val recordDate: String? = fecha?.text.toString()
                     val recordAmount: String? = monto?.text.toString()
                     val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-                    //val recordPhoto =   taskSnapshot.result
                     val recordDescription: String = editTextDescripcion?.text.toString()
-                    val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
-                    val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
+                    val recordDateLastUpdate: String? = Timestamp.now().toDate().toString()
 
                     firebaseDB.collection("e-Tracker").document(travelId).collection("record").document(recordId)
                         .update(
@@ -349,9 +345,7 @@ class AddRecordFragment : Fragment() {
                             "recordDate", recordDate,
                             "recordMount", recordAmount,
                             "recordCategory", recordCategory,
-                            //"recordPhoto", "$recordPhoto",
                             "recordDescription", recordDescription,
-                            "recordDateRegister", recordDateRegistered,
                             "recordDateLastUpdate", recordDateLastUpdate
                         )
                         .addOnFailureListener {
@@ -388,8 +382,7 @@ class AddRecordFragment : Fragment() {
                             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
                             val recordPhoto =   taskSnapshot.result
                             val recordDescription: String = editTextDescripcion?.text.toString()
-                            val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
-                            val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
+                            val recordDateLastUpdate: String? = Timestamp.now().toDate().toString()
 
                             // Envio de Datos
 
@@ -402,7 +395,6 @@ class AddRecordFragment : Fragment() {
                                     "recordCategory", recordCategory,
                                     "recordPhoto", "$recordPhoto",
                                     "recordDescription", recordDescription,
-                                    "recordDateRegister", recordDateRegistered,
                                     "recordDateLastUpdate", recordDateLastUpdate
                                 )
                                 .addOnFailureListener {
@@ -464,7 +456,7 @@ class AddRecordFragment : Fragment() {
                         val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
                         val recordPhoto =  taskSnapshot.result
                         val recordDescription: String = editTextDescripcion?.text.toString()
-                        val recordDateRegistered: String? = "" // Falta obtener fecha actual al momento de crear el record
+                        val recordDateRegistered: String? = Timestamp.now().toDate().toString()
                         val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
 
                         // Envio de datos usando el data class

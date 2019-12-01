@@ -8,29 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.dialogs.CreateReportDialogFragment
-import com.unicomer.e_tracker_test.dialogs.FinishtTravelDialogFragment
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
 
 
 class MainActivity : AppCompatActivity(),
@@ -38,8 +27,10 @@ class MainActivity : AppCompatActivity(),
     AddRegistroFragment.OnFragmentInteractionListener,
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener,
-    TravelRegistrationFragment.OnFragmentInteractionListener
+    TravelRegistrationFragment.OnFragmentInteractionListener,
+    CreateReportDialogFragment.OnFragmentInteractionListener
 {
+
 
     var listener: onMainActivityInterface? = null
     // Declaring FirebaseAuth components
@@ -173,6 +164,7 @@ class MainActivity : AppCompatActivity(),
             }
 
             R.id.item_terminos -> {
+                showToolBarOnFragmentViewCreate()
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(
@@ -184,7 +176,7 @@ class MainActivity : AppCompatActivity(),
             R.id.item_generar -> {
                 // Manejar el evento en item "Generar Reporte"
                 val fm = this.supportFragmentManager
-                val dialog = CreateReportDialogFragment.newInstance(idTravel)
+                val dialog = CreateReportDialogFragment.newInstance(idTravel, "0")
                 dialog.show(fm, LOGIN_DIALOG)
 
                 true
@@ -193,7 +185,7 @@ class MainActivity : AppCompatActivity(),
             R.id.item_fin_viaje -> {
                 // Manejar el evento en item "Finalizar Viaje"
                 val fm = this.supportFragmentManager
-                val dialog = FinishtTravelDialogFragment.newInstance()
+                val dialog = CreateReportDialogFragment.newInstance(idTravel, "1")
                 dialog.show(fm, LOGIN_DIALOG)
                 true
             }
@@ -239,6 +231,10 @@ class MainActivity : AppCompatActivity(),
         Log.i("BUSCANDOID","el id en el activity es: $id")
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id), true, true, true)
+    }
+    override fun finishTravelListener() { //finaliza el viaje desde el dialog
+        CallFragment().addFragment(this.supportFragmentManager,
+            HomeFragment(), true, false,false)
     }
 
     override fun showToolBarOnFragmentViewCreate() {

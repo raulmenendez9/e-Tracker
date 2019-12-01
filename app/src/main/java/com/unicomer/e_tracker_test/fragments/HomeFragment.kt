@@ -1,15 +1,16 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.unicomer.e_tracker_test.R
 
 
-class TerminosFragment : Fragment() {
+class HomeFragment : Fragment() {
+
 
     private var listener: OnFragmentInteractionListener? = null
 
@@ -19,19 +20,27 @@ class TerminosFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
+        var view=inflater.inflate(R.layout.fragment_home, container, false)
 
-        listener?.hideToolBarOnFragmentViewDissapears()
+        val floatingButtonHomeFragment: View = view.findViewById(R.id.floatingActionButton_addviaje)
 
-        return inflater.inflate(R.layout.fragment_terminos, container, false)
+        listener?.showToolBarOnFragmentViewCreate()
+
+        floatingButtonHomeFragment.setOnClickListener {
+            listener?.openRegistrationTravelFragment()
+        }
+
+        return view
     }
 
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
+
 
     override fun onAttach(context: Context) {
+
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
             listener = context
@@ -45,15 +54,22 @@ class TerminosFragment : Fragment() {
         listener = null
     }
 
+
     interface OnFragmentInteractionListener {
-        fun onFragmentInteraction(uri: Uri)
+
+        fun openRegistrationTravelFragment()
         fun showToolBarOnFragmentViewCreate()
         fun hideToolBarOnFragmentViewDissapears()
+
     }
+
+
 
     companion object {
 
+
         @JvmStatic
-        fun newInstance() = TerminosFragment()
+        fun newInstance() = HomeFragment()
+            }
     }
-}
+

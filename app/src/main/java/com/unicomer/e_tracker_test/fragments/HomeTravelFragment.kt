@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.content.Context
 import android.net.Uri
@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.models.Travel
@@ -78,7 +79,8 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         floatingActionButton?.setOnClickListener {
 
             fragmentManager?.let {
-                CallFragment().addFragment(it, AddRecordFragment(), true, true, true)
+                CallFragment().addFragment(it,
+                    AddRecordFragment(), true, true, true)
             }
 
         }
@@ -200,8 +202,9 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
     companion object {
         @JvmStatic
-        fun newInstance(idTravel: String): HomeTravelFragment{
-            val fragment = HomeTravelFragment()
+        fun newInstance(idTravel: String): HomeTravelFragment {
+            val fragment =
+                HomeTravelFragment()
             fragment.idTravelMain = idTravel
             return fragment
         }

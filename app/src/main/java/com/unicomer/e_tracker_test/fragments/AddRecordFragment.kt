@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
@@ -35,6 +35,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.constants.ADD_RECORD_FRAGMENT
 import com.unicomer.e_tracker_test.constants.FIREBASE_TRAVEL_ID
 import com.unicomer.e_tracker_test.models.Record
@@ -134,10 +135,6 @@ class AddRecordFragment : Fragment() {
 
         Log.i(ADD_RECORD_FRAGMENT, "El record es ${recordExists.toString()}")
 
-        // Ocultar el Toolbar al inicio
-        listener?.hideToolBarOnFragmentViewDissapears()
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -208,8 +205,6 @@ class AddRecordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.i(ADD_RECORD_FRAGMENT, "In method onViewCreated")
-
-        listener?.hideToolBarOnFragmentViewDissapears()
 
 
         // Aqui se inicializa este Fragment
@@ -630,7 +625,9 @@ class AddRecordFragment : Fragment() {
     private fun dialogPhoto(){
         try {
             var photoFile: File? = null
-            val items = arrayOf<CharSequence>(getString(R.string.gallery), getString(R.string.camera))
+            val items = arrayOf<CharSequence>(getString(R.string.gallery), getString(
+                R.string.camera
+            ))
             val builder :AlertDialog.Builder = AlertDialog.Builder(context)
             builder.setTitle(getString(R.string.select_image))
             builder.setItems(items) { _: DialogInterface, i: Int ->
@@ -701,16 +698,14 @@ class AddRecordFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
-        fun showToolBarOnFragmentViewCreate()
-        fun hideToolBarOnFragmentViewDissapears()
-
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(objectRecordDetail: Record, recordId: String, travelId: String, recordExists: Boolean): AddRecordFragment{
+        fun newInstance(objectRecordDetail: Record, recordId: String, travelId: String, recordExists: Boolean): AddRecordFragment {
             // Instanciar este fragment y recibir un objeto que contenga los datos de un registro anterior
-            val fragment = AddRecordFragment()
+            val fragment =
+                AddRecordFragment()
             fragment.objectRecordDetail = objectRecordDetail
             fragment.recordId = recordId
             fragment.travelId = travelId

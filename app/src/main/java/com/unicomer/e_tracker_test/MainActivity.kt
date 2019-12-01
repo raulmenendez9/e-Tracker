@@ -25,6 +25,7 @@ import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.*
 import com.unicomer.e_tracker_test.dialogs.CreateReportDialogFragment
 import com.unicomer.e_tracker_test.dialogs.FinishtTravelDialogFragment
+import com.unicomer.e_tracker_test.fragments.*
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
@@ -82,7 +83,8 @@ class MainActivity : AppCompatActivity(),
                     Log.i("ERROR2","el snapshot tiene: ${querySnapshot.documents}")
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
                         //por tanto si devuelve vacio cargará homeFragment
-                        CallFragment().addFragment(this.supportFragmentManager, HomeFragment(), true, false, true)
+                        CallFragment().addFragment(this.supportFragmentManager,
+                            HomeFragment(), true, false, true)
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
@@ -107,7 +109,8 @@ class MainActivity : AppCompatActivity(),
                 }.addOnFailureListener {
                     Log.i("ERROR","datos: $it")
                     //y si el viaje ya fue registrado cargara homeTravel
-                    CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, false, false)
+                    CallFragment().addFragment(this.supportFragmentManager,
+                        HomeTravelFragment(), true, false, false)
                     splashScreen.visibility = View.GONE
                 }
     }
@@ -207,7 +210,8 @@ class MainActivity : AppCompatActivity(),
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(
-                    this.supportFragmentManager, HistorialFragment(),
+                    this.supportFragmentManager,
+                    HistorialFragment(),
                     true, true, true)
                 true
             }
@@ -217,7 +221,8 @@ class MainActivity : AppCompatActivity(),
                 globalmenu.findItem(R.id.item_generar).setVisible(true)
                 globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
                 CallFragment().addFragment(
-                    this.supportFragmentManager, TerminosFragment(),
+                    this.supportFragmentManager,
+                    TerminosFragment(),
                     true, true, true)
                 true
             }

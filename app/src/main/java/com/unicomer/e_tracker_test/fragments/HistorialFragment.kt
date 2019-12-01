@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.adapters.AdapterHistory
 

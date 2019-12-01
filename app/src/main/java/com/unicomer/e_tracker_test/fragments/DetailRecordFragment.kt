@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.graphics.Color
 import android.net.Uri
@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
 import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
@@ -55,7 +56,7 @@ class DetailRecordFragment : Fragment() {
         descriptionDetail = view.findViewById(R.id.recordDescriptionDetail)
         priceDetail = view.findViewById(R.id.recordPriceDetail)
         titleCatDetail = view.findViewById(R.id.categoyTittleDetail)
-        imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
+        imageCatDetail = view.findViewById(R.id.imageCategoryDetail)
         photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
         btnEditRecord = view.findViewById(R.id.editButtonDetail)
@@ -140,9 +141,10 @@ class DetailRecordFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(obj:Record, id:String, idTravel:String) : DetailRecordFragment{
+        fun newInstance(obj:Record, id:String, idTravel:String) : DetailRecordFragment {
             //se instancia el fragment con el objeto de tipo Record que viene del adapter
-            val fragment = DetailRecordFragment()
+            val fragment =
+                DetailRecordFragment()
             fragment.objDetailData = obj
             fragment.idRecord = id
             fragment.idTravel = idTravel

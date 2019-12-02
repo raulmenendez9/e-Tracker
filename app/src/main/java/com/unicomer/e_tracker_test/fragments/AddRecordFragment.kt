@@ -687,7 +687,6 @@ class AddRecordFragment : Fragment() {
         fun onFragmentInteraction(uri: Uri)
 
         fun createNewRecord()
-        fun updateExistingRecord()
 
     }
 

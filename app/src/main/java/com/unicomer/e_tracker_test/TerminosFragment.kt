@@ -3,10 +3,8 @@ package com.unicomer.e_tracker_test
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 
 
 class TerminosFragment : Fragment() {
@@ -15,7 +13,7 @@ class TerminosFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -44,6 +42,20 @@ class TerminosFragment : Fragment() {
         super.onDetach()
         listener = null
     }
+
+    //ADMIN DEL MENU DE LA TOOLBAR
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menus, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.item_generar).isVisible= false
+        menu.findItem(R.id.item_fin_viaje).isVisible= false
+        menu.findItem(R.id.action_search).isVisible=false
+        menu.findItem(R.id.item_terminos).isVisible=false
+    }
+    //FIN DEL ADMIN DEL MENU DE LA TOOLBAR
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)

@@ -65,7 +65,6 @@ class DetailRecordFragment : Fragment() {
         fillDetail()
         val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
         container.startAnimation(animation)
-        Log.i("DETALLES", "el valor de isActive es: $isActive")
         if(isActive!="0"){
             btnDelete!!.visibility = View.GONE
             btnEdit!!.visibility = View.GONE

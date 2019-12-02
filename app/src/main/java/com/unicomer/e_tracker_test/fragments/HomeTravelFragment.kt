@@ -78,7 +78,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
-            CallFragment().addFragment(this.fragmentManager!!, AddRecordFragment.createRecord(false), true, true, true)
+            listener?.createNewRecord()
 
         }
 
@@ -190,7 +190,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
 
 
     interface OnFragmentInteractionListener {
-        fun openAddRecordFragment()
+        fun createNewRecord()
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()

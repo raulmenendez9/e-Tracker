@@ -30,39 +30,58 @@ import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
 class MainActivity : AppCompatActivity(),
-    HomeFragment.OnFragmentInteractionListener,
-    AddRecordFragment.OnFragmentInteractionListener,
-    TerminosFragment.OnFragmentInteractionListener,
-    HomeTravelFragment.OnFragmentInteractionListener,
-    //AdapterHomeTravel.ShowDataInterface,
-    TravelRegistrationFragment.OnFragmentInteractionListener
+        HomeFragment.OnFragmentInteractionListener,
+        AddRecordFragment.OnFragmentInteractionListener,
+        TerminosFragment.OnFragmentInteractionListener,
+        HomeTravelFragment.OnFragmentInteractionListener,
+        TravelRegistrationFragment.OnFragmentInteractionListener,
+        DetailRecordFragment.OnFragmentInteractionListener
 {
 
 
-    //override fun sendDetailItem(Obj: Record, id: String) {
-        //Se llama para usar el adapter en el recycler de busqueda, no tiene otra finalidad
-    //}
-
     var listener: onMainActivityInterface? = null
+
     // Declaring FirebaseAuth components
+
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
+
     // Mandar a llamar al SharedPreferences
     var sharedPreferences: SharedPreferences? = null
+
     // End of Declaring FirebaseAuthLocalClass components
+
+
+    // Variables para HomeTravelFragment
+
     var adapterHt: AdapterHomeTravel? = null
-    var idTravel:String=""
+    var idTravel:String = ""
+
+
+    // Variables para AddRecord
+    var objectRecordDetail: Record? = null
+    var recordId: String? = null
+    var recordExists: Boolean? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         Log.i(MAIN_ACTIVITY_KEY, "In method onCreate")
+
         // Obtener currentUser de Firebase
+
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
+
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+
         var idDeViajeQueVieneDeFirestore: String?
+
         //inicializar la toolbar
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -163,10 +182,9 @@ class MainActivity : AppCompatActivity(),
     lateinit var globalmenu: Menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-        // Toast.makeText(this,"soy la creacion del menu",Toast.LENGTH_LONG).show()
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.home_menus, menu)
-        // val manager=getSystemService() as SearchManager
+
         val searchItem=menu.findItem(R.id.action_search)
         if (searchItem!=null) {
 
@@ -178,12 +196,14 @@ class MainActivity : AppCompatActivity(),
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+
                     // logica para filtrar con el recyclerView
                     //adaptador.getFilter().filter(newText)
                     //setUpRecyclerView(idTravel,newText)
                     //adapterHt!!.startListening()
                     Toast.makeText(this@MainActivity,"$newText",Toast.LENGTH_LONG).show()
                     return true
+
                 }
             })
 
@@ -264,23 +284,6 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun setUpRecyclerView(id:String,consulta:String?){ //metodo para llenar el recyclerview desde firebase id=el id del Record a llenar
-        val query: Query = dbCollectionReference!!.document(id)
-            .collection("record")
-            //.whereEqualTo("recordName",consulta)
-            .orderBy("recordName")
-            .startAt(consulta).endAt(consulta+"\uf8ff")
-        val options: FirestoreRecyclerOptions<Record> = FirestoreRecyclerOptions.Builder<Record>()
-            .setQuery(query, Record::class.java)
-            .build()
-        //adapterHt = AdapterHomeTravel(options) //datos reales del adapter
-        //adapterHt = AdapterHomeTravel(options, this) //datos reales del adapter
-        val recycler = findViewById<RecyclerView>(R.id.recyclerRecord)
-        recycler!!.setHasFixedSize(true)
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = adapterHt
-    }
-
     override fun openRegistrationTravelFragment() {
         hideToolBarOnFragmentViewDissapears()
         CallFragment().addFragment(this.supportFragmentManager,
@@ -296,11 +299,16 @@ class MainActivity : AppCompatActivity(),
             HomeTravelFragment.newInstance(idTravel), true, true, true)
     }
 
-    override fun openAddRecordFragment(){
+    override fun createNewRecord(){
         CallFragment().addFragment(this.supportFragmentManager,
-            AddRecordFragment(), true, true, true)
-
+            AddRecordFragment.createRecord(false), true, true, true)
     }
+
+    override fun updateExistingRecord(objectRecordDetail: Record, recordId: String, idTravel: String, recordExists: Boolean) {
+        CallFragment().addFragment(this.supportFragmentManager, AddRecordFragment.updateRecord(objectRecordDetail!!, recordId!!, idTravel, false), true, true, true)
+    }
+
+
     override fun sendToHomeTravel(id: String) {
         showToolBarOnFragmentViewCreate()
         globalmenu.findItem(R.id.item_generar).setVisible(true)

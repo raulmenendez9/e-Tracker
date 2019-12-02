@@ -72,7 +72,8 @@ class DetailRecordFragment : Fragment() {
         }
 
         btnEditRecord!!.setOnClickListener {
-            CallFragment().addFragment(this.fragmentManager!!, AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, true), true, true, true)
+            listener?.updateExistingRecord()
+            // CallFragment().addFragment(this.fragmentManager!!, AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, true), true, true, true)
         }
 
     }
@@ -139,7 +140,7 @@ class DetailRecordFragment : Fragment() {
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
-        fun openAddRecordFragment(obj: Record, id: String, idTravel: String)
+        fun updateExistingRecord(objDetailData: Record, idRecord: String, idTravel: String, recordExists: Boolean)
     }
 
     companion object {

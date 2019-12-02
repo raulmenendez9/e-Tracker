@@ -685,6 +685,10 @@ class AddRecordFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
+
+        fun createNewRecord()
+        fun updateExistingRecord()
+
     }
 
     companion object {

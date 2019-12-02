@@ -19,6 +19,7 @@
 * **`[ANIMACION]`**  Implementar animaciones de carga en @LoginFragment
 * **`[ANIMACION]`**  Implementar animaciones de carga en @AddRegistroFragment
 * **`[ANIMACION]`**  Implementar animaciones de carga en @CrearViajeFragment
+* **`[ANIMACION]`**  Implementar animaciones al hacer "click" en los diferentes botones (Ripple)
 * **`[RETOCAR UI]`** Hacer ajustes necesarios en @TravelRegistrationFragment, @TerminosFragment, @AddRecordFragment
 
 

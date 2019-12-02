@@ -236,8 +236,7 @@ class MainActivity : AppCompatActivity(),
         CallFragment().addFragment(this.supportFragmentManager,
             HomeFragment(), true, false,false)
     }
-    override fun sendEditTravel(idtravel: String, pe: String) {
-        Log.i("SENDEDIT", "el id es $idTravel y el pe es $persist")
+    override fun sendEditTravel(idtravel: String) {
         CallFragment().addFragment(this.supportFragmentManager,
             TravelRegistrationFragment.newInstance(idTravel, persist), true, true, true)
     }

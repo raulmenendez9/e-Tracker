@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(),
 {
 
 
+
     var listener: onMainActivityInterface? = null
     // Declaring FirebaseAuth components
     private var dbAuth: FirebaseAuth? = null
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity(),
     // End of Declaring FirebaseAuthLocalClass components
     var adapterHt: AdapterHomeTravel? = null
     var idTravel:String=""
+    var persist: String =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -82,6 +84,8 @@ class MainActivity : AppCompatActivity(),
                         val nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
                         //idTravel = nuevoIdCreadoLocal.toString()
                         idTravel = querySnapshot.documents[0].id
+                        persist = querySnapshot.documents[0].data!!["dateRegister"].toString()//envio fecha
+                        Log.i("SENDEDIT", "el persist en el main es: $persist")
                         Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
                         //y si el viaje ya fue registrado cargara homeTravel
@@ -214,8 +218,6 @@ class MainActivity : AppCompatActivity(),
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
-        //globalmenu.findItem(R.id.item_generar).setVisible(true) //visibilidad para items del menu
-        //globalmenu.findItem(R.id.item_fin_viaje).setVisible(true)
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(idTravel), true, true, true)
     }
@@ -227,13 +229,17 @@ class MainActivity : AppCompatActivity(),
     }
     override fun sendToHomeTravel(id: String) {
         showToolBarOnFragmentViewCreate()
-        Log.i("BUSCANDOID","el id en el activity es: $id")
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id), true, true, true)
     }
     override fun finishTravelListener() { //finaliza el viaje desde el dialog
         CallFragment().addFragment(this.supportFragmentManager,
             HomeFragment(), true, false,false)
+    }
+    override fun sendEditTravel(idtravel: String, pe: String) {
+        Log.i("SENDEDIT", "el id es $idTravel y el pe es $persist")
+        CallFragment().addFragment(this.supportFragmentManager,
+            TravelRegistrationFragment.newInstance(idTravel, persist), true, true, true)
     }
 
     override fun showToolBarOnFragmentViewCreate() {

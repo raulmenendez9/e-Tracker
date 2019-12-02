@@ -159,7 +159,8 @@ class TravelRegistrationFragment : Fragment() {
             initialTravel!!.text= getString(R.string.update_travel) //Cambio de texto del boton
              getTravels(id!!) //Obtencion de la data
             initialTravel!!.setOnClickListener{
-        updateTravel(id!!,datepersist!!)} //Actualizacion de la data
+                updateTravel(id!!,datepersist!!)
+            } //Actualizacion de la data
         }
         floatingActionButton!!.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()

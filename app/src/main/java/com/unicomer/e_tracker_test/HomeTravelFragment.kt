@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import android.widget.TextView
@@ -37,6 +38,9 @@ class HomeTravelFragment : Fragment(),
     var initDate: TextView?=null
     var finishDate: TextView?=null
     var balance: TextView?=null
+    //Edit Button travel
+    var editBtn: ImageView?=null
+    var persist: String=""
 
     private var floatingActionButton: FloatingActionButton? = null
     //totales en cabecera
@@ -53,7 +57,6 @@ class HomeTravelFragment : Fragment(),
         // Mostrar el toolbar
         listener?.showToolBarOnFragmentViewCreate()
         setHasOptionsMenu(true) //menu
-        //Se inicializa por primera y unica vez al adapter como uno vacio
         adapterHt = AdapterHomeTravel(adapterInit(), this)
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
     }
@@ -71,9 +74,12 @@ class HomeTravelFragment : Fragment(),
         totalCar = view.findViewById(R.id.txt_header_cat_car_total)
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
+        editBtn = view.findViewById(R.id.id_editTravel_imageView)
         fillForm()//metodo para llenar la cabecera de fragment
         setUpRecyclerView(idTravelMain, "") //llena el fragment
-
+        editBtn!!.setOnClickListener {
+            listener!!.sendEditTravel(idTravelMain, persist)
+        }
         floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
@@ -126,7 +132,8 @@ class HomeTravelFragment : Fragment(),
                 originCountry!!.text = data[0].originCountry //seteo los datos
                 destinyCountry!!.text = data[0].destinyCountry
                 initDate!!.text = data[0].initialDate!!.substring(0, data[0].initialDate!!.length-5)
-                finishDate!!.text = data[0].finishDate!!.substring(0, data[0].initialDate!!.length-5)
+                finishDate!!.text = data[0].finishDate!! //.substring(0, data[0].initialDate!!.length-5)
+                persist = data[0].DateRegister.toString()
                 //llenar los totales
                 travelRef.document(idTravelMain)
                     .collection("record")
@@ -228,6 +235,7 @@ class HomeTravelFragment : Fragment(),
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
         fun sendDetailItemHT(obj:Record, id: String, idTravel:String)
+        fun sendEditTravel(idtravel:String, persist:String)
     }
 
     companion object {

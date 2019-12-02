@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -34,6 +36,7 @@ class DetailRecordFragment : Fragment() {
     var priceDetail: TextView?=null
     var photoDetail: ImageView?=null
     var btnDelete: Button?=null
+    //var container: FrameLayout?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +58,11 @@ class DetailRecordFragment : Fragment() {
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
         photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
+        val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
         fillDetail()
+        val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+        container.startAnimation(animation)
+
     }
 
     override fun onResume() {

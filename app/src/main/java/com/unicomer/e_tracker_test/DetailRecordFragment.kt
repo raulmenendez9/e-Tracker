@@ -3,19 +3,26 @@ package com.unicomer.e_tracker_test
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
+import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
 
 
 class DetailRecordFragment : Fragment() {
     //objeto que contiene los datos del detalle
     lateinit var objDetailData:Record
+    //obtnego el id del viaje
+    lateinit var idRecord: String
+    lateinit var idTravel: String
     private var listener: OnFragmentInteractionListener? = null
     //variables del layout
     var titleCatDetail: TextView?=null
@@ -26,6 +33,7 @@ class DetailRecordFragment : Fragment() {
     var descriptionDetail: TextView?=null
     var priceDetail: TextView?=null
     var photoDetail: ImageView?=null
+    var btnDelete: Button?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +54,18 @@ class DetailRecordFragment : Fragment() {
         titleCatDetail = view.findViewById(R.id.categoyTittleDetail)
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
         photoDetail = view.findViewById(R.id.photoRecordDetail)
+        btnDelete = view.findViewById(R.id.deleteButtonDetail)
         fillDetail()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        btnDelete!!.setOnClickListener {
+            Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel y el ${objDetailData}")
+            showDialog(idRecord, idTravel, objDetailData)
+
+
+        }
     }
     private fun fillDetail(){
         //Seteo de datos
@@ -80,11 +99,16 @@ class DetailRecordFragment : Fragment() {
             }
         }
     }
-    // TODO: Rename method, update argument and hook method into UI event
+
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
+    fun showDialog(id: String, idTravel: String, obj:Record){
+        val fm = this.fragmentManager
+        val dialog = DeleteRecordDialog.newInstance(id, idTravel, obj)
+        dialog.show(fm!!, DELETE_DIALOG)
 
+    }
 /*
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -107,10 +131,12 @@ class DetailRecordFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(obj:Record) : DetailRecordFragment{
+        fun newInstance(obj:Record, id:String, idTravel:String) : DetailRecordFragment{
             //se instancia el fragment con el objeto de tipo Record que viene del adapter
             val fragment = DetailRecordFragment()
             fragment.objDetailData = obj
+            fragment.idRecord = id
+            fragment.idTravel = idTravel
             return  fragment
         }
 

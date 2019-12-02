@@ -74,11 +74,12 @@
                     </FrameLayout>
 
                     <ImageView
-                        android:id="@+id/id_editTravel_button"
+                        android:id="@+id/id_editTravel_imageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:layout_margin="3dp"
                         android:paddingStart="5dp"
                         android:paddingTop="0dp"
                         android:paddingEnd="5dp"
@@ -232,7 +233,7 @@
             android:id="@+id/backgroundRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

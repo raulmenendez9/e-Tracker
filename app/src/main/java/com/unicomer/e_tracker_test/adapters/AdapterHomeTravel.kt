@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,11 +40,9 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, var listener: 
                 }
             }
             holder.containerView.setOnClickListener {
-
-
-                listener.SendaDetailItemInterface(position, model.recordName, model.recordCategory,
-                    model.recordMount, model.recordDescription, model.recordDate)
-                listener.sendDetailItem(model)
+                Log.i("ELID"," el id del recordd es: ${snapshots.getSnapshot(position).id}")
+                //snapshots.getSnapshot(position).id entrega el id del modelo tocado
+                listener.sendDetailItem(model, snapshots.getSnapshot(position).id)
             }
         }
     }
@@ -56,9 +55,6 @@ class AdapterHomeTravel(options:FirestoreRecyclerOptions<Record>, var listener: 
         var imageCat: ImageView = containerView.findViewById(R.id.image_record_cat)
     }
     interface ShowDataInterface{
-        fun SendaDetailItemInterface(position:Int=0, name: String="",
-                                     cat:String="", price:String="",
-                                     description:String="", date:String="")
-        fun sendDetailItem(Obj:Record)
+        fun sendDetailItem(Obj:Record, id:String)
     }
 }

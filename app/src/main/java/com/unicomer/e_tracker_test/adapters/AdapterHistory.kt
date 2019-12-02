@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,9 +28,9 @@ class AdapterHistory(options: FirestoreRecyclerOptions<Travel>, var listener:Sho
             fecha.text = model.initialDate
 
             holder.containerView.setOnClickListener {
-
-                var id:String=snapshots.getSnapshot(position).id
-                listener.sendDetailItem(id)
+                Log.i("idenhistorial"," el id del recordd es: ${snapshots.getSnapshot(position).id}")
+                //var id:String=snapshots.getSnapshot(position).id
+                listener!!.sendDetailItemhistorial(snapshots.getSnapshot(position).id)
             }
         }
     }
@@ -43,7 +44,7 @@ class AdapterHistory(options: FirestoreRecyclerOptions<Travel>, var listener:Sho
     }
     interface ShowDataInterfaceHistory{
 
-        fun sendDetailItem(id:String)
+        fun sendDetailItemhistorial(id:String)
     }
 
 

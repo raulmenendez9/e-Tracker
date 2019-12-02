@@ -2,6 +2,7 @@ package com.unicomer.e_tracker_test.travel_registration
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -158,7 +159,8 @@ class TravelRegistrationFragment : Fragment() {
             initialTravel!!.text= getString(R.string.update_travel) //Cambio de texto del boton
              getTravels(id!!) //Obtencion de la data
             initialTravel!!.setOnClickListener{
-        updateTravel(id!!,datepersist!!)} //Actualizacion de la data
+                updateTravel(id!!,datepersist!!)
+            } //Actualizacion de la data
         }
         floatingActionButton!!.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()
@@ -264,7 +266,9 @@ class TravelRegistrationFragment : Fragment() {
                     .addOnSuccessListener {
                         Log.d("Enviodata", "$travel")
                         Toast.makeText(activity, getString(R.string.register_complete), Toast.LENGTH_SHORT).show()
-                        homeTravelFragment(HomeTravelFragment())
+                        //homeTravelFragment(HomeTravelFragment())
+                        Log.i("BUSCANDOID", " el nuevo id del viaje es: ${it.id}")
+                        listener!!.sendToHomeTravel(it.id)
                     }
                     .addOnFailureListener { e -> Log.w("Error", "$e") }
 
@@ -386,25 +390,43 @@ class TravelRegistrationFragment : Fragment() {
             e.toString()
         }
     }
-    private fun homeTravelFragment(homeTravel: HomeTravelFragment){
+    /*private fun homeTravelFragment(homeTravel: HomeTravelFragment){
         val homeTravelFragment = mycontext!!.supportFragmentManager.beginTransaction()
         homeTravelFragment.replace(R.id.main_fragment_container, homeTravel)
         homeTravelFragment.commit()
-    }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()
         unbinder!!.unbind()
     }
 
-    @Suppress("DEPRECATION")
-    override fun onAttach(activity: Activity) {
-        mycontext= activity as FragmentActivity
-                super.onAttach(activity)
+    override fun onAttach(context: Context) {
+        mycontext= activity
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+                super.onAttach(context)
+    }
+
+    /*override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }*/
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
     }
 
     interface OnFragmentInteractionListener {
         fun hideToolBarOnFragmentViewDissapears()
+        fun sendToHomeTravel(id:String)
     }
 
 

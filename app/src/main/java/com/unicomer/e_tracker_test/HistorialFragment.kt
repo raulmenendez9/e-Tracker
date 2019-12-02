@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -14,8 +15,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.adapters.AdapterHistory
+import com.unicomer.e_tracker_test.adapters.AdapterHistory.historyAdapterInterface
 
-class HistorialFragment : Fragment() {
+class HistorialFragment : Fragment(), historyAdapterInterface {
+
+
     // TODO: Rename and change types of parameters
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     private var listener: OnFragmentInteractionListener? = null
@@ -43,7 +47,7 @@ class HistorialFragment : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+        //listener?.onFragmentInteraction(uri)
     }
 
     fun setUpRecyclerView(){
@@ -54,7 +58,7 @@ class HistorialFragment : Fragment() {
             .setQuery(query,Travel::class.java)
             .build()
 
-        adapter = AdapterHistory(options)
+        adapter = AdapterHistory(options, this)
 
         var recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerHistorial)
         recyclerView!!.setHasFixedSize(true)
@@ -85,27 +89,29 @@ class HistorialFragment : Fragment() {
         menu.findItem(R.id.item_historial).isVisible=false
     }
     //FIN DEL ADMIN DEL MENU DE LA TOOLBAR
+    override fun sendDataToHistoryTtoHomeT(idTravel: String) {
+        listener!!.sendDatatoHomeTfromHistT(idTravel, "1")
+    }
 
-//
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is OnFragmentInteractionListener) {
-//            listener = context
-//        } else {
-//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-//        }
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        listener = null
-//    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
 
 
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
-       // fun atras(fr: FormularioFragment)
+        fun sendDatatoHomeTfromHistT(idTravel:String, esActual:String)
     }
 
     companion object {

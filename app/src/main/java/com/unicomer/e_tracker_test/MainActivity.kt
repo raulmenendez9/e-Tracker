@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity(),
     TerminosFragment.OnFragmentInteractionListener,
     HomeTravelFragment.OnFragmentInteractionListener,
     TravelRegistrationFragment.OnFragmentInteractionListener,
-    CreateReportDialogFragment.OnFragmentInteractionListener
+    CreateReportDialogFragment.OnFragmentInteractionListener,
+    HistorialFragment.OnFragmentInteractionListener
 {
 
 
@@ -230,6 +231,10 @@ class MainActivity : AppCompatActivity(),
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id, "0"), true, true, true)
+    }
+    override fun sendDatatoHomeTfromHistT(idTravel: String, esActual: String) {
+        CallFragment().addFragment(this.supportFragmentManager,
+            HomeTravelFragment.newInstance(idTravel, esActual), true, true, true)
     }
     override fun finishTravelListener() { //finaliza el viaje desde el dialog
         CallFragment().addFragment(this.supportFragmentManager,

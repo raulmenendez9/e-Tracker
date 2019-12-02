@@ -164,7 +164,6 @@ class MainActivity : AppCompatActivity(),
             }
 
             R.id.item_terminos -> {
-                showToolBarOnFragmentViewCreate()
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(

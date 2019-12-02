@@ -22,7 +22,7 @@ class TerminosFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        listener?.hideToolBarOnFragmentViewDissapears()
+        //listener?.hideToolBarOnFragmentViewDissapears()
 
         return inflater.inflate(R.layout.fragment_terminos, container, false)
     }
@@ -48,7 +48,7 @@ class TerminosFragment : Fragment() {
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
         fun showToolBarOnFragmentViewCreate()
-        fun hideToolBarOnFragmentViewDissapears()
+        //fun hideToolBarOnFragmentViewDissapears()
     }
 
     companion object {

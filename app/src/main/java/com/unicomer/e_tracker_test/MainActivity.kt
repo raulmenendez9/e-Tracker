@@ -256,10 +256,10 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    override fun sendDetailItemHT(obj: Record, id: String, idTravel:String) {
+    override fun sendDetailItemHT(obj: Record, id: String, idTravel:String, esActual: String) {
         //detalles de items de registros, el objeto contiene todo lo que viene del adapter
         CallFragment().addFragment(this.supportFragmentManager,
-            DetailRecordFragment.newInstance(obj, id, idTravel), true, true, true)
+            DetailRecordFragment.newInstance(obj, id, idTravel, esActual), true, true, true)
 
     }
     //floating button que crea el reporte en homeTravel cuando viene del historyTravel

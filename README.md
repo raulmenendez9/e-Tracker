@@ -14,9 +14,11 @@
 - **`[OTRO]`** 
 - **`[OTRO]`** 
 
-### OTROS CAMBIOS
+### UI
 
-1. 
+* **`[ANIMACION]`**  Implementar animaciones de carga en @LoginFragment
+* **`[ANIMACION]`**  Implementar animaciones de carga en @AddRegistroFragment
+* **`[ANIMACION]`**  Implementar animaciones de carga en @CrearViajeFragment
+* **`[RETOCAR UI]`** Hacer ajustes necesarios en @TravelRegistrationFragment, @TerminosFragment, @AddRecordFragment
 
-### Accesso al Prototipo de AdobeXD: ['PROTOTIPO'](https://xd.adobe.com/view/19b724b8-02c5-4729-53c5-695cf89ad95c-6f86/?fullscreen)
-
+### Acceso al Prototipo de AdobeXD: ['PROTOTIPO'](

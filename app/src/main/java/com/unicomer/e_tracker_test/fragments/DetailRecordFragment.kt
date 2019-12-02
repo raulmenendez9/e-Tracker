@@ -73,7 +73,7 @@ class DetailRecordFragment : Fragment() {
         }
 
         btnEditRecord!!.setOnClickListener {
-            listener?.updateExistingRecord(objDetailData,idRecord,idTravel,true)
+            listener?.updateExistingRecord(objDetailData, idRecord, idTravel, true)
             // CallFragment().addFragment(this.fragmentManager!!, AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, true), true, true, true)
         }
 

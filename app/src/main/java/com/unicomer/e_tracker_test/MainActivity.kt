@@ -308,8 +308,6 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-
-
     override fun sendToHomeTravel(id: String) {
         showToolBarOnFragmentViewCreate()
         globalmenu.findItem(R.id.item_generar).setVisible(true)

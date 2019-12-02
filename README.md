@@ -10,8 +10,8 @@
 
 ### BUGs
 - **`[UPDATE]`** en @DetailRecordFragment, luego de un edit de datos en @AddRecordFragment al volver a @DetailRecordFragment no actualiza con los cambios
-- **`[OTRO]`** 
-- **`[OTRO]`** 
+- **`[SEARCH]`** la busqueda es aun sensitiva para todo
+- **`[LOGIN]`** Falta un NestedScrooll para que el usuario mueva los inputs y no tenga que quitar su teclado para pasar al siguiente input
 - **`[OTRO]`** 
 
 ### UI

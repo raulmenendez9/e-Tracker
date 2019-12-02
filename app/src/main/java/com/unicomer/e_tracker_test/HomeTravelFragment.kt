@@ -2,13 +2,13 @@ package com.unicomer.e_tracker_test
 
 import android.content.Context
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -30,6 +30,7 @@ class HomeTravelFragment : Fragment(),
     val db = FirebaseFirestore.getInstance()
     var travelRef: CollectionReference = db.collection("e-Tracker")
     private lateinit var idTravelMain:String //variable que recibe el id
+    private lateinit var esActual:String //viaje actual: 0=si, 1=no
     //Instancia del Adapter para el RecyclerView
     var adapterHt: AdapterHomeTravel? = null
     //Obteniendo referencias del layout
@@ -43,6 +44,7 @@ class HomeTravelFragment : Fragment(),
     var persist: String=""
 
     private var floatingActionButton: FloatingActionButton? = null
+    private var floatingActionButtonSendReport: FloatingActionButton?=null
     //totales en cabecera
     var totalFood: TextView?=null
     var totalCar: TextView?=null
@@ -74,19 +76,29 @@ class HomeTravelFragment : Fragment(),
         totalCar = view.findViewById(R.id.txt_header_cat_car_total)
         totalHotel = view.findViewById(R.id.txt_header_cat_hotel_total)
         totalOther = view.findViewById(R.id.txt_header_cat_other_total)
+        floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
+        floatingActionButtonSendReport = view.findViewById(R.id.floatingActionButtonHTCreateReport)
         editBtn = view.findViewById(R.id.id_editTravel_imageView)
+        //viaje actual: 0=si, 1=no
+        if(esActual!="0"){
+            editBtn!!.visibility = View.GONE
+            floatingActionButton!!.visibility = View.GONE
+            floatingActionButtonSendReport!!.visibility = View.VISIBLE
+        }
         fillForm()//metodo para llenar la cabecera de fragment
         setUpRecyclerView(idTravelMain, "") //llena el fragment
         editBtn!!.setOnClickListener {
             listener!!.sendEditTravel(idTravelMain)
         }
-        floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
             fragmentManager?.let {
                 CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
             }
 
+        }
+        floatingActionButtonSendReport?.setOnClickListener {
+            listener!!.sendCreateRportDialog(idTravelMain, "0")
         }
 
     }
@@ -118,22 +130,22 @@ class HomeTravelFragment : Fragment(),
     }
 
     private fun fillForm(){ //metodo para llenar la cabecera de info del viaje y el recycler
-        var data: MutableList<Travel>
+        var data: Travel?
         var totalFoodC = 0.0
         var totalCarC = 0.0
-        var totalhotelC = 0.0
+        var totalHotelC = 0.0
         var totalOtherC = 0.0
         travelRef
-            .whereEqualTo("emailUser", FirebaseUser!!.email) //verifica que el document sea del usuario
-            .whereEqualTo("active", true) //verifica que este esté como activo (el viaje)
+            .document(idTravelMain)
             .get()
             .addOnSuccessListener { doc ->
-                data = doc.toObjects(Travel::class.java)
-                originCountry!!.text = data[0].originCountry //seteo los datos
-                destinyCountry!!.text = data[0].destinyCountry
-                initDate!!.text = data[0].initialDate!!.substring(0, data[0].initialDate!!.length-5)
-                finishDate!!.text = data[0].finishDate!! //.substring(0, data[0].initialDate!!.length-5)
-                persist = data[0].DateRegister.toString()
+                //data = doc.data.toMutableMap()
+                data = doc.toObject(Travel::class.java)
+                originCountry!!.text = doc.data!!["originCountry"].toString()//data[0].originCountry //seteo los datos
+                destinyCountry!!.text = data!!.destinyCountry
+                initDate!!.text = data!!.initialDate!!.substring(0, data!!.initialDate!!.length-5)
+                finishDate!!.text = data!!.finishDate!! //.substring(0, data[0].initialDate!!.length-5)
+                persist = data!!.DateRegister.toString()
                 //llenar los totales
                 travelRef.document(idTravelMain)
                     .collection("record")
@@ -149,17 +161,17 @@ class HomeTravelFragment : Fragment(),
                                 "1" -> // transporte
                                     totalCarC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
                                 "2" -> //hospedaje
-                                    totalhotelC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
+                                    totalHotelC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
                                 "3" -> //Otros
                                     totalOtherC += querySnapShot.documents[i].data!!["recordMount"].toString().toDouble()
                             }
                         }
                         totalFood!!.text = "$$totalFoodC"
                         totalCar!!.text = "$$totalCarC"
-                        totalHotel!!.text = "$$totalhotelC"
+                        totalHotel!!.text = "$$totalHotelC"
                         totalOther!!.text = "$$totalOtherC"
                         //muestro el total de gastos disminuidos
-                        val balanceReg = data[0].balance!!.toDouble() - totalFoodC - totalCarC -totalhotelC -totalOtherC
+                        val balanceReg = data!!.balance!!.toDouble() - totalFoodC - totalCarC -totalHotelC -totalOtherC
                         val roundedBalance = Math.round(balanceReg*100.0)/100.0
                         balance!!.text = roundedBalance.toString()
                     }
@@ -212,7 +224,7 @@ class HomeTravelFragment : Fragment(),
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.item_generar).isVisible= true
-        menu.findItem(R.id.item_fin_viaje).isVisible= true
+        menu.findItem(R.id.item_fin_viaje).isVisible = esActual == "0"
     }
     //FIN INSTANCIA DEL MENU
     override fun onAttach(context: Context) {
@@ -236,14 +248,16 @@ class HomeTravelFragment : Fragment(),
         fun showToolBarOnFragmentViewCreate()
         fun sendDetailItemHT(obj:Record, id: String, idTravel:String)
         fun sendEditTravel(idtravel:String)
+        fun sendCreateRportDialog(idTravel: String, whichLayout:String)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(idTravel: String): HomeTravelFragment{
+        fun newInstance(idTravel: String, esActual:String): HomeTravelFragment{
             val fragment = HomeTravelFragment()
             fragment.idTravelMain = idTravel
+            fragment.esActual = esActual
             return fragment
-        }
             }
+    }
 }

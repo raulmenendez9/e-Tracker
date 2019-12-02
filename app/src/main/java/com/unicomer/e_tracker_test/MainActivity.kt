@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(),
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
                         //y si el viaje ya fue registrado cargara homeTravel
                         CallFragment().addFragment(this.supportFragmentManager,
-                            HomeTravelFragment.newInstance(querySnapshot.documents[0].id),
+                            HomeTravelFragment.newInstance(querySnapshot.documents[0].id, "0"),
                             true, false, false)
 
                         splashScreen.visibility = View.GONE
@@ -181,7 +181,6 @@ class MainActivity : AppCompatActivity(),
                 val fm = this.supportFragmentManager
                 val dialog = CreateReportDialogFragment.newInstance(idTravel, "0")
                 dialog.show(fm, LOGIN_DIALOG)
-
                 true
             }
 
@@ -219,7 +218,7 @@ class MainActivity : AppCompatActivity(),
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(idTravel), true, true, true)
+            HomeTravelFragment.newInstance(idTravel, "0"), true, true, true)
     }
 
     override fun openAddRecordFragment(){
@@ -230,7 +229,7 @@ class MainActivity : AppCompatActivity(),
     override fun sendToHomeTravel(id: String) {
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(id), true, true, true)
+            HomeTravelFragment.newInstance(id, "0"), true, true, true)
     }
     override fun finishTravelListener() { //finaliza el viaje desde el dialog
         CallFragment().addFragment(this.supportFragmentManager,
@@ -257,6 +256,12 @@ class MainActivity : AppCompatActivity(),
         CallFragment().addFragment(this.supportFragmentManager,
             DetailRecordFragment.newInstance(obj, id, idTravel), true, true, true)
 
+    }
+    //floating button que crea el reporte en homeTravel cuando viene del historyTravel
+    override fun sendCreateRportDialog(idTravel: String, whichLayout: String) {
+        val fm = this.supportFragmentManager
+        val dialog = CreateReportDialogFragment.newInstance(idTravel, "0")
+        dialog.show(fm, LOGIN_DIALOG)
     }
 
 

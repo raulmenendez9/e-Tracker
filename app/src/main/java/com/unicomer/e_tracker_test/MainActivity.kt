@@ -14,12 +14,8 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.*
@@ -37,6 +33,7 @@ class MainActivity : AppCompatActivity(),
         TravelRegistrationFragment.OnFragmentInteractionListener,
         DetailRecordFragment.OnFragmentInteractionListener
 {
+
 
 
     var listener: onMainActivityInterface? = null
@@ -304,9 +301,13 @@ class MainActivity : AppCompatActivity(),
             AddRecordFragment.createRecord(false), true, true, true)
     }
 
-    override fun updateExistingRecord(objectRecordDetail: Record, recordId: String, idTravel: String, recordExists: Boolean) {
-        CallFragment().addFragment(this.supportFragmentManager, AddRecordFragment.updateRecord(objectRecordDetail!!, recordId!!, idTravel, false), true, true, true)
+    override fun updateExistingRecord(objDetailData: Record, idRecord: String, idTravel: String, recordExists: Boolean) {
+        CallFragment().addFragment(this.supportFragmentManager,
+            AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, recordExists),
+            true, true, true)
     }
+
+
 
 
     override fun sendToHomeTravel(id: String) {

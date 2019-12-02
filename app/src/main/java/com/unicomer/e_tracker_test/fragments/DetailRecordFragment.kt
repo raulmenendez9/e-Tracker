@@ -1,5 +1,6 @@
 package com.unicomer.e_tracker_test.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -72,7 +73,7 @@ class DetailRecordFragment : Fragment() {
         }
 
         btnEditRecord!!.setOnClickListener {
-            listener?.updateExistingRecord()
+            listener?.updateExistingRecord(objDetailData,idRecord,idTravel,true)
             // CallFragment().addFragment(this.fragmentManager!!, AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, true), true, true, true)
         }
 
@@ -122,7 +123,7 @@ class DetailRecordFragment : Fragment() {
         dialog.show(fm!!, DELETE_DIALOG)
 
     }
-/*
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -136,7 +137,7 @@ class DetailRecordFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-*/
+
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)

@@ -178,7 +178,7 @@
         android:id="@+id/btn_tomar_foto"
         style="@style/ButtonWhite_Big_Size"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/add_photo"
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
         app:layout_constraintEnd_toEndOf="parent"
@@ -189,6 +189,8 @@
     <Button
         android:id="@+id/btn_agregar_registro"
         style="@style/ButtonBlue_Big_Size"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/agregar_registro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

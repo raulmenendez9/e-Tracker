@@ -689,7 +689,7 @@ class AddRecordFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(objectRecordDetail: Record, recordId: String, travelId: String, recordExists: Boolean): AddRecordFragment {
+        fun updateRecord(objectRecordDetail: Record, recordId: String, travelId: String, recordExists: Boolean): AddRecordFragment {
             // Instanciar este fragment y recibir un objeto que contenga los datos de un registro anterior
             val fragment =
                 AddRecordFragment()

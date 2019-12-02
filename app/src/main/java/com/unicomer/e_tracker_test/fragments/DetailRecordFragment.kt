@@ -91,16 +91,19 @@ class DetailRecordFragment : Fragment() {
                 titleCatDetail!!.text = "Comida"
                 titleCatDetail!!.setTextColor(Color.parseColor("#FEC180"))
             }
+
             "1"->{
                 imageCatDetail!!.setImageResource(R.drawable.ic_cat_car)
                 titleCatDetail!!.text = "Transporte"
                 titleCatDetail!!.setTextColor(Color.parseColor("#FBE339"))
             }
+
             "2"->{
                 imageCatDetail!!.setImageResource(R.drawable.ic_cat_hotel)
                 titleCatDetail!!.text = "Hospedaje"
                 titleCatDetail!!.setTextColor(Color.parseColor("#BAFC8B"))
             }
+
             "3"->{
                 imageCatDetail!!.setImageResource(R.drawable.ic_cat_other)
                 titleCatDetail!!.text = "Otro"

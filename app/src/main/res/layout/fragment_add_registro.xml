@@ -171,7 +171,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="416dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.70"
+        app:layout_constraintGuide_percent="0.80"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -189,24 +189,10 @@
     <Button
         android:id="@+id/btn_agregar_registro"
         style="@style/ButtonBlue_Big_Size"
-        android:layout_marginBottom="4dp"
         android:text="@string/agregar_registro"
-        app:layout_constraintBottom_toTopOf="@+id/floating_action_button_add_record"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button_add_record"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:src="@drawable/cancel_medium_ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_agregar_registro" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

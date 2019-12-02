@@ -78,10 +78,7 @@ class HomeTravelFragment : Fragment(), AdapterHomeTravel.ShowDataInterface{
         floatingActionButton = view.findViewById(R.id.floatingActionButtonHomeTravel)
         floatingActionButton?.setOnClickListener {
 
-            fragmentManager?.let {
-                CallFragment().addFragment(it,
-                    AddRecordFragment(), true, true, true)
-            }
+            CallFragment().addFragment(this.fragmentManager!!, AddRecordFragment.createRecord(false), true, true, true)
 
         }
 

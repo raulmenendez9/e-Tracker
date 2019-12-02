@@ -98,9 +98,6 @@ class AddRecordFragment : Fragment() {
 
     private var buttonAddRecord: Button? = null
 
-    // FloatingButton
-    private var floatingActionButton: FloatingActionButton? = null
-
     // DatePicker
     private var datePicker: TextView? = null
     // private var finishDate: EditText?=null
@@ -189,14 +186,6 @@ class AddRecordFragment : Fragment() {
 
         }
 
-
-
-
-        //Manipular el FloatinActionButton
-        floatingActionButton = view?.findViewById(R.id.floating_action_button_add_record)
-        floatingActionButton?.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
-        }
 
         return view
     }
@@ -422,6 +411,8 @@ class AddRecordFragment : Fragment() {
             var radioId = radioGroup?.checkedRadioButtonId.toString()
 
 
+            buttonAddRecord!!.setOnClickListener {
+
             // Validar campos en formulario
 
             if (editTextName?.text!!.isBlank()
@@ -437,54 +428,50 @@ class AddRecordFragment : Fragment() {
 
             } else {
 
-                val firestoreDB = FirebaseFirestore.getInstance()
-                var image = Uri.parse(imageDir)
+                    val firestoreDB = FirebaseFirestore.getInstance()
+                    var image = Uri.parse(imageDir)
 
-                imageRef.putFile(image).addOnSuccessListener {
-                    imageRef.downloadUrl.addOnCompleteListener {taskSnapshot ->
+                    imageRef.putFile(image).addOnSuccessListener {
+                        imageRef.downloadUrl.addOnCompleteListener {taskSnapshot ->
 
-                        // Elementos de UI
+                            // Elementos de UI
 
-                        val recordName: String? = editTextName?.text.toString()
-                        val recordDate: String? = fecha?.text.toString()
-                        val recordAmount: String? = monto?.text.toString()
-                        val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
-                        val recordPhoto =  taskSnapshot.result
-                        val recordDescription: String = editTextDescripcion?.text.toString()
-                        val recordDateRegistered: String? = Timestamp.now().toDate().toString()
-                        val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
+                            val recordName: String? = editTextName?.text.toString()
+                            val recordDate: String? = fecha?.text.toString()
+                            val recordAmount: String? = monto?.text.toString()
+                            val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
+                            val recordPhoto =  taskSnapshot.result
+                            val recordDescription: String = editTextDescripcion?.text.toString()
+                            val recordDateRegistered: String? = Timestamp.now().toDate().toString()
+                            val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
 
-                        // Envio de datos usando el data class
+                            // Envio de datos usando el data class
 
-                        val addNewRecord = Record(
-                            recordName!!,
-                            recordDate!!,
-                            recordAmount!!,
-                            recordCategory!!,
-                            "$recordPhoto",
-                            recordDescription,
-                            recordDateRegistered!!,
-                            recordDateLastUpdate!!
-                        )
+                            val addNewRecord = Record(
+                                recordName!!,
+                                recordDate!!,
+                                recordAmount!!,
+                                recordCategory!!,
+                                "$recordPhoto",
+                                recordDescription,
+                                recordDateRegistered!!,
+                                recordDateLastUpdate!!
+                            )
 
-                        firestoreDB.collection("e-Tracker").document(travelId).collection("record")
-                            .add(addNewRecord)
-                            .addOnFailureListener {
-                                Toast.makeText(this.context, "La creación del registro ha fallado", Toast.LENGTH_SHORT).show()
-                                Log.e(ADD_RECORD_FRAGMENT, "Error en $it")
-                            }
-                            .addOnSuccessListener {
-                                Toast.makeText(this.context, "Registro creado exitosamente.", Toast.LENGTH_SHORT).show()
-                            }
-
+                            firestoreDB.collection("e-Tracker").document(travelId).collection("record")
+                                .add(addNewRecord)
+                                .addOnFailureListener {
+                                    Toast.makeText(this.context, "La creación del registro ha fallado", Toast.LENGTH_SHORT).show()
+                                    Log.e(ADD_RECORD_FRAGMENT, "Error en $it")
+                                }
+                                .addOnSuccessListener {
+                                    Toast.makeText(this.context, "Registro creado exitosamente.", Toast.LENGTH_SHORT).show()
+                                }
+                        }
                     }
                 }
-
             }
-
-
         }
-
     }
 
 
@@ -712,6 +699,16 @@ class AddRecordFragment : Fragment() {
             fragment.recordExists = recordExists
             return fragment
         }
+
+        @JvmStatic
+        fun createRecord(recordExists: Boolean): AddRecordFragment {
+            // Crear nuevo record
+            val fragment = AddRecordFragment()
+            fragment.recordExists = recordExists
+            return fragment
+        }
+
+
     }
 }
 

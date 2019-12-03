@@ -96,7 +96,7 @@ class HomeTravelFragment : Fragment(),
         floatingActionButton?.setOnClickListener {
 
             fragmentManager?.let {
-                CallFragment().addFragment(it, AddRegistroFragment(), true, true, true)
+                CallFragment().addFragment(it, AddRegistroFragment(), true, true, 0)
             }
 
         }

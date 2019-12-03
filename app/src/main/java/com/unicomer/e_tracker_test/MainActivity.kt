@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity(),
                     Log.i("ERROR2","el snapshot tiene: ${querySnapshot.documents}")
                     if (querySnapshot.documents.toString()=="[]"){ //cuando no encuentra lo que busca igual devuelve un documento vacio para llenarlo []
                         //por tanto si devuelve vacio cargará homeFragment
-                        CallFragment().addFragment(this.supportFragmentManager, HomeFragment(), true, false, true)
+                        CallFragment().addFragment(this.supportFragmentManager, HomeFragment(), true, false, 0)
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
@@ -93,14 +92,14 @@ class MainActivity : AppCompatActivity(),
                         //y si el viaje ya fue registrado cargara homeTravel
                         CallFragment().addFragment(this.supportFragmentManager,
                             HomeTravelFragment.newInstance(querySnapshot.documents[0].id, "0", persist),
-                            true, false, false)
+                            true, false, 0)
 
                         splashScreen.visibility = View.GONE
                     }
                 }.addOnFailureListener {
                     Log.i("ERROR","datos: $it")
                     //y si el viaje ya fue registrado cargara homeTravel
-                    CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, false, false)
+                    CallFragment().addFragment(this.supportFragmentManager, HomeTravelFragment(), true, false, 0)
                     splashScreen.visibility = View.GONE
                 }
     }
@@ -165,7 +164,7 @@ class MainActivity : AppCompatActivity(),
                 supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(
                     this.supportFragmentManager, HistorialFragment(),
-                    true, true, true)
+                    true, true, 0)
                 true
             }
 
@@ -174,7 +173,7 @@ class MainActivity : AppCompatActivity(),
                 supportActionBar?.setDisplayShowHomeEnabled(true)
                 CallFragment().addFragment(
                     this.supportFragmentManager, TerminosFragment(),
-                    true, true, true)
+                    true, true, 0)
                 true
             }
 
@@ -213,37 +212,37 @@ class MainActivity : AppCompatActivity(),
     override fun openRegistrationTravelFragment() {
         hideToolBarOnFragmentViewDissapears()
         CallFragment().addFragment(this.supportFragmentManager,
-            TravelRegistrationFragment(), true, true, true)
+            TravelRegistrationFragment(), true, true, 2)
 
     }
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(idTravel, "0", persist), true, true, true)
+            HomeTravelFragment.newInstance(idTravel, "0", persist), true, true, 0)
     }
 
     override fun openAddRecordFragment(){
         CallFragment().addFragment(this.supportFragmentManager,
-            AddRegistroFragment(), true, true, true)
+            AddRegistroFragment(), true, true, 0)
 
     }
     override fun sendToHomeTravel(id: String, persist:String) {
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(id, "0", persist), true, true, true)
+            HomeTravelFragment.newInstance(id, "0", persist), true, true, 1)
     }
     override fun sendDatatoHomeTfromHistT(idTravel: String, esActual: String) {
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(idTravel, esActual, persist), true, true, true)
+            HomeTravelFragment.newInstance(idTravel, esActual, persist), true, true, 0)
     }
     override fun finishTravelListener() { //finaliza el viaje desde el dialog
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeFragment(), true, false,false)
+            HomeFragment(), true, false,0)
     }
     override fun sendEditTravel(idtravel: String, persist:String?) {
         CallFragment().addFragment(this.supportFragmentManager,
-            TravelRegistrationFragment.newInstance(idtravel, persist), true, true, true)
+            TravelRegistrationFragment.newInstance(idtravel, persist), true, true, 2)
     }
 
 
@@ -261,7 +260,7 @@ class MainActivity : AppCompatActivity(),
     override fun sendDetailItemHT(obj: Record, id: String, idTravel:String, esActual: String) {
         //detalles de items de registros, el objeto contiene todo lo que viene del adapter
         CallFragment().addFragment(this.supportFragmentManager,
-            DetailRecordFragment.newInstance(obj, id, idTravel, esActual), true, true, true)
+            DetailRecordFragment.newInstance(obj, id, idTravel, esActual), true, true, 0)
 
     }
     //floating button que crea el reporte en homeTravel cuando viene del historyTravel

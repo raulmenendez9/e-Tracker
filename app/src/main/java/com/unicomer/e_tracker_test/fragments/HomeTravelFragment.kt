@@ -111,6 +111,10 @@ class HomeTravelFragment : Fragment(),
         listener!!.sendDetailItemHT(Obj, id, idTravelMain, esActual)
     }
 
+    override fun openAddRecordFragment(Obj: Record, id: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun onStart() {
         super.onStart()
         adapterHt!!.startListening()

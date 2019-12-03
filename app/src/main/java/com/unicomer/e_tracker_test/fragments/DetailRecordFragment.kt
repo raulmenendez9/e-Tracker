@@ -31,6 +31,7 @@ class DetailRecordFragment : Fragment() {
     lateinit var idRecord: String
     lateinit var idTravel: String
     lateinit var isActive: String //viaje actual: 0=si, 0!=no
+
     private var listener: OnFragmentInteractionListener? = null
     //variables del layout
     var titleCatDetail: TextView?=null

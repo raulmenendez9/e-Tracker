@@ -230,6 +230,10 @@ class AddRecordFragment : Fragment() {
     }
 
     fun showResultAnimation(resultado: Int){
+
+        // Aqui se define la visibilidad del XML que contiene las animaciones en AddRecordFragment XML
+        // Son 3 estados de animacion
+
         val visibility: Int = View.VISIBLE
 
         addRecordAnimationContainer?.visibility = visibility
@@ -241,8 +245,14 @@ class AddRecordFragment : Fragment() {
         val animacionFailure = view?.findViewById<LottieAnimationView>(R.id.animation_loading_failure)
 
         when (resultado){
+
+            // Animacion Infinita mientras el proceso de Firebase sigue en ejecucion
             1 -> animacionInfinita?.visibility = visibility
+
+            // Animacion de fallo cuando el proceso retorna un error
             2 -> animacionFailure?.visibility = visibility
+
+            // Animacion de exito cuando el proceso ha sido completado sin errores
             3 -> animacionSuccess?.visibility = visibility
         }
     }
@@ -337,6 +347,9 @@ class AddRecordFragment : Fragment() {
 
                 } else if (imageDir.equals(initialImageDirFromFirebase)) {
 
+                    // Aqui se carga el XML con la animacion infinita
+                    showResultAnimation(1)
+
 
                     // Si el URI de la foto no se cambia, es decir, el usuario no cambia la foto
                     // se ejecuta este codigo
@@ -362,16 +375,21 @@ class AddRecordFragment : Fragment() {
                             "recordDateLastUpdate", recordDateLastUpdate
                         )
                         .addOnFailureListener {
+
+                            showResultAnimation(2)
+
                             Toast.makeText(this.context, "El record no pudo ser actualizado.", Toast.LENGTH_SHORT).show()
 
                         }
                         .addOnSuccessListener {
                             Toast.makeText(this.context, "El record ha sido actualizado.", Toast.LENGTH_SHORT).show()
 
+                            showResultAnimation(3)
+
                             Handler().postDelayed({
                                 activity!!.supportFragmentManager.popBackStack()
                                 activity!!.supportFragmentManager.popBackStack()
-                            }, 1000)
+                            }, 3000)
                         }
 
                 } else {
@@ -380,6 +398,9 @@ class AddRecordFragment : Fragment() {
                     // Si el URI de la foto ha sido cambiada entonces se ejecuta este codigo
 
                     // INICIALIZANDO INSTANCIA DE FIREBASE
+
+                    showResultAnimation(1)
+
 
                     val firebaseDB = FirebaseFirestore.getInstance()
                     val image = Uri.parse(imageDir)
@@ -413,15 +434,21 @@ class AddRecordFragment : Fragment() {
                                 )
                                 .addOnFailureListener {
                                     Toast.makeText(this.context, "Fallo", Toast.LENGTH_SHORT).show()
+
+                                    showResultAnimation(2)
+
                                     Log.i(ADD_RECORD_FRAGMENT, "Error $it")
                                 }
                                 .addOnSuccessListener {
                                     Toast.makeText(this.context, "El registro ha sido actualizado", Toast.LENGTH_SHORT).show()
+
+                                    showResultAnimation(3)
+
                                     Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID")
                                     Handler().postDelayed({
                                         activity!!.supportFragmentManager.popBackStack()
                                         activity!!.supportFragmentManager.popBackStack()
-                                    }, 1000)
+                                    }, 3000)
                                 }
                         }
                     }
@@ -479,6 +506,7 @@ class AddRecordFragment : Fragment() {
 
             } else {
 
+                    // Aqui se carga el XML con la animacion infinita
                     showResultAnimation(1)
 
                     val firestoreDB = FirebaseFirestore.getInstance()
@@ -521,12 +549,18 @@ class AddRecordFragment : Fragment() {
                                 .add(addNewRecord)
                                 .addOnFailureListener {
 
+
+                                    // Si el resultado de la operacion falla entonces
+                                    // se cambia la animacion por una que muestre un error
                                     showResultAnimation(2)
 
                                     Toast.makeText(this.context, "La creación del registro ha fallado", Toast.LENGTH_SHORT).show()
                                     Log.e(ADD_RECORD_FRAGMENT, "Error en $it")
                                 }
                                 .addOnSuccessListener {
+
+                                    // Si por el contrario la operacion es exitosa entonces
+                                    // se cambia la animacion por una que muestre un check
 
                                     showResultAnimation(3)
 

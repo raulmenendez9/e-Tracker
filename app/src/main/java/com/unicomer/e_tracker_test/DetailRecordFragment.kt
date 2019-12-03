@@ -1,13 +1,12 @@
 package com.unicomer.e_tracker_test
 
+import android.content.Context
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.FrameLayout
@@ -19,7 +18,9 @@ import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
 
 
-class DetailRecordFragment : Fragment() {
+class DetailRecordFragment : Fragment(), View.OnTouchListener {
+
+
     //objeto que contiene los datos del detalle
     lateinit var objDetailData:Record
     //obtnego el id del viaje
@@ -38,10 +39,13 @@ class DetailRecordFragment : Fragment() {
     var photoDetail: ImageView?=null
     var btnDelete: Button?=null
     var btnEdit:Button?=null
-    //var container: FrameLayout?=null
-
+    //para el zoom
+    private var mScaleGestureDetector: ScaleGestureDetector? = null
+    private var mScaleFactor = 1.0f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //instancia de animacion
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,13 +67,20 @@ class DetailRecordFragment : Fragment() {
         btnEdit = view.findViewById(R.id.editButtonDetail)
         val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
         fillDetail()
+        //animacion para la card que contiene la info(solo de entrada)
         val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
         container.startAnimation(animation)
+        //verifica de donde proviene para saber si mostrar o no los botones de edit/delete
         if(isActive!="0"){
             btnDelete!!.visibility = View.GONE
             btnEdit!!.visibility = View.GONE
         }
+        //mScaleGestureDetector = ScaleGestureDetector(context, ScaleListener())
+    }
 
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+       // mScaleGestureDetector?.onTouchEvent(event)
+        return true
     }
 
     override fun onResume() {
@@ -156,4 +167,14 @@ class DetailRecordFragment : Fragment() {
         }
 
     }
+    /*
+    private inner class ScaleListener: ScaleGestureDetector.SimpleOnScaleGestureListener(){
+        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
+            mScaleFactor *= scaleGestureDetector.scaleFactor
+            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f))
+            photoDetail?.setScaleX(mScaleFactor)
+            photoDetail?.setScaleY(mScaleFactor)
+            return true
+        }
+    }*/
 }

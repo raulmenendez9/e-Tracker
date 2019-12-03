@@ -226,7 +226,7 @@ class TravelRegistrationFragment : Fragment() {
             val aproved = spinner!!.selectedItem.toString()
             emailUser=user!!.email
             val email = emailUser
-            val date = getDateTime()
+            val date:String = getDateTime().toString()
             val update = null
             val active = true
             val settled = false
@@ -266,7 +266,7 @@ class TravelRegistrationFragment : Fragment() {
                         Toast.makeText(activity, getString(R.string.register_complete), Toast.LENGTH_SHORT).show()
                         //homeTravelFragment(HomeTravelFragment())
                         Log.i("BUSCANDOID", " el nuevo id del viaje es: ${it.id}")
-                        listener!!.sendToHomeTravel(it.id)
+                        listener!!.sendToHomeTravel(it.id, date)
                     }
                     .addOnFailureListener { e -> Log.w("Error", "$e") }
 
@@ -424,7 +424,7 @@ class TravelRegistrationFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun hideToolBarOnFragmentViewDissapears()
-        fun sendToHomeTravel(id:String)
+        fun sendToHomeTravel(id:String, persist:String)
     }
 
 
@@ -432,7 +432,7 @@ class TravelRegistrationFragment : Fragment() {
 
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(id: String, datein: String) =
+        fun newInstance(id: String, datein: String?) =
             TravelRegistrationFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, id)

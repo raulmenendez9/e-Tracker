@@ -89,12 +89,12 @@ class CreateReportDialogFragment : DialogFragment() {
         }
         if(whichLayout=="0"){
             btnSend!!.setOnClickListener {
-                email(idtravel)
+                email(idtravel, false)
                 //dialog!!.cancel()
             }
         }else{
             btnSend!!.setOnClickListener {
-                finishTravel(idtravel)
+                email(idtravel, true)
                 //dialog!!.cancel()
             }
         }
@@ -102,7 +102,7 @@ class CreateReportDialogFragment : DialogFragment() {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun email(idTravel: String){
+    fun email(idTravel: String, Trigger:Boolean){
         travelRef.document(idTravel).get().addOnSuccessListener {
 
             originCountry = it.data?.get("originCountry")?.toString()
@@ -184,7 +184,12 @@ class CreateReportDialogFragment : DialogFragment() {
                     val isIntentSafe:Boolean = activities.isNotEmpty()
                     if (isIntentSafe) {
                         startActivity(Intent.createChooser(emailIntent, "Escoger una aplicacion:"))
-                        dialog!!.cancel()
+                        if (Trigger){
+                            finishTravel(idTravel)
+                        }else{
+                            dialog!!.cancel()
+                        }
+
                     }
                 }
         }
@@ -195,8 +200,9 @@ class CreateReportDialogFragment : DialogFragment() {
             .document(id)
             .update("active", false)
             .addOnSuccessListener {
-                email(id) //se genera el reporte
+                //email(id) //se genera el reporte
                 listener!!.finishTravelListener() //manda a homeFragment
+                dialog!!.cancel()
             }
             .addOnFailureListener {
                     e -> Log.w("ERROR", "Error updating finish Travel on CreateReportDialog", e)

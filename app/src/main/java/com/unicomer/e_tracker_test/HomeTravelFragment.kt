@@ -88,7 +88,7 @@ class HomeTravelFragment : Fragment(),
         fillForm()//metodo para llenar la cabecera de fragment
         setUpRecyclerView(idTravelMain, "") //llena el fragment
         editBtn!!.setOnClickListener {
-            listener!!.sendEditTravel(idTravelMain)
+            listener!!.sendEditTravel(idTravelMain, persist)
         }
         floatingActionButton?.setOnClickListener {
 
@@ -247,7 +247,7 @@ class HomeTravelFragment : Fragment(),
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
         fun sendDetailItemHT(obj:Record, id: String, idTravel:String, esActual: String)
-        fun sendEditTravel(idtravel:String)
+        fun sendEditTravel(idtravel:String, persist:String)
         fun sendCreateRportDialog(idTravel: String, whichLayout:String)
     }
 

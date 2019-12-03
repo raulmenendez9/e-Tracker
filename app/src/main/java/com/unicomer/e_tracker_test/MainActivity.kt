@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -240,10 +241,11 @@ class MainActivity : AppCompatActivity(),
         CallFragment().addFragment(this.supportFragmentManager,
             HomeFragment(), true, false,false)
     }
-    override fun sendEditTravel(idtravel: String) {
+    override fun sendEditTravel(idtravel: String, persist:String) {
         CallFragment().addFragment(this.supportFragmentManager,
-            TravelRegistrationFragment.newInstance(idTravel, persist), true, true, true)
+            TravelRegistrationFragment.newInstance(idtravel, persist), true, true, true)
     }
+
 
     override fun showToolBarOnFragmentViewCreate() {
         val toolbarMainActivity: View = findViewById(R.id.toolbar)

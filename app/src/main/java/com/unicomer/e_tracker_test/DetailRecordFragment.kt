@@ -18,7 +18,7 @@ import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
 
 
-class DetailRecordFragment : Fragment(), View.OnTouchListener {
+class DetailRecordFragment : Fragment() {
 
 
     //objeto que contiene los datos del detalle
@@ -75,21 +75,15 @@ class DetailRecordFragment : Fragment(), View.OnTouchListener {
             btnDelete!!.visibility = View.GONE
             btnEdit!!.visibility = View.GONE
         }
-        //mScaleGestureDetector = ScaleGestureDetector(context, ScaleListener())
+
     }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-       // mScaleGestureDetector?.onTouchEvent(event)
-        return true
-    }
 
     override fun onResume() {
         super.onResume()
         btnDelete!!.setOnClickListener {
             Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel y el ${objDetailData}")
             showDialog(idRecord, idTravel, objDetailData)
-
-
         }
     }
     private fun fillDetail(){

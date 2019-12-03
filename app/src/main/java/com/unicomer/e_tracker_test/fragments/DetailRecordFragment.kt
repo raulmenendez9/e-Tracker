@@ -5,14 +5,15 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.github.chrisbanes.photoview.PhotoView
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
@@ -20,12 +21,16 @@ import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
 
 
+
+
 class DetailRecordFragment : Fragment() {
+
     //objeto que contiene los datos del detalle
     lateinit var objDetailData:Record
     //obtnego el id del viaje
     lateinit var idRecord: String
     lateinit var idTravel: String
+    lateinit var isActive: String //viaje actual: 0=si, 0!=no
     private var listener: OnFragmentInteractionListener? = null
     //variables del layout
     var titleCatDetail: TextView?=null
@@ -35,18 +40,24 @@ class DetailRecordFragment : Fragment() {
     var imageCatDetail:ImageView?=null
     var descriptionDetail: TextView?=null
     var priceDetail: TextView?=null
-    var photoDetail: ImageView?=null
+    //var photoDetail: ImageView?=null
     var btnDelete: Button?=null
     var btnEditRecord: Button? = null
 
+    var btnEdit:Button?=null
+    var photo: PhotoView?=null
+    var container: FrameLayout?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //instancia de animacion
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_detail_record, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,12 +68,26 @@ class DetailRecordFragment : Fragment() {
         descriptionDetail = view.findViewById(R.id.recordDescriptionDetail)
         priceDetail = view.findViewById(R.id.recordPriceDetail)
         titleCatDetail = view.findViewById(R.id.categoyTittleDetail)
-        imageCatDetail = view.findViewById(R.id.imageCategoryDetail)
-        photoDetail = view.findViewById(R.id.photoRecordDetail)
+        imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
+        //photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
         btnEditRecord = view.findViewById(R.id.editButtonDetail)
+        btnEdit = view.findViewById(R.id.editButtonDetail)
+        photo = view.findViewById(R.id.photoRecordDetail)
+        //val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
+        container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
         fillDetail()
+        //animacion para la card que contiene la info(solo de entrada)
+        val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+        container!!.startAnimation(animation)
+        //verifica de donde proviene para saber si mostrar o no los botones de edit/delete
+        if(isActive!="0"){
+            btnDelete!!.visibility = View.GONE
+            btnEdit!!.visibility = View.GONE
+        }
+
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -84,7 +109,8 @@ class DetailRecordFragment : Fragment() {
         descriptionDetail!!.text= objDetailData.recordDescription
         priceDetail!!.text="$"+objDetailData.recordMount
         //Se asigna la imagen
-        Glide.with(this).load(objDetailData.recordPhoto).into(photoDetail!!)
+        Glide.with(this).load(objDetailData.recordPhoto).into(photo!!)
+        //photo!!.setImageResource(photoDetail!!.id)
         //se toma la categoria y dependiendo de la que se obtiene se setea
         when(objDetailData.recordCategory){
             "0"->{
@@ -145,13 +171,13 @@ class DetailRecordFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(obj:Record, id:String, idTravel:String) : DetailRecordFragment {
+        fun newInstance(obj:Record, id:String, idTravel:String, isActive:String) : DetailRecordFragment{
             //se instancia el fragment con el objeto de tipo Record que viene del adapter
-            val fragment =
-                DetailRecordFragment()
+            val fragment = DetailRecordFragment()
             fragment.objDetailData = obj
             fragment.idRecord = id
             fragment.idTravel = idTravel
+            fragment.isActive = isActive
             return  fragment
         }
 

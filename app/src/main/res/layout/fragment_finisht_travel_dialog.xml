@@ -5,7 +5,7 @@
     android:layout_width="280dp"
     android:layout_height="260dp"
     android:theme="@style/DialogseTracker"
-    tools:context=".dialogs.FinishtTravelDialogFragment">
+    tools:context=".dialogs.CreateReportDialogFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

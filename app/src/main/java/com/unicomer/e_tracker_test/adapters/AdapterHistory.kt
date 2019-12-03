@@ -11,7 +11,7 @@ import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.R
 import kotlinx.android.extensions.LayoutContainer
 
-class AdapterHistory(options: FirestoreRecyclerOptions<Travel>) :
+class AdapterHistory(options: FirestoreRecyclerOptions<Travel>, var listener:historyAdapterInterface):
     FirestoreRecyclerAdapter<Travel, AdapterHistory.CollectionHolder>(options) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_row_old_travel, parent,false)
@@ -25,8 +25,9 @@ class AdapterHistory(options: FirestoreRecyclerOptions<Travel>) :
             paisDestino.text = model.destinyCountry
             monto.text = model.cash
             fecha.text = model.initialDate
-
-
+        }
+        holder.containerView.setOnClickListener {
+            listener.sendDataToHistoryTtoHomeT(snapshots.getSnapshot(position).id)
         }
     }
 
@@ -37,7 +38,9 @@ class AdapterHistory(options: FirestoreRecyclerOptions<Travel>) :
         var monto: TextView = containerView.findViewById(R.id.textMontoViaje)
         var fecha: TextView = containerView.findViewById(R.id.textFecha)
     }
-
+    interface historyAdapterInterface{
+        fun sendDataToHistoryTtoHomeT(idTravel:String)
+    }
 
 }
 

@@ -3,6 +3,7 @@ package com.unicomer.e_tracker_test.travel_registration
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.unicomer.e_tracker_test.HomeTravelFragment
+import com.unicomer.e_tracker_test.MainActivity
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Travel
 import java.text.SimpleDateFormat
@@ -154,6 +156,7 @@ class TravelRegistrationFragment : Fragment() {
             //Finish Spinner
             initialTravel!!.setOnClickListener {
                 registration()
+
             }
         }else{
             initialTravel!!.text= getString(R.string.update_travel) //Cambio de texto del boton

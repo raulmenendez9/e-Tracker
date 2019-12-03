@@ -223,6 +223,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
+
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(idTravel), true, true, true)
     }
@@ -236,6 +237,9 @@ class MainActivity : AppCompatActivity(),
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id), true, true, true)
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
     override fun finishTravelListener() { //finaliza el viaje desde el dialog
         CallFragment().addFragment(this.supportFragmentManager,

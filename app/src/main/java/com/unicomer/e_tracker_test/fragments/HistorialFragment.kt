@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.content.Context
 import android.net.Uri
@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Travel
 import com.unicomer.e_tracker_test.adapters.AdapterHistory
 import com.unicomer.e_tracker_test.adapters.AdapterHistory.historyAdapterInterface
@@ -21,6 +22,7 @@ class HistorialFragment : Fragment(), historyAdapterInterface {
 
 
     // TODO: Rename and change types of parameters
+
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     private var listener: OnFragmentInteractionListener? = null
     val db= FirebaseFirestore.getInstance()
@@ -36,6 +38,7 @@ class HistorialFragment : Fragment(), historyAdapterInterface {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_historial, container, false)
     }

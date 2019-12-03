@@ -4,57 +4,79 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
-import com.unicomer.e_tracker_test.constants.*
+import com.unicomer.e_tracker_test.constants.APP_NAME
+import com.unicomer.e_tracker_test.constants.FIREBASE_TRAVEL_ID
+import com.unicomer.e_tracker_test.constants.LOGIN_DIALOG
+import com.unicomer.e_tracker_test.constants.MAIN_ACTIVITY_KEY
 import com.unicomer.e_tracker_test.dialogs.CreateReportDialogFragment
+import com.unicomer.e_tracker_test.fragments.*
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.TravelRegistrationFragment
 
 
 class MainActivity : AppCompatActivity(),
-    HomeFragment.OnFragmentInteractionListener,
-    AddRegistroFragment.OnFragmentInteractionListener,
-    TerminosFragment.OnFragmentInteractionListener,
-    HomeTravelFragment.OnFragmentInteractionListener,
-    TravelRegistrationFragment.OnFragmentInteractionListener,
-    CreateReportDialogFragment.OnFragmentInteractionListener,
-    HistorialFragment.OnFragmentInteractionListener
+        HomeFragment.OnFragmentInteractionListener,
+        AddRecordFragment.OnFragmentInteractionListener,
+        TerminosFragment.OnFragmentInteractionListener,
+        HomeTravelFragment.OnFragmentInteractionListener,
+        TravelRegistrationFragment.OnFragmentInteractionListener,
+        CreateReportDialogFragment.OnFragmentInteractionListener,
+        HistorialFragment.OnFragmentInteractionListener,
+        DetailRecordFragment.OnFragmentInteractionListener
 {
 
 
 
     var listener: onMainActivityInterface? = null
+
     // Declaring FirebaseAuth components
+
     private var dbAuth: FirebaseAuth? = null
     private var dbFirestore: FirebaseFirestore? = null
     var dbCollectionReference: CollectionReference? = null
+
     // Mandar a llamar al SharedPreferences
     var sharedPreferences: SharedPreferences? = null
+
     // End of Declaring FirebaseAuthLocalClass components
-    var adapterHt: AdapterHomeTravel? = null
+
+
+    // Variables para HomeTravelFragment
+
     var idTravel:String=""
     var persist: String =""
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         Log.i(MAIN_ACTIVITY_KEY, "In method onCreate")
+
         // Obtener currentUser de Firebase
+
         dbAuth = FirebaseAuth.getInstance()
         val user = dbAuth!!.currentUser
+
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+
         var idDeViajeQueVieneDeFirestore: String?
+
         //inicializar la toolbar
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -79,17 +101,18 @@ class MainActivity : AppCompatActivity(),
                         splashScreen.visibility = View.GONE //la visibilidad del splash depende de cuanto tiempo esta peticion tarde
 
                     } else {
+
                         idDeViajeQueVieneDeFirestore = querySnapshot!!.documents[0].id
                         editor.putString(FIREBASE_TRAVEL_ID, idDeViajeQueVieneDeFirestore)
                         editor.apply()
-                        val nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
-                        //idTravel = nuevoIdCreadoLocal.toString()
+
+
                         idTravel = querySnapshot.documents[0].id
                         persist = querySnapshot.documents[0].data!!["dateRegister"].toString()//envio fecha
-                        Log.i("SENDEDIT", "el persist en el main es: $persist")
-                        Log.i(MAIN_ACTIVITY_KEY, idDeViajeQueVieneDeFirestore)
-                        Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
+
+
                         //y si el viaje ya fue registrado cargara homeTravel
+
                         CallFragment().addFragment(this.supportFragmentManager,
                             HomeTravelFragment.newInstance(querySnapshot.documents[0].id, "0", persist),
                             true, false, 0)
@@ -182,6 +205,7 @@ class MainActivity : AppCompatActivity(),
                 val fm = this.supportFragmentManager
                 val dialog = CreateReportDialogFragment.newInstance(idTravel, "0")
                 dialog.show(fm, LOGIN_DIALOG)
+
                 true
             }
 
@@ -190,13 +214,16 @@ class MainActivity : AppCompatActivity(),
                 val fm = this.supportFragmentManager
                 val dialog = CreateReportDialogFragment.newInstance(idTravel, "1")
                 dialog.show(fm, LOGIN_DIALOG)
+                Toast.makeText(this@MainActivity, "item fin viaje", Toast.LENGTH_SHORT).show()
                 true
             }
 
             R.id.item_cerrarapp -> {
                 // Manejar el evento en item "Cerrar sesion"
+
                 Toast.makeText(this@MainActivity, "La sesion ha finalizado", Toast.LENGTH_SHORT).show()
                 dbAuth?.signOut()
+
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -222,11 +249,17 @@ class MainActivity : AppCompatActivity(),
             HomeTravelFragment.newInstance(idTravel, "0", persist), true, true, 0)
     }
 
-    override fun openAddRecordFragment(){
+    override fun createNewRecord(){
         CallFragment().addFragment(this.supportFragmentManager,
-            AddRegistroFragment(), true, true, 0)
-
+            AddRecordFragment.createRecord(false, true, false), true, true, 1)
     }
+
+    override fun updateExistingRecord(objDetailData: Record, idRecord: String, idTravel: String, recordExists: Boolean) {
+        CallFragment().addFragment(this.supportFragmentManager,
+            AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, recordExists, true, false),
+            true, true, 1)
+    }
+
     override fun sendToHomeTravel(id: String, persist:String) {
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
@@ -245,7 +278,7 @@ class MainActivity : AppCompatActivity(),
     }
     override fun sendEditTravel(idtravel: String, persist:String?) {
         CallFragment().addFragment(this.supportFragmentManager,
-            TravelRegistrationFragment.newInstance(idtravel, persist), true, true, 2)
+            TravelRegistrationFragment.newInstance(idtravel, persist), true, true, 3)
     }
 
 

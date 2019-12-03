@@ -375,6 +375,7 @@ class TravelRegistrationFragment : Fragment() {
                 .addOnSuccessListener {
                     Log.d("Enviodata", "$travel")
                     Toast.makeText(activity, getString(R.string.register_update), Toast.LENGTH_SHORT).show()
+                    listener!!.sendToHomeTravel(id, persist)
                 }
                 .addOnFailureListener { e -> Log.w("Error", "$e") }
         }

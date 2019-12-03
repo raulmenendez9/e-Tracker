@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".travel_registration.TravelRegistrationFragment">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <!-- TODO: Update blank fragment layout -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -373,7 +378,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="60dp"
                 android:background="@drawable/btn_background_white"
                 android:fontFamily="@font/helvetica_neue_medium"
@@ -405,5 +410,6 @@
             app:layout_anchorGravity="bottom|center" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

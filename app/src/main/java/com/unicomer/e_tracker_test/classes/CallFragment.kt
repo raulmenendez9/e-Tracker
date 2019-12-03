@@ -32,6 +32,7 @@ class CallFragment{
             0->{fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)}
             1->{fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right)}
             2->{fragmentTransaction.setCustomAnimations(R.anim.move_up, R.anim.fade_out)}
+            3->{fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit)}
 
         }
         if (replace) fragmentTransaction.replace(R.id.main_fragment_container, fragment, fragment.javaClass.name)

@@ -2,18 +2,22 @@
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
-            <gradient
-                android:type="linear"
-                android:startColor="#E29BFB"
-                android:endColor="#679EE4"
-                android:angle="270" />
+        <ripple android:color="@color/colorSecondary03LightBlue">
+            <item>
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:type="linear"
+                        android:startColor="#E29BFB"
+                        android:endColor="#679EE4"
+                        android:angle="270" />
 
-            <corners
-                android:topRightRadius="25dp"
-                android:bottomRightRadius="25dp"
-                />
-        </shape>
+                    <corners
+                        android:topRightRadius="25dp"
+                        android:bottomRightRadius="25dp"
+                        />
+                </shape>
+            </item>
+        </ripple>
     </item>
     <item
         android:drawable="@drawable/ic_cat_other_on"
@@ -23,3 +27,6 @@
         android:bottom="12dp">
     </item>
 </layer-list>
+
+
+

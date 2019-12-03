@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.content.Context
 import android.net.Uri
@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.adapters.AdapterHomeTravel
 import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.models.Travel
@@ -56,10 +57,12 @@ class HomeTravelFragment : Fragment(),
     var backgroundImage: View? = null
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Mostrar el toolbar
         listener?.showToolBarOnFragmentViewCreate()
+        //Se inicializa por primera y unica vez al adapter como uno vacio
         setHasOptionsMenu(true) //menu
         adapterHt = AdapterHomeTravel(adapterInit(), this)
         return inflater.inflate(R.layout.fragment_home_travel, container, false)
@@ -95,9 +98,7 @@ class HomeTravelFragment : Fragment(),
         }
         floatingActionButton?.setOnClickListener {
 
-            fragmentManager?.let {
-                CallFragment().addFragment(it, AddRegistroFragment(), true, true, 0)
-            }
+            listener?.createNewRecord()
 
         }
         floatingActionButtonSendReport?.setOnClickListener {
@@ -108,6 +109,10 @@ class HomeTravelFragment : Fragment(),
 
     override fun sendDetailItem(Obj: Record, id:String) {
         listener!!.sendDetailItemHT(Obj, id, idTravelMain, esActual)
+    }
+
+    override fun openAddRecordFragment(Obj: Record, id: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onStart() {
@@ -246,7 +251,7 @@ class HomeTravelFragment : Fragment(),
 
 
     interface OnFragmentInteractionListener {
-        fun openAddRecordFragment()
+        fun createNewRecord()
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()

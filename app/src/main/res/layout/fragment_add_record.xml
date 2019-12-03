@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_record_main_container"
     android:background="#F5F7FB"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRegistroFragment">
+    android:visibility="visible"
+    tools:context=".fragments.AddRecordFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -156,24 +162,11 @@
             android:maxLines="4"
             android:minLines="3"
             android:singleLine="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_record_description"
-            tools:layout_editor_absoluteX="10dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Esto es una prueba de Material Design"
-                android:inputType="textShortMessage|text"/>
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -184,14 +177,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="416dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.70"
+        app:layout_constraintGuide_percent="0.80"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_tomar_foto"
         style="@style/ButtonWhite_Big_Size"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/add_photo"
         app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
         app:layout_constraintEnd_toEndOf="parent"
@@ -202,24 +195,63 @@
     <Button
         android:id="@+id/btn_agregar_registro"
         style="@style/ButtonBlue_Big_Size"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/agregar_registro"
-        app:layout_constraintBottom_toTopOf="@+id/floating_action_button_add_record"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button_add_record"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:src="@drawable/cancel_medium_ff"
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:visibility="gone"
+    android:id="@+id/add_record_animation_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSecondary05LightGray">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/animation_loading_infinite"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:lottie_rawRes="@raw/animation_circle_loading"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_agregar_registro" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/animation_loading_success"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:lottie_rawRes="@raw/animation_circle_success"
+        app:lottie_loop="false"
+        app:lottie_autoPlay="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/animation_loading_failure"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:lottie_rawRes="@raw/animation_circle_fail"
+        app:lottie_loop="false"
+        app:lottie_autoPlay="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

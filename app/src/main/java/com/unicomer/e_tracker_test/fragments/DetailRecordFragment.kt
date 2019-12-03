@@ -1,4 +1,4 @@
-package com.unicomer.e_tracker_test
+package com.unicomer.e_tracker_test.fragments
 
 import android.content.Context
 import android.graphics.Color
@@ -14,6 +14,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
+import com.unicomer.e_tracker_test.R
+import com.unicomer.e_tracker_test.classes.CallFragment
 import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
 import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
@@ -29,6 +31,7 @@ class DetailRecordFragment : Fragment() {
     lateinit var idRecord: String
     lateinit var idTravel: String
     lateinit var isActive: String //viaje actual: 0=si, 0!=no
+
     private var listener: OnFragmentInteractionListener? = null
     //variables del layout
     var titleCatDetail: TextView?=null
@@ -40,6 +43,8 @@ class DetailRecordFragment : Fragment() {
     var priceDetail: TextView?=null
     //var photoDetail: ImageView?=null
     var btnDelete: Button?=null
+    var btnEditRecord: Button? = null
+
     var btnEdit:Button?=null
     var photo: PhotoView?=null
     var container: FrameLayout?=null
@@ -58,6 +63,7 @@ class DetailRecordFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         nameDetail = view.findViewById(R.id.recordNameDetail)
         dateDetail = view.findViewById(R.id.recordDateDetail)
         descriptionDetail = view.findViewById(R.id.recordDescriptionDetail)
@@ -66,6 +72,7 @@ class DetailRecordFragment : Fragment() {
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
         //photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
+        btnEditRecord = view.findViewById(R.id.editButtonDetail)
         btnEdit = view.findViewById(R.id.editButtonDetail)
         photo = view.findViewById(R.id.photoRecordDetail)
         //val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
@@ -88,7 +95,13 @@ class DetailRecordFragment : Fragment() {
         btnDelete!!.setOnClickListener {
             Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel y el ${objDetailData}")
             showDialog(idRecord, idTravel, objDetailData)
+
         }
+
+        btnEditRecord!!.setOnClickListener {
+            listener?.updateExistingRecord(objDetailData, idRecord, idTravel, true)
+        }
+
     }
     private fun fillDetail(){
         //Seteo de datos
@@ -106,16 +119,19 @@ class DetailRecordFragment : Fragment() {
                 titleCatDetail!!.text = "Comida"
                 titleCatDetail!!.setTextColor(Color.parseColor("#FEC180"))
             }
+
             "1"->{
                 imageCatDetail!!.setImageResource(R.drawable.ic_cat_car)
                 titleCatDetail!!.text = "Transporte"
                 titleCatDetail!!.setTextColor(Color.parseColor("#FBE339"))
             }
+
             "2"->{
                 imageCatDetail!!.setImageResource(R.drawable.ic_cat_hotel)
                 titleCatDetail!!.text = "Hospedaje"
                 titleCatDetail!!.setTextColor(Color.parseColor("#BAFC8B"))
             }
+
             "3"->{
                 imageCatDetail!!.setImageResource(R.drawable.ic_cat_other)
                 titleCatDetail!!.text = "Otro"
@@ -134,7 +150,6 @@ class DetailRecordFragment : Fragment() {
 
     }
 
-/*
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -148,10 +163,11 @@ class DetailRecordFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-*/
+
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
+        fun updateExistingRecord(objDetailData: Record, idRecord: String, idTravel: String, recordExists: Boolean)
     }
 
     companion object {

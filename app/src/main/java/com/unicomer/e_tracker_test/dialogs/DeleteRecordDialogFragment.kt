@@ -12,7 +12,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.unicomer.e_tracker_test.HomeTravelFragment
+import com.unicomer.e_tracker_test.fragments.HomeTravelFragment
 
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.models.Record

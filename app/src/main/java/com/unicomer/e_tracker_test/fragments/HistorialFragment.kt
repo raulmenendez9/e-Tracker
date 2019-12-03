@@ -33,6 +33,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class HistorialFragment : Fragment() {
     // TODO: Rename and change types of parameters
+
     private val FirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     private var param1: String? = null
     private var param2: String? = null
@@ -53,6 +54,7 @@ class HistorialFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_historial, container, false)
     }

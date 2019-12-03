@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.airbnb.lottie.LottieAnimationView
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
@@ -44,6 +45,14 @@ import java.util.*
 
 class AddRecordFragment : Fragment() {
 
+    // Contenedores / Vistas XML
+    var addRecordMainContainer: View? = null
+    var addRecordAnimationContainer: View? = null
+
+    // Visibilities para inicializar el fragment
+    // y que siempre el mainContainer sea visible
+    var mainContainerVisibility: Boolean? = null
+    var animationContainerVisibility: Boolean? = null
 
 
     // Objeto que contiene los datos de un detalle anteriomente guardado
@@ -105,6 +114,7 @@ class AddRecordFragment : Fragment() {
     var mDateStart: String? = null
     var mDateEnd: String? = null
 
+
     // Variable del contexto
     private var mycontext : FragmentActivity? = null
 
@@ -138,7 +148,11 @@ class AddRecordFragment : Fragment() {
 
         Log.i(ADD_RECORD_FRAGMENT, "In method onCreateView")
 
-        //pathImage = view?.findViewById(R.id.pathImage)
+
+        // LottieFiles Animations variables
+        addRecordAnimationContainer = view?.findViewById(R.id.add_record_animation_container)
+        addRecordMainContainer = view?.findViewById(R.id.add_record_main_container)
+
 
         // RadioGroup contenedor de RadioButton
         radioGroup = view?.findViewById(R.id.radioGroup_Category)
@@ -214,6 +228,25 @@ class AddRecordFragment : Fragment() {
         super.onDetach()
         listener = null
     }
+
+    fun showResultAnimation(resultado: Int){
+        val visibility: Int = View.VISIBLE
+
+        addRecordAnimationContainer?.visibility = visibility
+        addRecordMainContainer?.visibility != visibility
+
+        // 3 Tipos de animacion
+        val animacionInfinita = view?.findViewById<LottieAnimationView>(R.id.animation_loading_infinite)
+        val animacionSuccess = view?.findViewById<LottieAnimationView>(R.id.animation_loading_success)
+        val animacionFailure = view?.findViewById<LottieAnimationView>(R.id.animation_loading_failure)
+
+        when (resultado){
+            1 -> animacionInfinita?.visibility = visibility
+            2 -> animacionFailure?.visibility = visibility
+            3 -> animacionSuccess?.visibility = visibility
+        }
+    }
+
 
 
     private fun getInitialData(recordExists: Boolean){
@@ -446,6 +479,8 @@ class AddRecordFragment : Fragment() {
 
             } else {
 
+                    showResultAnimation(1)
+
                     val firestoreDB = FirebaseFirestore.getInstance()
                     var image = Uri.parse(imageDir)
 
@@ -485,14 +520,20 @@ class AddRecordFragment : Fragment() {
                             firestoreDB.collection("e-Tracker").document(travelId).collection("record")
                                 .add(addNewRecord)
                                 .addOnFailureListener {
+
+                                    showResultAnimation(2)
+
                                     Toast.makeText(this.context, "La creación del registro ha fallado", Toast.LENGTH_SHORT).show()
                                     Log.e(ADD_RECORD_FRAGMENT, "Error en $it")
                                 }
                                 .addOnSuccessListener {
+
+                                    showResultAnimation(3)
+
                                     Toast.makeText(this.context, "Registro creado exitosamente.", Toast.LENGTH_SHORT).show()
                                     Handler().postDelayed({
                                         activity!!.supportFragmentManager.popBackStack()
-                                    }, 1000)
+                                    }, 3000)
                                 }
                         }
                     }
@@ -723,7 +764,12 @@ class AddRecordFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun updateRecord(objectRecordDetail: Record, recordId: String, travelId: String, recordExists: Boolean): AddRecordFragment {
+        fun updateRecord(objectRecordDetail: Record,
+                         recordId: String,
+                         travelId: String,
+                         recordExists: Boolean,
+                         mainContainerVisibility: Boolean,
+                         animationContainerVisibility: Boolean): AddRecordFragment {
             // Instanciar este fragment y recibir un objeto que contenga los datos de un registro anterior
             val fragment =
                 AddRecordFragment()
@@ -731,14 +777,20 @@ class AddRecordFragment : Fragment() {
             fragment.recordId = recordId
             fragment.travelId = travelId
             fragment.recordExists = recordExists
+            fragment.mainContainerVisibility = mainContainerVisibility
+            fragment.animationContainerVisibility = animationContainerVisibility
             return fragment
         }
 
         @JvmStatic
-        fun createRecord(recordExists: Boolean): AddRecordFragment {
+        fun createRecord(recordExists: Boolean,
+                         mainContainerVisibility: Boolean,
+                         animationContainerVisibility: Boolean): AddRecordFragment {
             // Crear nuevo record
             val fragment = AddRecordFragment()
             fragment.recordExists = recordExists
+            fragment.mainContainerVisibility = mainContainerVisibility
+            fragment.animationContainerVisibility = animationContainerVisibility
             return fragment
         }
 

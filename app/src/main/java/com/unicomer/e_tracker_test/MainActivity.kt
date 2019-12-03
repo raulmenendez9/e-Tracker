@@ -293,12 +293,12 @@ class MainActivity : AppCompatActivity(),
 
     override fun createNewRecord(){
         CallFragment().addFragment(this.supportFragmentManager,
-            AddRecordFragment.createRecord(false), true, true, true)
+            AddRecordFragment.createRecord(false, true, false), true, true, true)
     }
 
     override fun updateExistingRecord(objDetailData: Record, idRecord: String, idTravel: String, recordExists: Boolean) {
         CallFragment().addFragment(this.supportFragmentManager,
-            AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, recordExists),
+            AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, recordExists, true, false),
             true, true, true)
     }
 

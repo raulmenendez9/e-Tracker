@@ -6,7 +6,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -28,12 +27,9 @@ import butterknife.Unbinder
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.unicomer.e_tracker_test.MainActivity
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.constants.ADD_RECORD_FRAGMENT
 import com.unicomer.e_tracker_test.constants.APP_NAME
@@ -138,7 +134,7 @@ class AddRecordFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_add_registro, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_record, container, false)
 
         Log.i(ADD_RECORD_FRAGMENT, "In method onCreateView")
 

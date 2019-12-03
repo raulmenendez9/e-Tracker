@@ -231,6 +231,9 @@ class MainActivity : AppCompatActivity(),
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id, "0", persist), true, true, 1)
+        val intent = Intent(this, MainActivity::class.java)// para al crear viaje y se va para atras se salga de la app
+        startActivity(intent)
+        finish()
     }
     override fun sendDatatoHomeTfromHistT(idTravel: String, esActual: String) {
         CallFragment().addFragment(this.supportFragmentManager,

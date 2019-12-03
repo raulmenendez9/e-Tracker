@@ -245,7 +245,7 @@ class MainActivity : AppCompatActivity(),
     }
     override fun sendEditTravel(idtravel: String, persist:String?) {
         CallFragment().addFragment(this.supportFragmentManager,
-            TravelRegistrationFragment.newInstance(idtravel, persist), true, true, 2)
+            TravelRegistrationFragment.newInstance(idtravel, persist), true, true, 3)
     }
 
 

@@ -21,6 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
+
         <FrameLayout
             android:id="@+id/frameDetailContainer"
             android:layout_width="match_parent"

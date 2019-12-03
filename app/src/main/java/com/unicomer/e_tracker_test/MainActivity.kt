@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(),
         val user = dbAuth!!.currentUser
         sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-        var idDeViajeQueVieneDeFirestore: String
+        var idDeViajeQueVieneDeFirestore: String?
         //inicializar la toolbar
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -256,10 +256,10 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    override fun sendDetailItemHT(obj: Record, id: String, idTravel:String) {
+    override fun sendDetailItemHT(obj: Record, id: String, idTravel:String, esActual: String) {
         //detalles de items de registros, el objeto contiene todo lo que viene del adapter
         CallFragment().addFragment(this.supportFragmentManager,
-            DetailRecordFragment.newInstance(obj, id, idTravel), true, true, 0)
+            DetailRecordFragment.newInstance(obj, id, idTravel, esActual), true, true, 0)
 
     }
     //floating button que crea el reporte en homeTravel cuando viene del historyTravel

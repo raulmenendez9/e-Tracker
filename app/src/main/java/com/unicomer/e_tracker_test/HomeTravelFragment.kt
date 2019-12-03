@@ -104,7 +104,7 @@ class HomeTravelFragment : Fragment(),
     }
 
     override fun sendDetailItem(Obj: Record, id:String) {
-        listener!!.sendDetailItemHT(Obj, id, idTravelMain)
+        listener!!.sendDetailItemHT(Obj, id, idTravelMain, esActual)
     }
 
     override fun onStart() {
@@ -246,7 +246,7 @@ class HomeTravelFragment : Fragment(),
         fun onFragmentInteraction(uri: Uri)
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
-        fun sendDetailItemHT(obj:Record, id: String, idTravel:String)
+        fun sendDetailItemHT(obj:Record, id: String, idTravel:String, esActual: String)
         fun sendEditTravel(idtravel:String)
         fun sendCreateRportDialog(idTravel: String, whichLayout:String)
     }

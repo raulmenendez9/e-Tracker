@@ -25,6 +25,7 @@ class DetailRecordFragment : Fragment() {
     //obtnego el id del viaje
     lateinit var idRecord: String
     lateinit var idTravel: String
+    lateinit var isActive: String //viaje actual: 0=si, 0!=no
     private var listener: OnFragmentInteractionListener? = null
     //variables del layout
     var titleCatDetail: TextView?=null
@@ -36,6 +37,7 @@ class DetailRecordFragment : Fragment() {
     var priceDetail: TextView?=null
     var photoDetail: ImageView?=null
     var btnDelete: Button?=null
+    var btnEdit:Button?=null
     //var container: FrameLayout?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,10 +60,15 @@ class DetailRecordFragment : Fragment() {
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
         photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
+        btnEdit = view.findViewById(R.id.editButtonDetail)
         val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
         fillDetail()
         val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
         container.startAnimation(animation)
+        if(isActive!="0"){
+            btnDelete!!.visibility = View.GONE
+            btnEdit!!.visibility = View.GONE
+        }
 
     }
 
@@ -138,12 +145,13 @@ class DetailRecordFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(obj:Record, id:String, idTravel:String) : DetailRecordFragment{
+        fun newInstance(obj:Record, id:String, idTravel:String, isActive:String) : DetailRecordFragment{
             //se instancia el fragment con el objeto de tipo Record que viene del adapter
             val fragment = DetailRecordFragment()
             fragment.objDetailData = obj
             fragment.idRecord = id
             fragment.idTravel = idTravel
+            fragment.isActive = isActive
             return  fragment
         }
 

@@ -13,13 +13,15 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.github.chrisbanes.photoview.PhotoView
 import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
 import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
 
 
-class DetailRecordFragment : Fragment(), View.OnTouchListener {
 
+
+class DetailRecordFragment : Fragment() {
 
     //objeto que contiene los datos del detalle
     lateinit var objDetailData:Record
@@ -36,12 +38,11 @@ class DetailRecordFragment : Fragment(), View.OnTouchListener {
     var imageCatDetail:ImageView?=null
     var descriptionDetail: TextView?=null
     var priceDetail: TextView?=null
-    var photoDetail: ImageView?=null
+    //var photoDetail: ImageView?=null
     var btnDelete: Button?=null
     var btnEdit:Button?=null
-    //para el zoom
-    private var mScaleGestureDetector: ScaleGestureDetector? = null
-    private var mScaleFactor = 1.0f
+    var photo: PhotoView?=null
+    var container: FrameLayout?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //instancia de animacion
@@ -52,6 +53,7 @@ class DetailRecordFragment : Fragment(), View.OnTouchListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_detail_record, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,34 +64,30 @@ class DetailRecordFragment : Fragment(), View.OnTouchListener {
         priceDetail = view.findViewById(R.id.recordPriceDetail)
         titleCatDetail = view.findViewById(R.id.categoyTittleDetail)
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
-        photoDetail = view.findViewById(R.id.photoRecordDetail)
+        //photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
         btnEdit = view.findViewById(R.id.editButtonDetail)
-        val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
+        photo = view.findViewById(R.id.photoRecordDetail)
+        //val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
+        container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
         fillDetail()
         //animacion para la card que contiene la info(solo de entrada)
         val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
-        container.startAnimation(animation)
+        container!!.startAnimation(animation)
         //verifica de donde proviene para saber si mostrar o no los botones de edit/delete
         if(isActive!="0"){
             btnDelete!!.visibility = View.GONE
             btnEdit!!.visibility = View.GONE
         }
-        //mScaleGestureDetector = ScaleGestureDetector(context, ScaleListener())
+
     }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-       // mScaleGestureDetector?.onTouchEvent(event)
-        return true
-    }
 
     override fun onResume() {
         super.onResume()
         btnDelete!!.setOnClickListener {
             Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel y el ${objDetailData}")
             showDialog(idRecord, idTravel, objDetailData)
-
-
         }
     }
     private fun fillDetail(){
@@ -99,7 +97,8 @@ class DetailRecordFragment : Fragment(), View.OnTouchListener {
         descriptionDetail!!.text= objDetailData.recordDescription
         priceDetail!!.text="$"+objDetailData.recordMount
         //Se asigna la imagen
-        Glide.with(this).load(objDetailData.recordPhoto).into(photoDetail!!)
+        Glide.with(this).load(objDetailData.recordPhoto).into(photo!!)
+        //photo!!.setImageResource(photoDetail!!.id)
         //se toma la categoria y dependiendo de la que se obtiene se setea
         when(objDetailData.recordCategory){
             "0"->{
@@ -134,6 +133,7 @@ class DetailRecordFragment : Fragment(), View.OnTouchListener {
         dialog.show(fm!!, DELETE_DIALOG)
 
     }
+
 /*
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -167,14 +167,4 @@ class DetailRecordFragment : Fragment(), View.OnTouchListener {
         }
 
     }
-    /*
-    private inner class ScaleListener: ScaleGestureDetector.SimpleOnScaleGestureListener(){
-        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
-            mScaleFactor *= scaleGestureDetector.scaleFactor
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f))
-            photoDetail?.setScaleX(mScaleFactor)
-            photoDetail?.setScaleY(mScaleFactor)
-            return true
-        }
-    }*/
 }

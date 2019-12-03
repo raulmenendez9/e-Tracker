@@ -90,12 +90,12 @@ class CreateReportDialogFragment : DialogFragment() {
         if(whichLayout=="0"){
             btnSend!!.setOnClickListener {
                 email(idtravel)
-                dialog!!.cancel()
+                //dialog!!.cancel()
             }
         }else{
             btnSend!!.setOnClickListener {
                 finishTravel(idtravel)
-                dialog!!.cancel()
+                //dialog!!.cancel()
             }
         }
 
@@ -184,6 +184,7 @@ class CreateReportDialogFragment : DialogFragment() {
                     val isIntentSafe:Boolean = activities.isNotEmpty()
                     if (isIntentSafe) {
                         startActivity(Intent.createChooser(emailIntent, "Escoger una aplicacion:"))
+                        dialog!!.cancel()
                     }
                 }
         }

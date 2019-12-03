@@ -39,17 +39,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.05"/>
+                    app:layout_constraintGuide_percent="0.05" />
 
                 <TextView
                     android:id="@+id/categoyTittleDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/helvetica_neue_regular"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/helvetica_neue_regular"
                     android:text="TextView"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/guideline11"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,9 +91,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/helvetica_neue_medium"
+                    android:text="$00.00"
                     android:textColor="@color/colorPrimary01Blue"
                     android:textSize="22sp"
-                    android:text="$00.00"
                     app:layout_constraintEnd_toStartOf="@+id/guideline12"
                     app:layout_constraintTop_toBottomOf="@+id/recordDateDetail" />
 
@@ -103,10 +103,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="24dp"
-                    android:textColor="@color/colorSecondary01DarkBlue"
-                    android:textSize="14sp"
                     android:fontFamily="@font/helvetica_neue_regular"
                     android:text="Descripcion:"
+                    android:textColor="@color/colorSecondary01DarkBlue"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/guideline11"
                     app:layout_constraintTop_toBottomOf="@+id/imageCategoryDetail" />
 
@@ -116,10 +116,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="8dp"
-                    android:textSize="14sp"
-                    android:paddingBottom="20dp"
                     android:fontFamily="@font/helvetica_neue_condensed"
+                    android:paddingBottom="20dp"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus quis libero et facilisis. Sed vitae venenatis ante. Vestibulum ac arcu et ex ultricies ullamcorper. Vivamus enim libero, dictum sed finibus vitae, venenatis eleifend velit. Cras lobortis arcu sed pharetra congue. Nullam vel malesuada ante. Etiam pulvinar eros quis posuere mattis. Vivamus euismod aliquet dui."
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/guideline12"
                     app:layout_constraintStart_toStartOf="@+id/guideline11"
                     app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -131,11 +131,11 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="24dp"
-                    android:visibility="visible"
                     android:background="@drawable/btn_background_blue"
                     android:text="Editar"
-
                     android:textColor="@color/colorSecondary05LightGray"
+
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline12"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -158,8 +158,8 @@
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/btn_background_white"
                     android:text="Eliminar"
-                    android:visibility="visible"
                     android:textColor="#F44336"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline12"
                     app:layout_constraintHorizontal_bias="0.0"

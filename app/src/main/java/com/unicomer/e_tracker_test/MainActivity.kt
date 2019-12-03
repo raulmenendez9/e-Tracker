@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(),
                         Log.i(MAIN_ACTIVITY_KEY, "El nuevo ID del viaje es $nuevoIdCreadoLocal")
                         //y si el viaje ya fue registrado cargara homeTravel
                         CallFragment().addFragment(this.supportFragmentManager,
-                            HomeTravelFragment.newInstance(querySnapshot.documents[0].id, "0"),
+                            HomeTravelFragment.newInstance(querySnapshot.documents[0].id, "0", persist),
                             true, false, false)
 
                         splashScreen.visibility = View.GONE
@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity(),
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(idTravel, "0"), true, true, true)
+            HomeTravelFragment.newInstance(idTravel, "0", persist), true, true, true)
     }
 
     override fun openAddRecordFragment(){
@@ -228,20 +228,20 @@ class MainActivity : AppCompatActivity(),
             AddRegistroFragment(), true, true, true)
 
     }
-    override fun sendToHomeTravel(id: String) {
+    override fun sendToHomeTravel(id: String, persist:String) {
         showToolBarOnFragmentViewCreate()
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(id, "0"), true, true, true)
+            HomeTravelFragment.newInstance(id, "0", persist), true, true, true)
     }
     override fun sendDatatoHomeTfromHistT(idTravel: String, esActual: String) {
         CallFragment().addFragment(this.supportFragmentManager,
-            HomeTravelFragment.newInstance(idTravel, esActual), true, true, true)
+            HomeTravelFragment.newInstance(idTravel, esActual, persist), true, true, true)
     }
     override fun finishTravelListener() { //finaliza el viaje desde el dialog
         CallFragment().addFragment(this.supportFragmentManager,
             HomeFragment(), true, false,false)
     }
-    override fun sendEditTravel(idtravel: String, persist:String) {
+    override fun sendEditTravel(idtravel: String, persist:String?) {
         CallFragment().addFragment(this.supportFragmentManager,
             TravelRegistrationFragment.newInstance(idtravel, persist), true, true, true)
     }

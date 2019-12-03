@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
@@ -31,6 +32,7 @@ class HomeTravelFragment : Fragment(),
     var travelRef: CollectionReference = db.collection("e-Tracker")
     private lateinit var idTravelMain:String //variable que recibe el id
     private lateinit var esActual:String //viaje actual: 0=si, 1=no
+    private lateinit var persist: String
     //Instancia del Adapter para el RecyclerView
     var adapterHt: AdapterHomeTravel? = null
     //Obteniendo referencias del layout
@@ -41,7 +43,7 @@ class HomeTravelFragment : Fragment(),
     var balance: TextView?=null
     //Edit Button travel
     var editBtn: ImageView?=null
-    var persist: String=""
+
 
     private var floatingActionButton: FloatingActionButton? = null
     private var floatingActionButtonSendReport: FloatingActionButton?=null
@@ -88,6 +90,7 @@ class HomeTravelFragment : Fragment(),
         fillForm()//metodo para llenar la cabecera de fragment
         setUpRecyclerView(idTravelMain, "") //llena el fragment
         editBtn!!.setOnClickListener {
+            Log.i("PERSIST", "lsitener del edit tiene: $persist")
             listener!!.sendEditTravel(idTravelMain, persist)
         }
         floatingActionButton?.setOnClickListener {
@@ -141,11 +144,12 @@ class HomeTravelFragment : Fragment(),
             .addOnSuccessListener { doc ->
                 //data = doc.data.toMutableMap()
                 data = doc.toObject(Travel::class.java)
-                originCountry!!.text = doc.data!!["originCountry"].toString()//data[0].originCountry //seteo los datos
+                originCountry!!.text = data!!.originCountry //seteo los datos
                 destinyCountry!!.text = data!!.destinyCountry
                 initDate!!.text = data!!.initialDate!!.substring(0, data!!.initialDate!!.length-5)
                 finishDate!!.text = data!!.finishDate!! //.substring(0, data[0].initialDate!!.length-5)
-                persist = data!!.DateRegister.toString()
+                //persist = data!!.DateRegister.toString()
+                Log.i("PERSIST", "dentro de fillform en HomeTravelFragment(), persist: $persist")
                 //llenar los totales
                 travelRef.document(idTravelMain)
                     .collection("record")
@@ -247,16 +251,17 @@ class HomeTravelFragment : Fragment(),
         fun goBackToHomeTravelFragment()
         fun showToolBarOnFragmentViewCreate()
         fun sendDetailItemHT(obj:Record, id: String, idTravel:String, esActual: String)
-        fun sendEditTravel(idtravel:String, persist:String)
+        fun sendEditTravel(idtravel:String, persist:String?)
         fun sendCreateRportDialog(idTravel: String, whichLayout:String)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(idTravel: String, esActual:String): HomeTravelFragment{
+        fun newInstance(idTravel: String, esActual:String, persist: String): HomeTravelFragment{
             val fragment = HomeTravelFragment()
             fragment.idTravelMain = idTravel
             fragment.esActual = esActual
+            fragment.persist = persist
             return fragment
             }
     }

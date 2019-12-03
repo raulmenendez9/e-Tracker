@@ -4,11 +4,9 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -35,8 +33,10 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.unicomer.e_tracker_test.MainActivity
 import com.unicomer.e_tracker_test.R
 import com.unicomer.e_tracker_test.constants.ADD_RECORD_FRAGMENT
+import com.unicomer.e_tracker_test.constants.APP_NAME
 import com.unicomer.e_tracker_test.constants.FIREBASE_TRAVEL_ID
 import com.unicomer.e_tracker_test.models.Record
 import com.unicomer.e_tracker_test.travel_registration.DatePickerFragment
@@ -84,6 +84,8 @@ class AddRecordFragment : Fragment() {
     private val buttonHotelId: Int? = 2 //1
     private val buttonTransportationId: Int? = 1 //2
     private val buttonOtherId: Int? = 3 //3
+
+    var radioId: String? = null
 
     // Boton Tomar Foto
 
@@ -158,34 +160,9 @@ class AddRecordFragment : Fragment() {
         radioButtonOther = view?.findViewById(R.id.radioButton_other)
         radioButtonOther?.id = buttonOtherId!!
 
-        // Detectar el ID del RadioButton
 
-        radioGroup?.setOnCheckedChangeListener {group, checkedId ->
-
-            var radioButtonSelectedId: Int = radioGroup!!.checkedRadioButtonId
-            radioButtonSelection(radioButtonSelectedId)
-            Log.i(ADD_RECORD_FRAGMENT, "radioButtonSelectionID es ${radioButtonSelectedId}")
-        }
 
         // Listener de los Botones
-
-        buttonTakePhoto = view?.findViewById(R.id.btn_tomar_foto)
-        buttonTakePhoto?.setOnClickListener{
-
-        //Permisos
-            if (permissionValidation()){
-                buttonTakePhoto!!.isEnabled
-                dialogPhoto()
-            }else {
-                buttonTakePhoto!!.isEnabled
-            }
-        }
-
-        buttonAddRecord = view?.findViewById(R.id.btn_agregar_registro)
-        buttonAddRecord?.setOnClickListener {
-
-        }
-
 
         return view
     }
@@ -199,7 +176,16 @@ class AddRecordFragment : Fragment() {
         // Aqui se inicializa este Fragment
         // Aqui se comprueba si el record ya existe y debe ser inicializado
         // Si no existe entonces se puede crear desde cero
+
+        buttonTakePhoto = view?.findViewById(R.id.btn_tomar_foto)
+
+        buttonAddRecord = view?.findViewById(R.id.btn_agregar_registro)
+
+        // Detectar el ID del RadioButton
+
+
         getInitialData(recordExists!!)
+
 
         datePicker = view.findViewById(R.id.textview_record_date_selection)
 
@@ -246,6 +232,15 @@ class AddRecordFragment : Fragment() {
         monto = view?.findViewById(R.id.et_Monto)
         editTextDescripcion = view?.findViewById(R.id.editText_record_description)
 
+        radioGroup?.setOnCheckedChangeListener {group, checkedId ->
+
+            var radioButtonSelectedId: Int = radioGroup!!.checkedRadioButtonId
+            radioButtonSelection(radioButtonSelectedId)
+            Log.i(ADD_RECORD_FRAGMENT, "radioButtonSelectionID es ${radioButtonSelectedId}")
+            radioId = radioButtonSelectedId.toString()
+        }
+
+
         if (recordExists) {
             // Si el record SI EXISTE y es TRUE entonces se ejecuta este codigo
 
@@ -257,6 +252,7 @@ class AddRecordFragment : Fragment() {
             monto?.setText(objectRecordDetail.recordMount)
             radioGroup!!.check(objectRecordDetail.recordCategory.toInt())
             editTextDescripcion?.setText(objectRecordDetail.recordDescription)
+            radioId = objectRecordDetail.recordCategory
 
 
             // Aqui se inicializa la variable global imageDir para que pueda ser comparada
@@ -295,16 +291,20 @@ class AddRecordFragment : Fragment() {
 
                 Log.i(ADD_RECORD_FRAGMENT, "imageDir es $imageDir y initialImageDir es $initialImageDirFromFirebase")
 
-                var radioId = radioGroup?.checkedRadioButtonId.toString()
-
                 // Comprobar nuevamente que los campos no esten vacios o solamente sean espacios
 
                 if (editTextName?.text!!.isBlank()
                     or fecha?.text!!.isBlank()
                     or monto?.text!!.isBlank()
-                    or editTextDescripcion?.text!!.isBlank()
                     or radioId.equals("-1")) {
                     Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+
+                    Log.i(ADD_RECORD_FRAGMENT, "editTextName: ${editTextName?.text}, fecha: ${fecha?.text}, monto: ${monto?.text}, radioId: $radioId, imageDir: $imageDir")
+
+
+                } else if (radioId!!.equals("3") and editTextDescripcion?.text!!.isBlank()){
+
+                    Toast.makeText(this.context, "Debe incluir una descripcion", Toast.LENGTH_SHORT).show()
 
                 } else if (imageDir.equals(initialImageDirFromFirebase)) {
 
@@ -321,7 +321,7 @@ class AddRecordFragment : Fragment() {
                     val recordAmount: String? = monto?.text.toString()
                     val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
                     val recordDescription: String = editTextDescripcion?.text.toString()
-                    val recordDateLastUpdate: String? = Timestamp.now().toDate().toString()
+                    val recordDateLastUpdate: String? = getDateTime()
 
                     firebaseDB.collection("e-Tracker").document(travelId).collection("record").document(recordId)
                         .update(
@@ -340,6 +340,7 @@ class AddRecordFragment : Fragment() {
                             Toast.makeText(this.context, "El record ha sido actualizado.", Toast.LENGTH_SHORT).show()
 
                             Handler().postDelayed({
+                                activity!!.supportFragmentManager.popBackStack()
                                 activity!!.supportFragmentManager.popBackStack()
                             }, 1000)
                         }
@@ -366,7 +367,7 @@ class AddRecordFragment : Fragment() {
                             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
                             val recordPhoto =   taskSnapshot.result
                             val recordDescription: String = editTextDescripcion?.text.toString()
-                            val recordDateLastUpdate: String? = Timestamp.now().toDate().toString()
+                            val recordDateLastUpdate: String? = getDateTime()
 
                             // Envio de Datos
 
@@ -390,6 +391,7 @@ class AddRecordFragment : Fragment() {
                                     Log.i(ADD_RECORD_FRAGMENT, "Registro agregado existosamente con ID de Viaje $FIREBASE_TRAVEL_ID")
                                     Handler().postDelayed({
                                         activity!!.supportFragmentManager.popBackStack()
+                                        activity!!.supportFragmentManager.popBackStack()
                                     }, 1000)
                                 }
                         }
@@ -399,8 +401,8 @@ class AddRecordFragment : Fragment() {
             }
 
 
-
         } else {
+
             // Si el record NO EXISTE y es FALSE entonces se ejecuta este codigo
 
             // Inicializar UI
@@ -408,23 +410,43 @@ class AddRecordFragment : Fragment() {
             fecha = view?.findViewById(R.id.textview_record_date_selection)
             monto = view?.findViewById(R.id.et_Monto)
             editTextDescripcion = view?.findViewById(R.id.editText_record_description)
-            var radioId = radioGroup?.checkedRadioButtonId.toString()
+            radioId = radioGroup?.checkedRadioButtonId.toString()
 
+
+            buttonTakePhoto!!.setOnClickListener {
+
+                // Pedir los permisos para abrir la camara
+
+                if (permissionValidation()) {
+
+                    buttonTakePhoto!!.isEnabled
+                    dialogPhoto()
+
+                } else {
+                    buttonTakePhoto!!.isEnabled
+                }
+            }
 
             buttonAddRecord!!.setOnClickListener {
 
             // Validar campos en formulario
 
+                Log.i(ADD_RECORD_FRAGMENT, "imageDir: $imageDir")
+
             if (editTextName?.text!!.isBlank()
                 or fecha?.text!!.isBlank()
                 or monto?.text!!.isBlank()
-                or editTextDescripcion?.text!!.isBlank()
                 or radioId.equals("-1")
                 or imageDir.equals(null)) {
-                Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.context, "Todos los campos son obligatorios / NUEVO RECORD", Toast.LENGTH_SHORT).show()
 
-                Log.i(ADD_RECORD_FRAGMENT, "Radio category is ${radioGroup?.checkedRadioButtonId.toString()}")
+                Log.i(ADD_RECORD_FRAGMENT, "Radio category is Create ${radioGroup?.checkedRadioButtonId.toString()}")
+                Log.i(ADD_RECORD_FRAGMENT, "editTextName: ${editTextName?.text}, fecha: ${fecha?.text}, monto: ${monto?.text}, radioId: $radioId, imageDir: $imageDir")
 
+
+            } else if (radioId!!.equals("3") and editTextDescripcion?.text!!.isBlank()){
+
+                Toast.makeText(this.context, "Debe incluir una descripcion", Toast.LENGTH_SHORT).show()
 
             } else {
 
@@ -442,7 +464,7 @@ class AddRecordFragment : Fragment() {
                             val recordCategory: String? = radioGroup?.checkedRadioButtonId.toString()
                             val recordPhoto =  taskSnapshot.result
                             val recordDescription: String = editTextDescripcion?.text.toString()
-                            val recordDateRegistered: String? = Timestamp.now().toDate().toString()
+                            val recordDateRegistered: String? = getDateTime()
                             val recordDateLastUpdate: String? = "" // Falta obtener fecha de modificacion
 
                             // Envio de datos usando el data class
@@ -458,6 +480,12 @@ class AddRecordFragment : Fragment() {
                                 recordDateLastUpdate!!
                             )
 
+                            var sharedPreferences: SharedPreferences? = null
+                            sharedPreferences = this.activity!!.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
+
+                            val nuevoIdCreadoLocal = sharedPreferences!!.getString(FIREBASE_TRAVEL_ID, "")
+                            travelId = nuevoIdCreadoLocal.toString()
+
                             firestoreDB.collection("e-Tracker").document(travelId).collection("record")
                                 .add(addNewRecord)
                                 .addOnFailureListener {
@@ -466,6 +494,9 @@ class AddRecordFragment : Fragment() {
                                 }
                                 .addOnSuccessListener {
                                     Toast.makeText(this.context, "Registro creado exitosamente.", Toast.LENGTH_SHORT).show()
+                                    Handler().postDelayed({
+                                        activity!!.supportFragmentManager.popBackStack()
+                                    }, 1000)
                                 }
                         }
                     }
@@ -641,7 +672,7 @@ class AddRecordFragment : Fragment() {
                             camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
                             startActivityForResult(camaraIntent, TAKE_PICTURE)
                             imageDir = photoUri.toString()
-                            Log.i(ADD_RECORD_FRAGMENT, "uri image = $photoUri.")
+
                         }
                     }
                 }
@@ -653,6 +684,9 @@ class AddRecordFragment : Fragment() {
             Log.e("ERROR", "$e")
             Toast.makeText(this.context, "ERROR", Toast.LENGTH_SHORT).show()
         }
+
+        Log.i(ADD_RECORD_FRAGMENT, "uri image = $imageDir.")
+
     }
 
     @SuppressLint("SimpleDateFormat")

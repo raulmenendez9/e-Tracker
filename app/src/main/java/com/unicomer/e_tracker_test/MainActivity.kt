@@ -56,11 +56,6 @@ class MainActivity : AppCompatActivity(),
     var idTravel:String = ""
 
 
-    // Variables para AddRecord
-    var objectRecordDetail: Record? = null
-    var recordId: String? = null
-    var recordExists: Boolean? = null
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -307,6 +302,12 @@ class MainActivity : AppCompatActivity(),
             true, true, true)
     }
 
+    override fun sendDetailItemHT(obj: Record, id: String, idTravel:String) {
+        //detalles de items de registros, el objeto contiene todo lo que viene del adapter
+        CallFragment().addFragment(this.supportFragmentManager,
+            DetailRecordFragment.newInstance(obj, id, idTravel), true, true, true)
+
+    }
 
     override fun sendToHomeTravel(id: String) {
         showToolBarOnFragmentViewCreate()
@@ -325,14 +326,6 @@ class MainActivity : AppCompatActivity(),
     override fun hideToolBarOnFragmentViewDissapears() {
         val toolbarMainActivity: View = findViewById(R.id.toolbar)
         toolbarMainActivity.visibility = View.GONE
-    }
-
-
-    override fun sendDetailItemHT(obj: Record, id: String, idTravel:String) {
-        //detalles de items de registros, el objeto contiene todo lo que viene del adapter
-        CallFragment().addFragment(this.supportFragmentManager,
-            DetailRecordFragment.newInstance(obj, id, idTravel), true, true, true)
-
     }
 
 

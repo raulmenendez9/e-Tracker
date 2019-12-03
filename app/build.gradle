@@ -62,7 +62,7 @@ dependencies {
     implementation 'com.afollestad:date-picker:0.3.1'
 
 //    Material Design
-    implementation 'com.google.android.material:material:1.2.0-alpha01'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
 
 //    ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'

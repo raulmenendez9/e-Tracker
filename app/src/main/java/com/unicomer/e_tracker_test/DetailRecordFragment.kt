@@ -12,7 +12,9 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
+import com.github.chrisbanes.photoview.PhotoView
 import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
 import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
@@ -36,12 +38,10 @@ class DetailRecordFragment : Fragment() {
     var imageCatDetail:ImageView?=null
     var descriptionDetail: TextView?=null
     var priceDetail: TextView?=null
-    var photoDetail: ImageView?=null
+    //var photoDetail: ImageView?=null
     var btnDelete: Button?=null
     var btnEdit:Button?=null
-    //para el zoom
-    private var mScaleGestureDetector: ScaleGestureDetector? = null
-    private var mScaleFactor = 1.0f
+    var photo: PhotoView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //instancia de animacion
@@ -62,9 +62,10 @@ class DetailRecordFragment : Fragment() {
         priceDetail = view.findViewById(R.id.recordPriceDetail)
         titleCatDetail = view.findViewById(R.id.categoyTittleDetail)
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
-        photoDetail = view.findViewById(R.id.photoRecordDetail)
+        //photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
         btnEdit = view.findViewById(R.id.editButtonDetail)
+        photo = view.findViewById(R.id.photoRecordDetail)
         val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
         fillDetail()
         //animacion para la card que contiene la info(solo de entrada)
@@ -93,7 +94,8 @@ class DetailRecordFragment : Fragment() {
         descriptionDetail!!.text= objDetailData.recordDescription
         priceDetail!!.text="$"+objDetailData.recordMount
         //Se asigna la imagen
-        Glide.with(this).load(objDetailData.recordPhoto).into(photoDetail!!)
+        Glide.with(this).load(objDetailData.recordPhoto).into(photo!!)
+        //photo!!.setImageResource(photoDetail!!.id)
         //se toma la categoria y dependiendo de la que se obtiene se setea
         when(objDetailData.recordCategory){
             "0"->{

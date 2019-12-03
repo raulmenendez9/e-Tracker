@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
 import com.unicomer.e_tracker_test.constants.DELETE_DIALOG
@@ -20,8 +19,9 @@ import com.unicomer.e_tracker_test.dialogs.DeleteRecordDialog
 import com.unicomer.e_tracker_test.models.Record
 
 
-class DetailRecordFragment : Fragment() {
 
+
+class DetailRecordFragment : Fragment() {
 
     //objeto que contiene los datos del detalle
     lateinit var objDetailData:Record
@@ -42,6 +42,7 @@ class DetailRecordFragment : Fragment() {
     var btnDelete: Button?=null
     var btnEdit:Button?=null
     var photo: PhotoView?=null
+    var container: FrameLayout?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //instancia de animacion
@@ -52,6 +53,7 @@ class DetailRecordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_detail_record, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,11 +68,12 @@ class DetailRecordFragment : Fragment() {
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
         btnEdit = view.findViewById(R.id.editButtonDetail)
         photo = view.findViewById(R.id.photoRecordDetail)
-        val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
+        //val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
+        container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
         fillDetail()
         //animacion para la card que contiene la info(solo de entrada)
         val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
-        container.startAnimation(animation)
+        container!!.startAnimation(animation)
         //verifica de donde proviene para saber si mostrar o no los botones de edit/delete
         if(isActive!="0"){
             btnDelete!!.visibility = View.GONE
@@ -130,6 +133,7 @@ class DetailRecordFragment : Fragment() {
         dialog.show(fm!!, DELETE_DIALOG)
 
     }
+
 /*
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -163,14 +167,4 @@ class DetailRecordFragment : Fragment() {
         }
 
     }
-    /*
-    private inner class ScaleListener: ScaleGestureDetector.SimpleOnScaleGestureListener(){
-        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
-            mScaleFactor *= scaleGestureDetector.scaleFactor
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f))
-            photoDetail?.setScaleX(mScaleFactor)
-            photoDetail?.setScaleY(mScaleFactor)
-            return true
-        }
-    }*/
 }

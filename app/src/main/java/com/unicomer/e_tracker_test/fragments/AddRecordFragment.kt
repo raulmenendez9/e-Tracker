@@ -46,7 +46,7 @@ import java.util.*
 class AddRecordFragment : Fragment() {
 
     // Contenedores / Vistas XML
-    //var addRecordMainContainer: View? = null
+    var addRecordMainContainer: View? = null
     //var addRecordAnimationContainer: View? = null
 
     // Visibilities para inicializar el fragment
@@ -151,7 +151,7 @@ class AddRecordFragment : Fragment() {
 
         // LottieFiles Animations variables
         //addRecordAnimationContainer = view?.findViewById(R.id.add_record_animation_container)
-        //addRecordMainContainer = view?.findViewById(R.id.add_record_main_container)
+        addRecordMainContainer = view?.findViewById(R.id.add_record_main_container)
 
 
         // RadioGroup contenedor de RadioButton
@@ -237,7 +237,7 @@ class AddRecordFragment : Fragment() {
         val visibility: Int = View.VISIBLE
 
         //addRecordAnimationContainer?.visibility = visibility
-        //addRecordMainContainer?.visibility != visibility
+        addRecordMainContainer?.visibility != visibility
 
         // 3 Tipos de animacion
         val animacionInfinita: View = view!!.findViewById(R.id.animation_loading_infinite)

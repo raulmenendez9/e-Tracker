@@ -48,6 +48,8 @@ class DetailRecordFragment : Fragment() {
     var btnEdit:Button?=null
     var photo: PhotoView?=null
     var container: FrameLayout?=null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //instancia de animacion

@@ -251,13 +251,13 @@ class MainActivity : AppCompatActivity(),
 
     override fun createNewRecord(){
         CallFragment().addFragment(this.supportFragmentManager,
-            AddRecordFragment.createRecord(false, true, false), true, true, 1)
+            AddRecordFragment.createRecord(false, true, false), true, true, 2)
     }
 
     override fun updateExistingRecord(objDetailData: Record, idRecord: String, idTravel: String, recordExists: Boolean) {
         CallFragment().addFragment(this.supportFragmentManager,
             AddRecordFragment.updateRecord(objDetailData, idRecord, idTravel, recordExists, true, false),
-            true, true, 1)
+            true, true, 2)
     }
 
     override fun sendToHomeTravel(id: String, persist:String) {

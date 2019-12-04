@@ -167,11 +167,13 @@ class DetailRecordFragment : Fragment() {
                 priceDetail!!.visibility = View.VISIBLE
                 titleCatDetail!!.visibility = View.VISIBLE
                 imageCatDetail!!.visibility = View.VISIBLE
-                btnDelete!!.visibility = View.VISIBLE
-                btnEditRecord!!.visibility = View.VISIBLE
-                btnEdit!!.visibility = View.VISIBLE
                 descriptionTitle!!.visibility = View.VISIBLE
                 btnArrow!!.rotation = 180f
+                if(isActive=="0"){
+                    btnDelete!!.visibility = View.VISIBLE
+                    btnEditRecord!!.visibility = View.VISIBLE
+                    btnEdit!!.visibility = View.VISIBLE
+                }
             }, 250)
         }else{
             val animation2 = AnimationUtils.loadAnimation(context, R.anim.slide_down)

@@ -22,7 +22,7 @@ import java.util.*
 
 
 class DatePickerFragment : DialogFragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -84,7 +84,7 @@ class DatePickerFragment : DialogFragment() {
         // Options can be null, in which case, default
         // options are used.
         if (arguments != null) {
-            options = arguments!!.getParcelable("SUBLIME_OPTIONS")
+            options = arguments.getParcelable("SUBLIME_OPTIONS")
         }
 
         mSublimePicker!!.initializePicker(options, mListener)

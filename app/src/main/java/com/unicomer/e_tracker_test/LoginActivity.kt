@@ -151,10 +151,10 @@ class LoginActivity : AppCompatActivity() {
                         val sharedPreferences = this.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
                         editor.putString(FIREBASE_USER_EMAIL_LOGGED_IN_KEY, userLoggedIn!!.email)
-                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn!!.uid)
+                        editor.putString(FIREBASE_USER_UID_KEY, userLoggedIn.uid)
                         editor.apply()
 
-                        var userUID: String? = sharedPreferences?.getString(FIREBASE_USER_UID_KEY, "")
+                        var userUID: String? = sharedPreferences.getString(FIREBASE_USER_UID_KEY, "")
 
                         Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with user ${it.result?.user?.email} and UID ${it.result?.user?.uid}")
                         Log.i(LOGIN_ACTIVITY_KEY,"Successfully logged in with UID $userUID")
@@ -178,7 +178,6 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-    // TODO REVISAR ESTO
 
     fun showDialog(){
         val fm = this.supportFragmentManager

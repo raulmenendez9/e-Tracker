@@ -179,7 +179,6 @@ class MainActivity : AppCompatActivity(),
 
         // Manejar seleccion de Item en Menu (Toolbar)
         return when (item.itemId) {
-            // TODO Cambiar los textos del Toast por Strings
 
             R.id.item_historial -> {
                 // Manejar el evento en item "Historial"
@@ -205,7 +204,6 @@ class MainActivity : AppCompatActivity(),
                 val fm = this.supportFragmentManager
                 val dialog = CreateReportDialogFragment.newInstance(idTravel, "0")
                 dialog.show(fm, LOGIN_DIALOG)
-
                 true
             }
 
@@ -214,7 +212,6 @@ class MainActivity : AppCompatActivity(),
                 val fm = this.supportFragmentManager
                 val dialog = CreateReportDialogFragment.newInstance(idTravel, "1")
                 dialog.show(fm, LOGIN_DIALOG)
-                Toast.makeText(this@MainActivity, "item fin viaje", Toast.LENGTH_SHORT).show()
                 true
             }
 
@@ -294,7 +291,7 @@ class MainActivity : AppCompatActivity(),
 
 
     override fun sendDetailItemHT(obj: Record, id: String, idTravel:String, esActual: String) {
-        //detalles de items de registros, el objeto contiene todo lo que viene del adapter
+        //detalles de items de registros, el objeto contiene lo que viene del adapter
         CallFragment().addFragment(this.supportFragmentManager,
             DetailRecordFragment.newInstance(obj, id, idTravel, esActual), true, true, 0)
 

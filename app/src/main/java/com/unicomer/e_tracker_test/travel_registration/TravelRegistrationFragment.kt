@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-// TODO: Rename parameter arguments, choose names that match
+
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2= "param2"
@@ -165,7 +165,7 @@ class TravelRegistrationFragment : Fragment() {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
 
     private fun openDateRangePicker(){ //Metodo para abrir el calendario
         val pickerFrag = DatePickerFragment()
@@ -431,7 +431,7 @@ class TravelRegistrationFragment : Fragment() {
 
     companion object {
 
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(id: String, datein: String?) =
             TravelRegistrationFragment().apply {

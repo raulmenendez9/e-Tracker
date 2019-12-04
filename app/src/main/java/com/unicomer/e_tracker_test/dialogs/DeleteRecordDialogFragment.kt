@@ -75,7 +75,6 @@ class DeleteRecordDialog : DialogFragment() {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -96,7 +95,6 @@ class DeleteRecordDialog : DialogFragment() {
 */
 
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 

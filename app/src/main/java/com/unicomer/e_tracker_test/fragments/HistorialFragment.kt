@@ -55,7 +55,8 @@ class HistorialFragment : Fragment(), historyAdapterInterface {
 
     fun setUpRecyclerView(){
         var query:Query=collecRef
-            .orderBy("initialDate", Query.Direction.DESCENDING)
+            .orderBy("finishDate", Query.Direction.DESCENDING)
+            .whereEqualTo("active", false)
             .whereEqualTo("emailUser", FirebaseUser!!.email)
         var options : FirestoreRecyclerOptions<Travel> = FirestoreRecyclerOptions.Builder<Travel>()
             .setQuery(query,Travel::class.java)

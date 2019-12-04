@@ -80,8 +80,8 @@ class MainActivity : AppCompatActivity(),
         //inicializar la toolbar
         val toolbar = this.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayShowHomeEnabled(true)
         //instancia de firebase
         dbFirestore = FirebaseFirestore.getInstance()
         dbCollectionReference = dbFirestore!!.collection("e-Tracker")
@@ -112,7 +112,8 @@ class MainActivity : AppCompatActivity(),
 
 
                         //y si el viaje ya fue registrado cargara homeTravel
-
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        supportActionBar?.setDisplayShowHomeEnabled(false)
                         CallFragment().addFragment(this.supportFragmentManager,
                             HomeTravelFragment.newInstance(querySnapshot.documents[0].id, "0", persist),
                             true, false, 0)
@@ -245,6 +246,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun goBackToHomeTravelFragment(){
         showToolBarOnFragmentViewCreate()
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(idTravel, "0", persist), true, true, 0)
     }
@@ -262,6 +265,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun sendToHomeTravel(id: String, persist:String) {
         showToolBarOnFragmentViewCreate()
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(id, "0", persist), true, true, 1)
         val intent = Intent(this, MainActivity::class.java)// para al crear viaje y se va para atras se salga de la app
@@ -269,6 +274,7 @@ class MainActivity : AppCompatActivity(),
         finish()
     }
     override fun sendDatatoHomeTfromHistT(idTravel: String, esActual: String) {
+
         CallFragment().addFragment(this.supportFragmentManager,
             HomeTravelFragment.newInstance(idTravel, esActual, persist), true, true, 0)
     }

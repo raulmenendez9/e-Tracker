@@ -13,7 +13,7 @@
 
     <!--    Otros-->
 
-    <string name="add_photo">Tomar Foto</string>
+    <string name="add_photo">Agregar Foto</string>
     <string name="agregar_registro">Agregar</string>
     <string name="et_description_hint">Agregar detalles adicionales</string>
 

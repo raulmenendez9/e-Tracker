@@ -41,7 +41,7 @@
     <string name="tv_monto">Monto:</string>
     <string name="tv_categoria">Categoria:</string>
     <string name="tv_descripcion">Descripción:</string>
-    <string name="add_photo">Tomar Foto</string>
+    <string name="add_photo">Agregar Foto</string>
     <string name="agregar_registro">Agregar</string>
     <string name="et_description_hint">Agregar detalles adicionales</string>
     <string name="a">a</string>

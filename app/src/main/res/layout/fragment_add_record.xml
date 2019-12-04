@@ -212,14 +212,9 @@
     android:layout_height="match_parent"
     android:background="@color/colorSecondary05LightGray">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
+    <include
         android:id="@+id/animation_loading_infinite"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:lottie_rawRes="@raw/animation_circle_loading"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

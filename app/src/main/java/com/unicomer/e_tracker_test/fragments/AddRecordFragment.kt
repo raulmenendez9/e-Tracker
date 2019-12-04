@@ -493,9 +493,8 @@ class AddRecordFragment : Fragment() {
             if (editTextName?.text!!.isBlank()
                 or fecha?.text!!.isBlank()
                 or monto?.text!!.isBlank()
-                or radioId.equals("-1")
-                or imageDir.equals(null)) {
-                Toast.makeText(this.context, "Todos los campos son obligatorios / NUEVO RECORD", Toast.LENGTH_SHORT).show()
+                or radioId.equals("-1")) {
+                Toast.makeText(this.context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
 
                 Log.i(ADD_RECORD_FRAGMENT, "Radio category is Create ${radioGroup?.checkedRadioButtonId.toString()}")
                 Log.i(ADD_RECORD_FRAGMENT, "editTextName: ${editTextName?.text}, fecha: ${fecha?.text}, monto: ${monto?.text}, radioId: $radioId, imageDir: $imageDir")
@@ -504,6 +503,11 @@ class AddRecordFragment : Fragment() {
             } else if (radioId!!.equals("3") and editTextDescripcion?.text!!.isBlank()){
 
                 Toast.makeText(this.context, "Debe incluir una descripcion", Toast.LENGTH_SHORT).show()
+
+            } else if (imageDir.equals(null)) {
+
+                Toast.makeText(this.context, "Debe seleccionar una fotografia", Toast.LENGTH_SHORT).show()
+
 
             } else {
 

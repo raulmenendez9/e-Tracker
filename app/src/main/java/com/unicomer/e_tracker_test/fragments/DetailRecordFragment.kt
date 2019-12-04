@@ -209,7 +209,7 @@ class DetailRecordFragment : Fragment() {
     }
 
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         fun onFragmentInteraction(uri: Uri)
         fun updateExistingRecord(objDetailData: Record, idRecord: String, idTravel: String, recordExists: Boolean)
     }

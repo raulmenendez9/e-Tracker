@@ -15,9 +15,6 @@ const val FIREBASE_TRAVEL_ID = ""
 const val APP_NAME = "UNICOMER_GROUP_E_TRACKER"
 
 
-// TODO Agregar TAGs para Logging, agregar los que faltan
-
-
 // ACTIVITY TAGs
 
 const val LOGIN_ACTIVITY_KEY = "LOGIN_ACTIVITY"

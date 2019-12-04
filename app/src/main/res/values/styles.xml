@@ -29,7 +29,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:paddingStart">10dp</item>
         <item name="android:textAppearance">@style/FontStyle_InputFormText</item>
-        <item name="android:textColor">@color/colorSecondary01DarkBlue</item>
+        <item name="android:textColor">@color/colorPrimary01Blue</item>
         <item name="android:textColorHint">@color/colorPrimary02Gray</item>
     </style>
 
@@ -53,9 +53,9 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:fontFamily">@font/helvetica_neue_medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_horizontal|center_vertical</item>
-        <item name="android:hint">01-01-2000</item>
+        <item name="android:hint">01-01-2019</item>
     </style>
 
     <style name="TextView_Date_Picker_Blue" parent="Theme.AppCompat.Light">
@@ -83,7 +83,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textAppearance">@style/FontStyle_Title</item>
-        <item name="android:textColor">@color/colorPrimary01Blue</item>
+        <item name="android:textColor">@color/colorSecondary01DarkBlue</item>
     </style>
 
     <style name="TextView_Body_Text" parent="Theme.AppCompat.Light">

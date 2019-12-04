@@ -13,7 +13,7 @@
 
     <!--    Otros-->
 
-    <string name="add_photo">Tomar Foto</string>
+    <string name="add_photo">Agregar Foto</string>
     <string name="agregar_registro">Agregar</string>
     <string name="et_description_hint">Agregar detalles adicionales</string>
 
@@ -54,7 +54,6 @@
     <string name="txt_record_price" translatable="false">$45</string>
     <string name="category_image" translatable="false">category image</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_dialog_login">Instrucciones sobre que hacer en caso de que el usuario no pueda iniciar sesion</string>
     <string name="txt_dialog_login_header">¿Problemas para iniciar sesión?</string>

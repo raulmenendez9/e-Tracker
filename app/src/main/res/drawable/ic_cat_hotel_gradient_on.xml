@@ -16,9 +16,9 @@
 
     <item
         android:drawable="@drawable/ic_cat_hotel_on"
-        android:top="12dp"
+        android:top="14dp"
         android:right="21dp"
         android:left="21dp"
-        android:bottom="12dp">
+        android:bottom="14dp">
     </item>
 </layer-list>

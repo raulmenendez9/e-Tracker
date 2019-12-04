@@ -10,7 +10,7 @@ import com.unicomer.e_tracker_test.R
 class CallFragment{
 
     /**
-     *  @sample CallFragment().addFragment(this.supportFragmentManager, TravelRegistrationFragment(), true, true, true)
+     *  @sample CallFragment().addFragment(this.supportFragmentManager, TravelRegistrationFragment(), true, true, 1)
      *
      *  @param1 FragmentManager from Activity (this@Activity.supportFragmentManager)
      *  @param2 Fragment needs to be opened
@@ -29,10 +29,14 @@ class CallFragment{
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         when (addAnimation){
-            0->{fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)}
-            1->{fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right)}
-            2->{fragmentTransaction.setCustomAnimations(R.anim.move_up, R.anim.fade_out)}
-            3->{fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit)}
+
+            0   ->  {fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)}
+            1   ->  {fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right)}
+            2   ->  {fragmentTransaction.setCustomAnimations(R.anim.move_up, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)}
+            3   ->  {fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.pop_enter, R.anim.pop_exit)}
+
+            // Animacion Default
+            else -> {fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)}
 
         }
         if (replace) fragmentTransaction.replace(R.id.main_fragment_container, fragment, fragment.javaClass.name)

@@ -25,7 +25,7 @@
     </style>
 
     <style name="FontStyle_InputFormText" parent="Theme.AppCompat.Light">
-        <item name="android:textSize">@dimen/Font_Size_Text_Input_Form</item>
+        <item name="android:textSize">@dimen/Font_Size_Text_Input_Add_Record_Form</item>
         <item name="android:fontFamily">@font/helvetica_neue_regular</item>
     </style>
 

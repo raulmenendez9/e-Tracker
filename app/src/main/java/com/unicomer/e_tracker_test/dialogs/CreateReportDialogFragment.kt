@@ -26,7 +26,7 @@ import java.io.FileWriter
 
 
 class CreateReportDialogFragment : DialogFragment() {
-    // TODO: Rename and change types of parameters
+
     var btnCancel: Button? = null
     var btnSend:Button?=null
     private var listener: OnFragmentInteractionListener? = null
@@ -101,7 +101,6 @@ class CreateReportDialogFragment : DialogFragment() {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun email(idTravel: String, Trigger:Boolean){
         travelRef.document(idTravel).get().addOnSuccessListener {
 
@@ -129,11 +128,11 @@ class CreateReportDialogFragment : DialogFragment() {
                     val dataHeaderRecord = arrayOf("REGISTROS")
                     val dataHeaderRecords = arrayOf("Nombre","Fecha","Costo","Categoria","Enlace de imagen","Descripcion")
 
-                    write!!.writeNext(dataHeader)
-                    write!!.writeNext(dataHeaderTravelcsv)
-                    write!!.writeNext(dataTravel)
-                    write!!.writeNext(dataHeaderRecord)
-                    write!!.writeNext(dataHeaderRecords)
+                    write.writeNext(dataHeader)
+                    write.writeNext(dataHeaderTravelcsv)
+                    write.writeNext(dataTravel)
+                    write.writeNext(dataHeaderRecord)
+                    write.writeNext(dataHeaderRecords)
                     val records = querySnapShot.toObjects(Record::class.java)
                     var dataRecords = arrayOf(String())
                     //obtengo todos los registros de gastos del viaje
@@ -159,12 +158,12 @@ class CreateReportDialogFragment : DialogFragment() {
                             records[i].recordCategory,
                             records[i].recordPhoto,
                             records[i].recordDescription)
-                        write!!.writeNext(dataRecords)
+                        write.writeNext(dataRecords)
                     }
                     balance = (cash!!.toDouble() - totalFoodC - totalCarC - totalhotelC - totalOtherC).toString()
                     val dataTotal = arrayOf("TOTAL DE GASTOS","","$balance")
-                    write!!.writeNext(dataTotal)
-                    write!!.close()
+                    write.writeNext(dataTotal)
+                    write.close()
 
                     //envio por correo
                     val emailIntent = Intent(Intent.ACTION_SEND)
@@ -172,8 +171,8 @@ class CreateReportDialogFragment : DialogFragment() {
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT,"Asunto")
                     emailIntent.putExtra(Intent.EXTRA_TEXT,"Escriba aqui")
                     emailIntent.type = "message/rfc822"
-                    var file = File(csv)
-                    var uri = FileProvider.getUriForFile(context!!,context!!.applicationContext.packageName+".fileprovider",file)
+                    val file = File(csv)
+                    val uri = FileProvider.getUriForFile(context!!,context!!.applicationContext.packageName+".fileprovider",file)
                     emailIntent.putExtra(Intent.EXTRA_STREAM,uri)
                     emailIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                     Log.d("EMAIL", "$uri")
@@ -230,14 +229,12 @@ class CreateReportDialogFragment : DialogFragment() {
 
 
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
         fun finishTravelListener()
     }
 
     companion object {
 
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(idTavel:String, whichLayout:String):CreateReportDialogFragment{
             val fragment=CreateReportDialogFragment()

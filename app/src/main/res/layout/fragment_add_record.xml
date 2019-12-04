@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_record_main_container"
         android:layout_width="match_parent"
@@ -15,18 +16,29 @@
         android:visibility="visible"
         tools:context=".fragments.AddRecordFragment">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@drawable/textview_white_background"
             android:elevation="@dimen/button_inset_vertical_material"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.75" />
 
             <TextView
                 android:id="@+id/tv_Titulo"
@@ -41,6 +53,8 @@
             <EditText
                 android:id="@+id/et_titulo_de_registro"
                 style="@style/EditText_Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/nombre_de_registro"
                 android:inputType="textCapSentences"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +95,7 @@
                 android:layout_width="150dp"
                 android:layout_marginTop="8dp"
                 android:drawableLeft="@drawable/ic_money"
+                android:hint="0.000"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_record_date_selection" />
@@ -157,52 +172,44 @@
                 android:layout_marginTop="8dp"
                 android:gravity="top|start"
                 android:hint="@string/et_description_hint"
-                android:inputType="textShortMessage|text"
+                android:inputType="textCapSentences"
                 android:lines="2"
                 android:maxLength="140"
                 android:maxLines="4"
                 android:minLines="3"
                 android:singleLine="true"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/guideline5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion"
                 app:layout_constraintVertical_bias="0.0" />
 
 
+            <Button
+                android:id="@+id/btn_tomar_foto"
+                style="@style/ButtonWhite_Big_Size"
+                android:text="@string/add_photo"
+                app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+            <Button
+                android:id="@+id/btn_agregar_registro"
+                style="@style/ButtonBlue_Big_Size"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/agregar_registro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="416dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.80"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_tomar_foto"
-            style="@style/ButtonWhite_Big_Size"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/add_photo"
-            app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <Button
-            android:id="@+id/btn_agregar_registro"
-            style="@style/ButtonBlue_Big_Size"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/agregar_registro"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

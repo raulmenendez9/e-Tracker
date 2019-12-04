@@ -48,8 +48,8 @@ class HistorialFragment : Fragment(), historyAdapterInterface {
         setUpRecyclerView()
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
+
+    fun onButtonPressed() {
         //listener?.onFragmentInteraction(uri)
     }
 
@@ -58,13 +58,13 @@ class HistorialFragment : Fragment(), historyAdapterInterface {
             .orderBy("finishDate", Query.Direction.DESCENDING)
             .whereEqualTo("active", false)
             .whereEqualTo("emailUser", FirebaseUser!!.email)
-        var options : FirestoreRecyclerOptions<Travel> = FirestoreRecyclerOptions.Builder<Travel>()
+        val options : FirestoreRecyclerOptions<Travel> = FirestoreRecyclerOptions.Builder<Travel>()
             .setQuery(query,Travel::class.java)
             .build()
 
         adapter = AdapterHistory(options, this)
 
-        var recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerHistorial)
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerHistorial)
         recyclerView!!.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter=adapter
@@ -113,7 +113,7 @@ class HistorialFragment : Fragment(), historyAdapterInterface {
 
 
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         fun onFragmentInteraction(uri: Uri)
         fun sendDatatoHomeTfromHistT(idTravel:String, esActual:String)
     }

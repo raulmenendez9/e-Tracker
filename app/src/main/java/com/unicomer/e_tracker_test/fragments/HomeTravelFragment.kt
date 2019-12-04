@@ -43,6 +43,7 @@ class HomeTravelFragment : Fragment(),
     var finishDate: TextView?=null
     var balance: TextView?=null
     //Edit Button travel
+
     var editBtn: ImageView?=null
 
 
@@ -85,12 +86,17 @@ class HomeTravelFragment : Fragment(),
         floatingActionButtonSendReport = view.findViewById(R.id.floatingActionButtonHTCreateReport)
         editBtn = view.findViewById(R.id.id_editTravel_imageView)
         //viaje actual: 0=si, 1=no
+
+
         if(esActual!="0"){
             editBtn!!.visibility = View.GONE
             floatingActionButton!!.visibility = View.GONE
             floatingActionButtonSendReport!!.visibility = View.VISIBLE
         }
+
+
         fillForm()//metodo para llenar la cabecera de fragment
+
         setUpRecyclerView(idTravelMain, "") //llena el fragment
         editBtn!!.setOnClickListener {
             Log.i("PERSIST", "lsitener del edit tiene: $persist")

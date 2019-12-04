@@ -6,7 +6,7 @@
 
     <style name="FontStyle_Title" parent="Theme.AppCompat.Light">
         <item name="android:textSize">@dimen/Font_Size_Title</item>
-        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
     </style>
 
     <style name="FontStyle_BodyText" parent="Theme.AppCompat.Light">
@@ -25,8 +25,8 @@
     </style>
 
     <style name="FontStyle_InputFormText" parent="Theme.AppCompat.Light">
-        <item name="android:textSize">@dimen/Font_Size_Text_Input_Form</item>
-        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textSize">@dimen/Font_Size_Text_Input_Add_Record_Form</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
     </style>
 
     <style name="FontStyle_SecondaryText" parent="Theme.AppCompat.Light">

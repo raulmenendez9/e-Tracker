@@ -30,10 +30,10 @@ class CallFragment{
 
         when (addAnimation){
 
-            0   ->  {fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)}
+            0   ->  {fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)}
             1   ->  {fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right)}
             2   ->  {fragmentTransaction.setCustomAnimations(R.anim.move_up, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)}
-            3   ->  {fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit)}
+            3   ->  {fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.pop_enter, R.anim.pop_exit)}
 
             // Animacion Default
             else -> {fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)}

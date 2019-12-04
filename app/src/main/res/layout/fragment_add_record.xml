@@ -3,250 +3,234 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/add_record_main_container"
-    android:background="#F5F7FB"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="visible"
-    tools:context=".fragments.AddRecordFragment">
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_record_main_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/textview_white_background"
-        android:elevation="@dimen/button_inset_vertical_material"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="#F5F7FB"
+        android:visibility="visible"
+        tools:context=".fragments.AddRecordFragment">
 
-        <TextView
-            android:id="@+id/tv_Titulo"
-            style="@style/TextView_Title"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/textview_white_background"
+            android:elevation="@dimen/button_inset_vertical_material"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_Titulo"
+                style="@style/TextView_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tv_titulo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_titulo_de_registro"
+                style="@style/EditText_Regular"
+                android:hint="@string/nombre_de_registro"
+                android:inputType="textCapSentences"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Titulo" />
+
+            <TextView
+                android:id="@+id/tv_Pick_Date"
+                style="@style/TextView_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tv_fecha"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
+
+            <TextView
+                android:id="@+id/textview_record_date_selection"
+                style="@style/TextView_Date_Picker_White"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
+
+            <TextView
+                android:id="@+id/tv_Monto"
+                style="@style/TextView_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/tv_monto"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Pick_Date" />
+
+            <EditText
+                android:id="@+id/et_Monto"
+                style="@style/EditText_Regular"
+                android:layout_width="150dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_money"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_record_date_selection" />
+
+            <TextView
+                android:id="@+id/tv_Categoria"
+                style="@style/TextView_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/tv_categoria"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Monto" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_Category"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:elevation="6dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Categoria">
+
+                <RadioButton
+                    android:id="@+id/radioButton_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_cat_food_gradient_off"
+                    android:button="@null" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_hotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_cat_hotel_gradient_off"
+                    android:button="@null" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_transportation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_cat_transportation_gradient_off"
+                    android:button="@null" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_cat_other_gradient_off"
+                    android:button="@null" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_Descripcion"
+                style="@style/TextView_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tv_descripcion"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_Category" />
+
+            <EditText
+                android:id="@+id/editText_record_description"
+                style="@style/EditText_Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="top|start"
+                android:hint="@string/et_description_hint"
+                android:inputType="textShortMessage|text"
+                android:lines="2"
+                android:maxLength="140"
+                android:maxLines="4"
+                android:minLines="3"
+                android:singleLine="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineHorizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/tv_titulo"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="416dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.80"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/et_titulo_de_registro"
-            style="@style/EditText_Regular"
-            android:hint="@string/nombre_de_registro"
-            android:inputType="textCapSentences"
+        <Button
+            android:id="@+id/btn_tomar_foto"
+            style="@style/ButtonWhite_Big_Size"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/add_photo"
+            app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Titulo" />
+            app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
+            app:layout_constraintVertical_bias="1.0" />
 
-        <TextView
-            android:id="@+id/tv_Pick_Date"
-            style="@style/TextView_Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/tv_fecha"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
-
-        <TextView
-            android:id="@+id/textview_record_date_selection"
-            style="@style/TextView_Date_Picker_White"
-            android:layout_height="30dp"
+        <Button
+            android:id="@+id/btn_agregar_registro"
+            style="@style/ButtonBlue_Big_Size"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_titulo_de_registro" />
-
-        <TextView
-            android:id="@+id/tv_Monto"
-            style="@style/TextView_Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/tv_monto"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Pick_Date" />
-
-        <EditText
-            android:id="@+id/et_Monto"
-            style="@style/EditText_Regular"
-            android:layout_width="150dp"
-            android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/ic_money"
-            android:inputType="numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_record_date_selection" />
-
-        <TextView
-            android:id="@+id/tv_Categoria"
-            style="@style/TextView_Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/tv_categoria"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Monto" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup_Category"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:elevation="6dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Categoria">
-
-            <RadioButton
-                android:id="@+id/radioButton_food"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_cat_food_gradient_off"
-                android:button="@null" />
-
-            <RadioButton
-                android:id="@+id/radioButton_hotel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_cat_hotel_gradient_off"
-                android:button="@null" />
-
-            <RadioButton
-                android:id="@+id/radioButton_transportation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_cat_transportation_gradient_off"
-                android:button="@null" />
-
-            <RadioButton
-                android:id="@+id/radioButton_other"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_cat_other_gradient_off"
-                android:button="@null" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/tv_Descripcion"
-            style="@style/TextView_Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/tv_descripcion"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup_Category" />
-
-        <EditText
-            android:id="@+id/editText_record_description"
-            style="@style/EditText_Regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="top|start"
-            android:hint="@string/et_description_hint"
-            android:inputType="textShortMessage|text"
-            android:lines="2"
-            android:maxLength="140"
-            android:maxLines="4"
-            android:minLines="3"
-            android:singleLine="true"
+            android:layout_marginBottom="16dp"
+            android:text="@string/agregar_registro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Descripcion"
-            app:layout_constraintVertical_bias="0.0" />
-
+            app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="416dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_tomar_foto"
-        style="@style/ButtonWhite_Big_Size"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/add_photo"
-        app:layout_constraintBottom_toTopOf="@+id/btn_agregar_registro"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btn_agregar_registro"
-        style="@style/ButtonBlue_Big_Size"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/agregar_registro"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_tomar_foto" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:visibility="gone"
-    android:id="@+id/add_record_animation_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorSecondary05LightGray">
-
     <include
-        android:id="@+id/animation_loading_infinite"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
-        android:id="@+id/animation_loading_success"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:lottie_rawRes="@raw/animation_circle_success"
-        app:lottie_loop="false"
-        app:lottie_autoPlay="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
-        android:id="@+id/animation_loading_failure"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:lottie_rawRes="@raw/animation_circle_fail"
-        app:lottie_loop="false"
-        app:lottie_autoPlay="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+             layout="@layout/splash_anim_loading_infinite"
+            android:id="@+id/animation_loading_infinite"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <include
+            layout="@layout/splash_anim_loading_success"
+            android:id="@+id/animation_loading_success"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <include
+            layout="@layout/splash_anim_loading_failure"
+            android:id="@+id/animation_loading_failure"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
 </FrameLayout>

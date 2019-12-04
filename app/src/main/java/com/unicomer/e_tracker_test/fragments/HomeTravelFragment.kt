@@ -197,7 +197,7 @@ class HomeTravelFragment : Fragment(),
         val query: Query = if (newText==""){
                 travelRef.document(id)
                 .collection("record")
-                .orderBy("recordDate", Query.Direction.DESCENDING)
+                .orderBy("recordDateRegister", Query.Direction.DESCENDING)
             }else{
                 travelRef.document(id)
                 .collection("record")

@@ -47,7 +47,7 @@ class AddRecordFragment : Fragment() {
 
     // Contenedores / Vistas XML
     var addRecordMainContainer: View? = null
-    var addRecordAnimationContainer: View? = null
+    //var addRecordAnimationContainer: View? = null
 
     // Visibilities para inicializar el fragment
     // y que siempre el mainContainer sea visible
@@ -150,7 +150,7 @@ class AddRecordFragment : Fragment() {
 
 
         // LottieFiles Animations variables
-        addRecordAnimationContainer = view?.findViewById(R.id.add_record_animation_container)
+        //addRecordAnimationContainer = view?.findViewById(R.id.add_record_animation_container)
         addRecordMainContainer = view?.findViewById(R.id.add_record_main_container)
 
 
@@ -236,13 +236,13 @@ class AddRecordFragment : Fragment() {
 
         val visibility: Int = View.VISIBLE
 
-        addRecordAnimationContainer?.visibility = visibility
+        //addRecordAnimationContainer?.visibility = visibility
         addRecordMainContainer?.visibility != visibility
 
         // 3 Tipos de animacion
-        val animacionInfinita = view?.findViewById<LottieAnimationView>(R.id.animation_loading_infinite)
-        val animacionSuccess = view?.findViewById<LottieAnimationView>(R.id.animation_loading_success)
-        val animacionFailure = view?.findViewById<LottieAnimationView>(R.id.animation_loading_failure)
+        val animacionInfinita: View = view!!.findViewById(R.id.animation_loading_infinite)
+        val animacionSuccess:View = view!!.findViewById(R.id.animation_loading_success)
+        val animacionFailure:View = view!!.findViewById(R.id.animation_loading_failure)
 
         when (resultado){
 
@@ -349,6 +349,7 @@ class AddRecordFragment : Fragment() {
 
                     // Aqui se carga el XML con la animacion infinita
                     showResultAnimation(1)
+
 
 
                     // Si el URI de la foto no se cambia, es decir, el usuario no cambia la foto

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -37,19 +38,17 @@ class DetailRecordFragment : Fragment() {
     var titleCatDetail: TextView?=null
     var nameDetail: TextView?=null
     var dateDetail: TextView?=null
-    var categoryDetail: TextView?=null
     var imageCatDetail:ImageView?=null
     var descriptionDetail: TextView?=null
     var priceDetail: TextView?=null
     //var photoDetail: ImageView?=null
     var btnDelete: Button?=null
     var btnEditRecord: Button? = null
-
     var btnEdit:Button?=null
     var photo: PhotoView?=null
     var container: FrameLayout?=null
-
-
+    var btnArrow: ImageView?=null
+    var descriptionTitle: TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //instancia de animacion
@@ -72,13 +71,13 @@ class DetailRecordFragment : Fragment() {
         priceDetail = view.findViewById(R.id.recordPriceDetail)
         titleCatDetail = view.findViewById(R.id.categoyTittleDetail)
         imageCatDetail = view.findViewById( R.id.imageCategoryDetail)
-        //photoDetail = view.findViewById(R.id.photoRecordDetail)
         btnDelete = view.findViewById(R.id.deleteButtonDetail)
         btnEditRecord = view.findViewById(R.id.editButtonDetail)
         btnEdit = view.findViewById(R.id.editButtonDetail)
         photo = view.findViewById(R.id.photoRecordDetail)
-        //val container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
-        container = view.findViewById<FrameLayout>(R.id.frameDetailContainer)
+        btnArrow = view.findViewById(R.id.arrow_detail)
+        container = view.findViewById(R.id.frameDetailContainer)
+        descriptionTitle = view.findViewById(R.id.textViewDescripTittle)
         fillDetail()
         //animacion para la card que contiene la info(solo de entrada)
         val animation = AnimationUtils.loadAnimation(context, R.anim.slide_up)
@@ -88,14 +87,20 @@ class DetailRecordFragment : Fragment() {
             btnDelete!!.visibility = View.GONE
             btnEdit!!.visibility = View.GONE
         }
+        btnArrow!!.setOnClickListener {
+            //animacion para ocultar parte del frame al dar clic en la flecha
+            animtationFrame()
+        }
+        photo!!.setOnClickListener {
+            //animacion al dar clic en la foto
+            animtationFrame()
+        }
 
     }
-
 
     override fun onResume() {
         super.onResume()
         btnDelete!!.setOnClickListener {
-            Log.i("ELMEROID","el id record es: $idRecord y el id del viaje es: $idTravel y el ${objDetailData}")
             showDialog(idRecord, idTravel, objDetailData)
 
         }
@@ -150,6 +155,41 @@ class DetailRecordFragment : Fragment() {
         val dialog = DeleteRecordDialog.newInstance(id, idTravel, obj)
         dialog.show(fm!!, DELETE_DIALOG)
 
+    }
+    fun animtationFrame(){
+        if (btnArrow!!.rotation==0f){
+            val animation2 = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+            container!!.startAnimation(animation2)
+            Handler().postDelayed({
+                nameDetail!!.visibility = View.VISIBLE
+                dateDetail!!.visibility = View.VISIBLE
+                descriptionDetail!!.visibility = View.VISIBLE
+                priceDetail!!.visibility = View.VISIBLE
+                titleCatDetail!!.visibility = View.VISIBLE
+                imageCatDetail!!.visibility = View.VISIBLE
+                btnDelete!!.visibility = View.VISIBLE
+                btnEditRecord!!.visibility = View.VISIBLE
+                btnEdit!!.visibility = View.VISIBLE
+                descriptionTitle!!.visibility = View.VISIBLE
+                btnArrow!!.rotation = 180f
+            }, 250)
+        }else{
+            val animation2 = AnimationUtils.loadAnimation(context, R.anim.slide_down)
+            container!!.startAnimation(animation2)
+            Handler().postDelayed({
+                nameDetail!!.visibility = View.GONE
+                dateDetail!!.visibility = View.GONE
+                descriptionDetail!!.visibility = View.GONE
+                priceDetail!!.visibility = View.GONE
+                titleCatDetail!!.visibility = View.GONE
+                imageCatDetail!!.visibility = View.GONE
+                btnDelete!!.visibility = View.GONE
+                btnEditRecord!!.visibility = View.GONE
+                btnEdit!!.visibility = View.GONE
+                descriptionTitle!!.visibility = View.GONE
+                btnArrow!!.rotation = 0f
+            }, 250)
+        }
     }
 
     override fun onAttach(context: Context) {

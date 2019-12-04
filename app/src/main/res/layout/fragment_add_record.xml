@@ -213,56 +213,31 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:visibility="gone"
-    android:id="@+id/add_record_animation_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorSecondary05LightGray">
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
-        android:id="@+id/animation_loading_infinite"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:lottie_rawRes="@raw/animation_circle_loading"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
-        android:id="@+id/animation_loading_success"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:lottie_rawRes="@raw/animation_circle_success"
-        app:lottie_loop="false"
-        app:lottie_autoPlay="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
-        android:id="@+id/animation_loading_failure"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:lottie_rawRes="@raw/animation_circle_fail"
-        app:lottie_loop="false"
-        app:lottie_autoPlay="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+             layout="@layout/splash_anim_loading_infinite"
+            android:id="@+id/animation_loading_infinite"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <include
+            layout="@layout/splash_anim_loading_success"
+            android:id="@+id/animation_loading_success"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <include
+            layout="@layout/splash_anim_loading_failure"
+            android:id="@+id/animation_loading_failure"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
 </FrameLayout>

@@ -92,13 +92,14 @@
                         android:id="@+id/id_editTravel_imageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/btn_background_edit"
                         android:clickable="true"
                         android:focusable="true"
-                        android:layout_margin="3dp"
                         android:paddingStart="5dp"
-                        android:paddingTop="0dp"
+                        android:paddingTop="1dp"
                         android:paddingEnd="5dp"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="1dp"
                         android:src="@drawable/ic_edit_24dp" />
 
                 </LinearLayout>

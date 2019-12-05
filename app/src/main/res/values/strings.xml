@@ -1,36 +1,298 @@
 <resources>
     <string name="app_name">e-Tracker</string>
 
+    <!-- Strings del Login   -->
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="required_email_password">Usuario y contraseña son obligatorios</string>
+    <string name="login_login_issues"><u>¿Problemas para ingresar?</u></string>
+    <string name="login_button_send">Entrar</string>
+    <string name="login_hint_et_email">Correo electrónico</string>
+    <string name="login_hint_et_password">Contraseña</string>
+    <string name="wrong_email_password">El usuario o contraseña es incorrecto</string>
+
+
+    <!--    Otros-->
+
+    <string name="add_photo">Agregar Foto</string>
+    <string name="agregar_registro">Agregar</string>
+    <string name="et_description_hint">Agregar detalles adicionales</string>
+
 
     <!--String del registro de viaje -->
     <!-- TextViews-->
     <string name="empecemos">Empecemos!</string>
-    <string name="initial">Pero antes, completa el formulario:</string>
+    <string name="initial">Pero antes, completa el formulario</string>
     <string name="origin_country">País de origen:</string>
     <string name="destiny_country">País de destino:</string>
     <string name="cost_center">Centro de coste:</string>
-    <string name="cod_project">(O código de proyecto)</string>
+    <string name="cod_project" translatable="false">(O código de proyecto)</string>
     <string name="Cash">Efectivo:</string>
     <string name="refound">Reintegro:</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
-    <string name="initial_date">Fecha inicio:</string>
+    <string name="initial_date">Fechas:</string>
     <string name="final_date">Fecha fin:</string>
     <string name="approved_by">Aprobado por:</string>
     <string name="description">Descripción:</string>
     <!--EditTexts -->
-    <string name="title_date_range_picker_example">Date Range Picker</string>
+    <string name="title_date_range_picker_example" translatable="false">Date Range Picker</string>
     <string name="origin_country_EditText">País donde te encuentras</string>
     <string name="destiny_country_EditText">País donde te diriges</string>
-    <string name="cost">0.00</string>
+    <string name="cost" translatable="false">0.00</string>
     <string name="motive">Motivo por el cual viaja</string>
-    <string name="date">Agregar fecha</string>
+    <string name="date">Agregar</string>
+    <string name="finish_date">Fecha final</string>
 
     <!--Buttons -->
+    <string name="update_travel">Actualizar</string>
     <string name="initial_travel">Iniciar viaje</string>
+    <string name="login_logo_etracker_app">Logo Unicomer</string>
+    <string name="txt_loading">Cargando...</string>
+    <string name="logo_garagework">Logo Garageworks</string>
+    <string name="txt_record_name">La pampa Argentina</string>
+    <string name="txt_record_date">10/08/2019</string>
+    <string name="txt_record_price" translatable="false">$45</string>
+    <string name="category_image" translatable="false">category image</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_dialog_login">Instrucciones sobre que hacer en caso de que el usuario no pueda iniciar sesion</string>
+    <string name="txt_dialog_login_header">¿Problemas para iniciar sesión?</string>
+
+    <!--Errors -->
+    <string name="error_hint">Todos los campos son obligatorio</string>
+    <string name="error_center_cost">El centro de coste deben ser de 4 digitos</string>
+    <string name="a">a</string>
+    <string name="tv_titulo">Titulo</string>
+    <string name="nombre_de_registro">Nombre de Registro</string>
+    <string name="tv_fecha">Fecha:</string>
+    <string name="tv_monto">Monto:</string>
+    <string name="tv_categoria">Categoria:</string>
+    <string name="tv_descripcion">Descripción:</string>
+
+    <!--Toasts -->
+    <string name="register_complete">Registro completado</string>
+    <string name="User_cancel_datapicker">Se canceló el calendario</string>
+    <string name="register_update">Registro actualizado</string>
+
+
+    <!--Countries -->
+    <string-array name="coutries_array">
+        <item>Afganistan</item>
+        <item>Albania</item>
+        <item>Alemania</item>
+        <item>Andorra</item>
+        <item>Angola</item>
+        <item>Antartida</item>
+        <item>Antigua y Barbuda</item>
+        <item>Arabia Saudi</item>
+        <item>Argelia</item>
+        <item>Argentina</item>
+        <item>Armenia</item>
+        <item>Aruba</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Azerbaiyan</item>
+        <item>Bahamas</item>
+        <item>Bahrain</item>
+        <item>Bangladesh</item>
+        <item>Barbados</item>
+        <item>Belgica</item>
+        <item>Belice</item>
+        <item>Benin</item>
+        <item>Bermudas</item>
+        <item>Bielorrusia</item>
+        <item>Birmania Myanmar</item>
+        <item>Bolivia</item>
+        <item>Bonaire</item>
+        <item>Bosnia y Herzegovina</item>
+        <item>Botswana</item>
+        <item>Brasil</item>
+        <item>British Virgin Islands</item>
+        <item>Brunei</item>
+        <item>Bulgaria</item>
+        <item>Burkina Faso</item>
+        <item>Burundi</item>
+        <item>Butan</item>
+        <item>Cabo Verde</item>
+        <item>Camboya</item>
+        <item>Camerun</item>
+        <item>Canada</item>
+        <item>Chad</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Chipre</item>
+        <item>Colombia</item>
+        <item>Comores</item>
+        <item>Congo</item>
+        <item>Corea del Norte</item>
+        <item>Corea del Sur</item>
+        <item>Costa de Marfil</item>
+        <item>Costa Rica</item>
+        <item>Croacia</item>
+        <item>Cuba</item>
+        <item>Curacao</item>
+        <item>Dinamarca</item>
+        <item>Dominica</item>
+        <item>Ecuador</item>
+        <item>Egipto</item>
+        <item>El Salvador</item>
+        <item>El Vaticano</item>
+        <item>Emiratos arabes Unidos</item>
+        <item>Eritrea</item>
+        <item>Eslovaquia</item>
+        <item>Eslovenia</item>
+        <item>España</item>
+        <item>Estados Unidos</item>
+        <item>Estonia</item>
+        <item>Etiopia</item>
+        <item>Filipinas</item>
+        <item>Finlandia</item>
+        <item>Fiji</item>
+        <item>Francia</item>
+        <item>Gabon</item>
+        <item>Gambia</item>
+        <item>Georgia</item>
+        <item>Ghana</item>
+        <item>Gibraltar</item>
+        <item>Granada</item>
+        <item>Grecia</item>
+        <item>Guam</item>
+        <item>Guatemala</item>
+        <item>Guinea</item>
+        <item>Guinea Ecuatorial</item>
+        <item>Guinea Bissau</item>
+        <item>Guyana Francesa</item>
+        <item>Guyana Holandesa</item>
+        <item>Guyana Inglesa</item>
+        <item>Haiti</item>
+        <item>Holanda</item>
+        <item>Honduras</item>
+        <item>Hungria</item>
+        <item>India</item>
+        <item>Indian Ocean</item>
+        <item>Indonesia</item>
+        <item>Iran</item>
+        <item>Iraq</item>
+        <item>Irlanda</item>
+        <item>Islandia</item>
+        <item>Islas Fiyi</item>
+        <item>Israel</item>
+        <item>Italia</item>
+        <item>Jamaica</item>
+        <item>Japon</item>
+        <item>Jersey</item>
+        <item>Jordania</item>
+        <item>Kazajstan</item>
+        <item>Kenia</item>
+        <item>Kirguistan</item>
+        <item>Kiribati</item>
+        <item>Kuwait</item>
+        <item>Laos</item>
+        <item>Lesoto</item>
+        <item>Letonia</item>
+        <item>Libano</item>
+        <item>Liberia</item>
+        <item>Libia</item>
+        <item>Liechtenstein</item>
+        <item>Lituania</item>
+        <item>Luxemburgo</item>
+        <item>Macedonia</item>
+        <item>Madagascar</item>
+        <item>Malasia</item>
+        <item>Malawi</item>
+        <item>Maldivas</item>
+        <item>Mali</item>
+        <item>Malta</item>
+        <item>Marruecos</item>
+        <item>Mauricio</item>
+        <item>Mauritania</item>
+        <item>Mexico</item>
+        <item>Micronesia</item>
+        <item>Moldavia</item>
+        <item>Monaco</item>
+        <item>Mongolia</item>
+        <item>Montserrat</item>
+        <item>Mozambique</item>
+        <item>Namibia</item>
+        <item>Nauru</item>
+        <item>Nepal</item>
+        <item>Nicaragua</item>
+        <item>Niger</item>
+        <item>Nigeria</item>
+        <item>Noruega</item>
+        <item>Nueva Zelanda</item>
+        <item>Oman</item>
+        <item>Paises Bajos</item>
+        <item>Pakistan</item>
+        <item>Palau</item>
+        <item>Panama</item>
+        <item>Papua Nueva Guinea</item>
+        <item>Paraguay</item>
+        <item>Peru</item>
+        <item>Polonia</item>
+        <item>Portugal</item>
+        <item>Puerto Rico</item>
+        <item>Qatar</item>
+        <item>Reino Unido</item>
+        <item>Republica Centroafricana</item>
+        <item>Republica Checa</item>
+        <item>Republica Democratica del Congo</item>
+        <item>Republica Dominicana</item>
+        <item>Ruanda</item>
+        <item>Rumania</item>
+        <item>Rusia</item>
+        <item>Sahara Occidental</item>
+        <item>Samoa</item>
+        <item>San Cristobal y Nevis</item>
+        <item>San Marino</item>
+        <item>San Vicente y las Granadinas</item>
+        <item>Santa Lucia</item>
+        <item>Santo Tome y Principe</item>
+        <item>Senegal</item>
+        <item>Seychelles</item>
+        <item>Sierra Leona</item>
+        <item>Singapur</item>
+        <item>Siria</item>
+        <item>Somalia</item>
+        <item>Southern Ocean</item>
+        <item>Sri Lanka</item>
+        <item>Swazilandia</item>
+        <item>Sudafrica</item>
+        <item>Sudan</item>
+        <item>Suecia</item>
+        <item>Suiza</item>
+        <item>Surinam</item>
+        <item>St Lucia</item>
+        <item>St Vincent and The Grenadines</item>
+        <item>St Kitts and Nevis</item>
+        <item>St. Maarten</item>
+        <item>Tailandia</item>
+        <item>Taiwan</item>
+        <item>Tanzania</item>
+        <item>Tayikistan</item>
+        <item>Togo</item>
+        <item>Tokelau</item>
+        <item>Tonga</item>
+        <item>Trinidad y Tobago</item>
+        <item>Tunez</item>
+        <item>Turkmekistan</item>
+        <item>Turquia</item>
+        <item>Tuvalu</item>
+        <item>Ucrania</item>
+        <item>Uganda</item>
+        <item>Uruguay</item>
+        <item>Uzbekistan</item>
+        <item>Vanuatu</item>
+        <item>Venezuela</item>
+        <item>Vietnam</item>
+        <item>Yemen</item>
+        <item>Djibouti</item>
+        <item>Zambia</item>
+        <item>Zimbabue</item>
+    </string-array>
+    <string name="gallery">Seleccionar de la galería</string>
+    <string name="camera">Hacer una foto</string>
+    <string name="select_image">Seleccionar una foto</string>
 
 
 </resources>

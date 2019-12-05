@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.DetailRecordFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/photoRecordDetail"
+            android:scaleType="centerCrop"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <FrameLayout
+            android:id="@+id/frameDetailContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_detail_record"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/arrow_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/btn_arrow_detail"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:rotation="180"
+                    android:src="@drawable/ic_keyboard_arrow_up"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.05" />
+
+                <TextView
+                    android:id="@+id/categoyTittleDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/helvetica_neue_regular"
+                    android:text="TextView"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/guideline11"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageCategoryDetail"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_cat_food"
+                    app:layout_constraintStart_toStartOf="@+id/guideline11"
+                    app:layout_constraintTop_toBottomOf="@+id/categoyTittleDetail" />
+
+                <TextView
+                    android:id="@+id/recordNameDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/helvetica_neue_medium"
+                    android:text="Titulo de la compra"
+                    android:textColor="@color/colorSecondary01DarkBlue"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageCategoryDetail"
+                    app:layout_constraintTop_toTopOf="@+id/imageCategoryDetail" />
+
+                <TextView
+                    android:id="@+id/recordDateDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/helvetica_neue_regular"
+                    android:text="13-11-2019"
+                    android:textColor="@color/colorSecondary04Gray"
+                    app:layout_constraintStart_toEndOf="@+id/imageCategoryDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/recordNameDetail" />
+
+                <TextView
+                    android:id="@+id/recordPriceDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica_neue_medium"
+                    android:text="$00.00"
+                    android:textColor="@color/colorPrimary01Blue"
+                    android:textSize="22sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline12"
+                    app:layout_constraintTop_toBottomOf="@+id/recordDateDetail" />
+
+                <TextView
+                    android:id="@+id/textViewDescripTittle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/helvetica_neue_regular"
+                    android:text="Descripcion:"
+                    android:textColor="@color/colorSecondary01DarkBlue"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/guideline11"
+                    app:layout_constraintTop_toBottomOf="@+id/imageCategoryDetail" />
+
+                <TextView
+                    android:id="@+id/recordDescriptionDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/helvetica_neue_condensed"
+                    android:paddingBottom="20dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus quis libero et facilisis. Sed vitae venenatis ante. Vestibulum ac arcu et ex ultricies ullamcorper. Vivamus enim libero, dictum sed finibus vitae, venenatis eleifend velit. Cras lobortis arcu sed pharetra congue. Nullam vel malesuada ante. Etiam pulvinar eros quis posuere mattis. Vivamus euismod aliquet dui."
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline12"
+                    app:layout_constraintStart_toStartOf="@+id/guideline11"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDescripTittle" />
+
+                <Button
+                    android:id="@+id/editButtonDetail"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/btn_background_blue"
+                    android:text="Editar"
+                    android:textColor="@color/colorSecondary05LightGray"
+
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline12"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/guideline11"
+                    app:layout_constraintTop_toBottomOf="@+id/recordDescriptionDetail" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.95" />
+
+                <Button
+                    android:id="@+id/deleteButtonDetail"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/btn_background_white"
+                    android:text="Eliminar"
+                    android:textColor="#F44336"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline12"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/guideline11"
+                    app:layout_constraintTop_toBottomOf="@+id/recordDescriptionDetail" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

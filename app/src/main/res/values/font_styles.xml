@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    Tamaño de Fuentes-->
+
+
+    <style name="FontStyle_Title" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_Title</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+    </style>
+
+    <style name="FontStyle_BodyText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_Body_Text</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <style name="FontStyle_DialogText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_Dialog_Modal</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <style name="FontStyle_ListTitleText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_List_Title</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+    </style>
+
+    <style name="FontStyle_InputFormText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_Text_Input_Add_Record_Form</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <style name="FontStyle_SecondaryText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_Secondary_Text</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <style name="FontStyle_ButtonTabText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_Button_Tab_Text</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+    </style>
+
+    <style name="FontStyle_ErrorText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_Error_Form</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <style name="FontStyle_DialogTitleText" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">@dimen/Font_Size_List_Title</item>
+        <item name="android:fontFamily">@font/helvetica_neue_condensed</item>
+    </style>
+
+
+</resources>

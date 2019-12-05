@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".travel_registration.TravelRegistrationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,11 +19,11 @@
             android:id="@+id/constraintLayoutRegistration"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50dp"
-            android:background="@color/colorPrimario_01_Azul"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/round_constraint"
             app:layout_anchor="@+id/constraintLayoutRegistration"
             app:layout_anchorGravity="center">
 
@@ -28,9 +32,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginBottom="595dp"
+                android:fontFamily="@font/helvetica_neue_bold"
                 android:text="@string/empecemos"
+                android:textSize="25sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,27 +48,33 @@
                 android:id="@+id/text_Start2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="35dp"
+                android:fontFamily="@font/helvetica_neue_medium"
                 android:text="@string/initial"
+                android:textSize="17sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="54dp" />
+                app:layout_constraintGuide_begin="61dp" />
 
             <TextView
                 android:id="@+id/text_OriginCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/helvetica_neue_regular"
                 android:text="@string/origin_country"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -72,17 +85,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="20dp" />
+                app:layout_constraintGuide_begin="7dp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/editTextOrigin"
-                android:layout_width="277dp"
-                android:layout_height="43dp"
+                android:layout_width="313dp"
+                android:layout_height="44dp"
                 android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/ic_pais_origen_destino"
+                android:backgroundTint="@color/colorSecondary05LightGray"
+                android:drawableStart="@drawable/ic_pais_origen_destino"
                 android:ems="10"
+                android:fontFamily="@font/helvetica_neue_regular"
                 android:hint="@string/origin_country_EditText"
                 android:inputType="textPersonName"
+                android:textColor="@color/colorSecondary05LightGray"
+                android:textColorHint="@color/hint"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -93,20 +111,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/destiny_country"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/editTextOrigin" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/editTextDestiny"
-                android:layout_width="274dp"
-                android:layout_height="39dp"
+                android:layout_width="318dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="4dp"
-                android:drawableLeft="@drawable/ic_pais_origen_destino"
+                android:backgroundTint="@color/colorSecondary05LightGray"
+                android:drawableStart="@drawable/ic_pais_origen_destino"
                 android:ems="10"
+                android:fontFamily="@font/helvetica_neue_regular"
                 android:hint="@string/destiny_country_EditText"
                 android:inputType="textPersonName"
+                android:textColor="@color/colorSecondary05LightGray"
+                android:textColorHint="@color/hint"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -117,6 +143,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cost_center"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/editTextDestiny" />
 
@@ -125,6 +154,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cod_project"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -135,9 +167,13 @@
                 android:layout_width="77dp"
                 android:layout_height="42dp"
                 android:hint="- - -"
-                android:inputType="phone"
+                android:textColorHint="@color/colorSecondary05LightGray"
                 android:textAlignment="center"
-                android:textColorHint="@color/colorSecundario_04_Blanco"
+                android:inputType="phone"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
+                android:backgroundTint="@color/colorSecondary05LightGray"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.979"
                 app:layout_constraintStart_toEndOf="@+id/textViewCostCenter"
@@ -151,6 +187,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/Cash"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCodProject" />
 
@@ -160,9 +199,14 @@
                 android:layout_height="42dp"
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="1dp"
-                android:drawableLeft="@drawable/ic_money"
+                android:drawableStart="@drawable/ic_money"
                 android:ems="10"
                 android:hint="@string/cost"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary05LightGray"
+                android:backgroundTint="@color/colorSecondary05LightGray"
+                android:textColorHint="@color/hint"
                 android:inputType="numberDecimal"
                 android:textAlignment="textEnd"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -176,6 +220,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/refound"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCost" />
 
@@ -196,7 +243,10 @@
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:text="@string/yes"
-                    android:textColorHint="@color/colorSecundario_04_Blanco"/>
+                    android:fontFamily="@font/helvetica_neue_regular"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorSecondary05LightGray"
+                    android:textColorHint="@color/colorSecondary05LightGray"/>
 
                 <RadioButton
                     android:theme="@style/RadioButtonStyle"
@@ -205,7 +255,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="35dp"
                     android:text="@string/no"
-                    android:textColorHint="@color/colorSecundario_04_Blanco"/>
+                    android:fontFamily="@font/helvetica_neue_regular"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorSecondary05LightGray"
+                    android:textColorHint="@color/colorSecondary05LightGray"/>
             </RadioGroup>
 
             <TextView
@@ -214,23 +267,43 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/initial_date"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRefound" />
 
-            <EditText
-                android:id="@+id/editTextDate"
-                android:layout_width="193dp"
-                android:layout_height="38dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/ic_date"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="@string/date"
-                android:inputType="date"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.979"
+            <TextView
+                android:id="@+id/textView_pick_initial_date"
+                style="@style/TextView_Date_Picker_Blue"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:drawableStart="@drawable/ic_date"
+                app:layout_constraintEnd_toStartOf="@+id/textA"
                 app:layout_constraintStart_toEndOf="@+id/textViewInitialDate"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <TextView
+                android:id="@+id/textA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/a"
+                android:textColor="@color/colorSecondary05LightGray"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView_pick_final_date"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <TextView
+                android:id="@+id/textView_pick_final_date"
+                style="@style/TextView_Date_Picker_Blue"
+                android:layout_width="120dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
             <TextView
@@ -239,17 +312,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/approved_by"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/textViewInitialDate" />
 
             <Spinner
-
+                android:id="@+id/spinnerAproved"
                 android:layout_width="276dp"
                 android:layout_height="36dp"
                 android:layout_marginTop="1dp"
                 android:textAlignment="center"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -261,6 +340,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/description"
+                android:fontFamily="@font/helvetica_neue_regular"
+                android:textSize="15sp"
+                android:textColor="@color/colorSecondary05LightGray"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -268,11 +350,16 @@
 
             <EditText
                 android:id="@+id/editTextMotive"
-                android:layout_width="277dp"
-                android:layout_height="45dp"
+                android:layout_width="318dp"
+                android:layout_height="43dp"
+                android:backgroundTint="@color/colorSecondary05LightGray"
                 android:ems="10"
+                android:fontFamily="@font/helvetica_neue_regular"
                 android:hint="@string/motive"
                 android:inputType="textPersonName"
+                android:textColor="@color/colorSecondary05LightGray"
+                android:textColorHint="@color/hint"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -283,15 +370,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="389dp" />
+                app:layout_constraintGuide_begin="391dp" />
 
             <Button
                 android:id="@+id/buttonRegistrations"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="60dp"
+                android:background="@drawable/btn_background_white"
+                android:fontFamily="@font/helvetica_neue_medium"
                 android:text="@string/initial_travel"
-                android:textColor="@color/colorPrimario_01_Azul"
+                android:textColor="@color/colorPrimary01Blue"
+                android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/editTextMotive" />
@@ -301,7 +393,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="298dp" />
+                app:layout_constraintGuide_percent="0.98" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -311,11 +403,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:backgroundTint="@color/colorPrimario_01_Azul"
+            app:backgroundTint="@color/colorPrimary01Blue"
             android:src="@drawable/ic_close"
             app:layout_anchor="@+id/constraintLayoutRegistration"
-            app:layout_anchorGravity="bottom|center" />
+            app:layout_anchorGravity="bottom|center"
+            android:focusable="true" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>
